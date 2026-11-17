@@ -1,3 +1,4 @@
+import ProjectStories from "@/components/ProjectStories";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -139,8 +140,8 @@ export default function Partners() {
                 <div className="h-px w-20 bg-white/15" />
               </div>
               <h1 className="section-display-title mb-6 text-white flex flex-col">
-                <span>PARTNERS</span>
-                <span className="text-white/42">&amp; CREW</span>
+                <span>Partners</span>
+                <span className="text-white/42">&amp; crew</span>
               </h1>
               <p className="text-white/74 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
                 We work with venues, brands, crew, and creative collaborators
@@ -151,6 +152,7 @@ export default function Partners() {
           </div>
         </section>
 
+        <ProjectStories />
         {/* Partnership Types — Large Immerisve Blocks */}
         <section className="py-28 md:py-36 px-6">
           <div className="container layout-default">

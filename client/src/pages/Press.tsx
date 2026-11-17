@@ -1,3 +1,4 @@
+import ProjectStories from "@/components/ProjectStories";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -86,11 +87,11 @@ const pressHighlights: Array<{
 const fastFacts = [
   { label: "Founded", value: "2024" },
   { label: "Based", value: "Chicago, IL" },
-  { label: "Series", value: "2 Active" },
-  { label: "Seasons", value: "6 Total" },
+  { label: "Series", value: "Chasing Sun(Sets) · Untold Story" },
+
   { label: "Genre", value: "Afro · Melodic · House" },
-  { label: "Capacity", value: "150–500" },
-  { label: "Home Venue", value: "Alhambra Palace" },
+  { label: "Formats", value: "Lakefront · Club rooms · Radio" },
+  { label: "Venues", value: "See the event archive for each room" },
   { label: "Press Contact", value: "press@monolithproject.com" },
 ];
 
@@ -129,8 +130,8 @@ export default function Press() {
               — Media Resources
             </span>
             <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-6">
-              PRESS &<br />
-              MEDIA KIT
+              Press &<br />
+              media kit
             </h1>
             <motion.div
               initial={{ scaleX: 0 }}
@@ -159,7 +160,7 @@ export default function Press() {
               </a>
               <a href="#assets" className="btn-pill-outline btn-pill-compact">
                 <Download className="w-3.5 h-3.5" />
-                Download Assets
+                Request Assets
               </a>
             </div>
           </motion.div>
@@ -192,6 +193,7 @@ export default function Press() {
             </div>
           </motion.div>
 
+          <ProjectStories />
           {/* About blurb */}
           <div className="grid lg:grid-cols-12 gap-10 mb-20">
             <motion.div
@@ -283,8 +285,8 @@ export default function Press() {
                 Brand Assets
               </p>
               <p className="text-white/70 text-sm">
-                Request assets via email — we'll send a download link within 24
-                hours.
+                Request approved assets by email. Include your publication,
+                deadline, and the material you need.
               </p>
             </motion.div>
 
@@ -418,7 +420,7 @@ export default function Press() {
                 Need Something Else?
               </p>
               <p className="text-sm text-white/70">
-                We'll get back to press inquiries within 24 hours.
+                We'll get back to press inquiries after review.
               </p>
             </div>
             <a

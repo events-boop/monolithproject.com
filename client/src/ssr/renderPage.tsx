@@ -23,6 +23,9 @@ const PAGES: Record<string, () => Promise<{ default: ComponentType }>> = {
   Booking: () => import("../pages/Booking"),
   Partners: () => import("../pages/Partners"),
   Archive: () => import("../pages/Archive"),
+  SunsetsVipBio: () => import("../pages/SunsetsVipBio"),
+  UntoldVipLanding: () => import("../pages/UntoldVipLanding"),
+  HouseOfFriendsBio: () => import("../pages/HouseOfFriendsBio"),
 };
 
 export type PrerenderPageKey = keyof typeof PAGES;
@@ -34,6 +37,9 @@ export const PRERENDER_PAGE_ROUTES: Record<string, PrerenderPageKey> = {
   "/booking": "Booking",
   "/partners": "Partners",
   "/archive": "Archive",
+  "/sunsets-links": "SunsetsVipBio",
+  "/untold": "UntoldVipLanding",
+  "/house-of-friends/links": "HouseOfFriendsBio",
 };
 
 /** Source module for a page, as keyed in Vite's build manifest. */
@@ -63,5 +69,12 @@ export async function renderPage(
   );
   // Same wrappers App renders around every route: #app-shell (several page
   // styles are scoped to it) and withTransition()'s container.
-  return `<div><div id="app-shell" class="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-h-screen relative"><div class="relative w-full bg-background min-h-screen overflow-x-clip">${markup}</div></div></div>`;
+  const world = path.startsWith("/house-of-friends")
+    ? "friends"
+    : path === "/untold"
+      ? "untold"
+      : /radio|sunsets/.test(path)
+        ? "sunsets"
+        : "monolith";
+  return `<div><div id="app-shell" data-page="${path}" data-world="${world}" class="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-h-screen relative"><div class="relative w-full bg-background min-h-screen overflow-x-clip">${markup}</div></div></div>`;
 }

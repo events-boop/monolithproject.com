@@ -1,7 +1,4 @@
-import {
-  TICKET_POLICY,
-  SUNSETS_TICKET_HOLDER_UPDATE,
-} from "@shared/events/ticket-policy";
+import { SUNSETS_TICKET_HOLDER_UPDATE } from "@shared/events/ticket-policy";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -91,13 +88,13 @@ function FAQItem({
 
 export default function FAQ() {
   const [activeCategory, setActiveCategory] = useState(0);
+  const [query, setQuery] = useState("");
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const faqSchemaEntries = categories.flatMap(category =>
     category.faqs.map(faq => [faq.q, faq.a] as [string, string])
   );
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     setOpenIndex(0);
   }, [activeCategory]);
 
@@ -115,7 +112,7 @@ export default function FAQ() {
         canonicalPath="/faq"
       />
       <JsonLd id="schema-main-faq" data={buildFaqSchema(faqSchemaEntries)} />
-      <Navigation />
+      <Navigation variant="dark" />
 
       {/* Atmosphere */}
       <div className="pointer-events-none fixed inset-0 z-0">
@@ -157,11 +154,11 @@ export default function FAQ() {
               id="ticket-policy-title"
               className="font-display text-2xl md:text-3xl text-white mb-3"
             >
-              {TICKET_POLICY.salesFinal}
+              September ticket-holder update
             </h2>
             <p className="text-white/80 leading-relaxed max-w-3xl">
-              <strong>Sun(Sets) III — JOEZI × MASSUMA is postponed.</strong>{" "}
-              {SUNSETS_TICKET_HOLDER_UPDATE}
+              Sun(Sets) III — JOEZI × MASSUMA is postponed. Read the latest
+              update for rescheduling and refund information.
             </p>
             <div className="flex flex-wrap gap-x-6 gap-y-3 mt-5 text-sm text-amber-200">
               <a
@@ -177,11 +174,45 @@ export default function FAQ() {
                 Full weather & ticket policy ↗
               </a>
             </div>
+            <details className="mt-4 text-sm text-white/80 leading-relaxed">
+              <summary className="cursor-pointer py-2 text-amber-200">
+                Read the ticket-holder policy
+              </summary>
+              <p className="mt-3 max-w-3xl">{SUNSETS_TICKET_HOLDER_UPDATE}</p>
+            </details>
           </aside>
 
+          {query &&
+            !categories.some(cat =>
+              cat.faqs.some(faq =>
+                `${faq.q} ${faq.a}`
+                  .toLowerCase()
+                  .includes(query.trim().toLowerCase())
+              )
+            ) && (
+              <p role="status" className="mb-6 text-white/75">
+                No answers match that search. Try a shorter phrase or contact
+                the team below.
+              </p>
+            )}
+          <label className="faq-search">
+            <span className="sr-only">Search frequently asked questions</span>
+            <input
+              type="search"
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              placeholder="Search tickets, arrival, accessibility…"
+            />
+          </label>
           <div className="layout-narrow space-y-4">
             {categories.map((cat, idx) => {
-              const isCatOpen = activeCategory === idx;
+              const matches = cat.faqs.filter(faq =>
+                `${faq.q} ${faq.a}`
+                  .toLowerCase()
+                  .includes(query.trim().toLowerCase())
+              );
+              if (query && matches.length === 0) return null;
+              const isCatOpen = Boolean(query) || activeCategory === idx;
               return (
                 <div
                   key={cat.label}
@@ -237,12 +268,12 @@ export default function FAQ() {
                       >
                         <div className="px-4 md:px-16 pb-12 pt-4">
                           <div className="space-y-2">
-                            {cat.faqs.map((faq, fIdx) => (
+                            {matches.map((faq, fIdx) => (
                               <FAQItem
                                 key={fIdx}
                                 q={faq.q}
                                 a={faq.a}
-                                isOpen={openIndex === fIdx}
+                                isOpen={Boolean(query) || openIndex === fIdx}
                                 onToggle={() => {
                                   signalChirp.click();
                                   setOpenIndex(

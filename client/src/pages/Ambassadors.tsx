@@ -40,20 +40,20 @@ const labelClass =
 const perks = [
   {
     icon: Ticket,
-    title: "Free Access",
-    desc: "Sell 5 tickets -> Your ticket is 100% free.",
+    title: "Bring your people",
+    desc: "Tell us about your community and the shows you want to support.",
     color: "#E05A3A",
   },
   {
     icon: Wine,
-    title: "Drink Tokens",
-    desc: "1 free drink for you + 1 for EACH friend who buys.",
+    title: "Know the terms",
+    desc: "Any ticket benefits or rewards are agreed for the individual event before you participate.",
     color: "#E8B86D",
   },
   {
     icon: Star,
-    title: "VIP Status",
-    desc: "Top sellers get upgraded to VIP entry + backstage access.",
+    title: "Stay connected",
+    desc: "Register your interest. The team will follow up when a suitable opportunity is available.",
     color: "#8B5CF6",
   },
 ];
@@ -99,7 +99,7 @@ export default function Ambassadors() {
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
       <SEO
         title="Ambassador Program"
-        description="Join the Monolith Project ambassador team. Sell 5 tickets and get yours free plus drink tokens for the event."
+        description="Register your interest in supporting Monolith shows. Opportunities and participation terms are confirmed for each event."
       />
       <Navigation />
 
@@ -122,14 +122,14 @@ export default function Ambassadors() {
               — Join The Team
             </span>
             <h1 className="font-display text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] uppercase tracking-tight-display text-white mb-6">
-              BRING THE COLLECTIVE.
+              Bring your people.
               <br />
-              THE NIGHT ON US.
+              Build the night.
             </h1>
             <p className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto">
-              You're already bringing your friends. You might as well get
-              rewarded for it. Join our ambassador program to earn free tickets,
-              drink tokens, and exclusive perks.
+              Help connect your community with Monolith shows. Tell us about
+              your audience and interests; opportunities and participation terms
+              are confirmed for each event.
             </p>
           </motion.div>
 
@@ -271,7 +271,7 @@ export default function Ambassadors() {
                       <span className="animate-pulse">Sending...</span>
                     ) : (
                       <>
-                        APPLY NOW <Send className="w-3.5 h-3.5" />
+                        REGISTER INTEREST <Send className="w-3.5 h-3.5" />
                       </>
                     )}
                   </button>

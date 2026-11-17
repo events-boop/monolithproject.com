@@ -19,31 +19,43 @@ import EventStatusBadge from "./EventStatusBadge";
 
 /** A concise homepage view of the same live catalogue as the full calendar. */
 export default function HomeUpcomingShows() {
-  const events = getScheduledEvents().slice(0, 4);
-  const hasOnSale = events.some(
-    event => getPublishedEventState(event).kind === "on-sale"
-  );
+  const now = new Date();
+  const catalogue = getScheduledEvents(now).map(event => ({
+    event,
+    state: getPublishedEventState(event, now),
+  }));
+  // Support notices remain in the persistent rail; the homepage leads with announced shows.
+  const events = catalogue
+    .filter(({ state }) =>
+      ["on-sale", "sold-out", "first-access"].includes(state.kind)
+    )
+    .slice(0, 4);
+  const hasOnSale = events.some(({ state }) => state.kind === "on-sale");
   return (
     <section
       id="schedule"
       className="home-editorial-section home-upcoming home-etched-band"
-      aria-labelledby="home-upcoming-title"
+      aria-labelledby={
+        events.length ? "home-upcoming-title" : "next-chapter-title"
+      }
     >
       <div className="container layout-wide home-section-container">
-        <header className="home-section-heading">
-          <div>
-            <p className="home-eyebrow">01 / The calendar</p>
-            <h2 id="home-upcoming-title">Upcoming shows.</h2>
-          </div>
-          <Link href="/schedule" className="home-text-link">
-            View full calendar
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </header>
+        {!hasOnSale && <HomeNextChapter headingLevel="h2" />}
+        {events.length > 0 && (
+          <header className="home-section-heading">
+            <div>
+              <p className="home-eyebrow">01 / The calendar</p>
+              <h2 id="home-upcoming-title">Upcoming shows.</h2>
+            </div>
+            <Link href="/schedule" className="home-text-link">
+              View full calendar
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          </header>
+        )}
         {events.length ? (
           <div className="home-show-grid">
-            {events.map(event => {
-              const state = getPublishedEventState(event);
+            {events.map(({ event, state }) => {
               const onSale = state.kind === "on-sale";
               const finale = isCurrentSunsetsEvent(event);
               const title = finale
@@ -226,7 +238,6 @@ export default function HomeUpcomingShows() {
             })}
           </div>
         ) : null}
-        {!hasOnSale && <HomeNextChapter />}
       </div>
     </section>
   );

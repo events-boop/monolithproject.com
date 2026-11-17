@@ -16,7 +16,11 @@ import { Link } from "wouter";
 import type { ScheduledEvent } from "@shared/events/types";
 import { ROUTES } from "@shared/routes";
 
-export type ConciergeRoomId = "castaways" | "west-loop" | "kashmir";
+export type ConciergeRoomId =
+  | "castaways"
+  | "west-loop"
+  | "alhambra"
+  | "kashmir";
 
 interface RoomProfile {
   id: ConciergeRoomId;
@@ -44,7 +48,8 @@ export const CHICAGO_ROOM_PROFILES: Record<ConciergeRoomId, RoomProfile> = {
     series: "Chasing Sun(Sets) · Open Air",
     name: "Castaways Beach Club",
     neighborhood: "North Avenue Beach · Lake Michigan",
-    address: "1603 N Jean Baptiste Pointe du Sable Lake Shore Dr, Chicago, IL 60611",
+    address:
+      "1603 N Jean Baptiste Pointe du Sable Lake Shore Dr, Chicago, IL 60611",
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=Castaways+Beach+Club+Chicago",
     atmosphere: "day",
@@ -61,11 +66,13 @@ export const CHICAGO_ROOM_PROFILES: Record<ConciergeRoomId, RoomProfile> = {
     zones: [
       {
         name: "Upper Sunset Deck",
-        detail: "Primary open-air dance floor facing Lake Michigan and the Chicago skyline.",
+        detail:
+          "Primary open-air dance floor facing Lake Michigan and the Chicago skyline.",
       },
       {
         name: "Cabana & VIP Rail",
-        detail: "Reserved group hospitality with dedicated server & expedited host entry.",
+        detail:
+          "Reserved group hospitality with dedicated server & expedited host entry.",
       },
       {
         name: "North Bridge Check-In",
@@ -76,34 +83,60 @@ export const CHICAGO_ROOM_PROFILES: Record<ConciergeRoomId, RoomProfile> = {
   "west-loop": {
     id: "west-loop",
     series: "Untold Story · After Dark",
-    name: "Hideaway & West Loop Rooms",
+    name: "Hideaway Chicago",
     neighborhood: "West Loop / Fulton Market · Chicago",
-    address: "730 W Couch Pl / 1240 W Randolph St, Chicago, IL",
+    address: "730 W Couch Pl, Chicago, IL",
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=730+W+Couch+Pl+Chicago+IL+60661",
     atmosphere: "night",
     soundProfile: "Deep Afro, hypnotic melodic & peak-hour club pressure",
     attire: "Elevated after-dark nightlife attire · Built for movement",
     arrivalWindow:
-      "Doors typically open 9:00–10:00 PM; arriving before 11:00 PM locks you into the opening tension of the room.",
+      "Use the doors time on your event confirmation; hours vary by chapter.",
     ridesharePin:
-      "Drop off along W Randolph St or N Halsted St depending on the chapter address on your confirmation.",
+      "Use 730 W Couch Pl as the venue destination and follow the entry instructions on your event confirmation.",
     transitNote:
-      "CTA Green / Pink Line — Morgan or Clinton stations (4–6 min walk).",
+      "Check a current transit route to 730 W Couch Pl before you travel.",
     hospitalityNote:
       "Booth-side and elevated table inquiries are coordinated directly with our host team prior to doors.",
     zones: [
       {
         name: "The Dancefloor Core",
-        detail: "360° or intimate club-focused floor tuned for low-end warmth and minimal phone glare.",
+        detail:
+          "360° or intimate club-focused floor tuned for low-end warmth and minimal phone glare.",
       },
       {
         name: "Booth & Table Perimeter",
-        detail: "Close-proximity reserved tables with dedicated bottle & host service.",
+        detail:
+          "Close-proximity reserved tables with dedicated bottle & host service.",
       },
       {
         name: "Marquee Priority Line",
         detail: "Separate GA and VIP/Table host check-in at street level.",
+      },
+    ],
+  },
+  alhambra: {
+    id: "alhambra",
+    series: "The Monolith Project",
+    name: "Alhambra Palace",
+    neighborhood: "West Loop · Chicago",
+    address: "1240 W Randolph St, Chicago, IL 60607",
+    mapsUrl:
+      "https://www.google.com/maps/search/?api=1&query=1240+W+Randolph+St+Chicago+IL+60607",
+    atmosphere: "night",
+    soundProfile: "House music in a historic Chicago room",
+    attire: "Check the entry guidance for your specific event.",
+    arrivalWindow: "Use the doors time on your event confirmation.",
+    ridesharePin: "Use 1240 W Randolph St as the venue destination.",
+    transitNote: "Check a current route to the venue before you travel.",
+    hospitalityNote:
+      "Confirm any table or group arrangements with the host team.",
+    zones: [
+      {
+        name: "Venue entry",
+        detail:
+          "Use your event confirmation for entry and check-in instructions.",
       },
     ],
   },
@@ -116,7 +149,8 @@ export const CHICAGO_ROOM_PROFILES: Record<ConciergeRoomId, RoomProfile> = {
     mapsUrl:
       "https://www.google.com/maps/search/?api=1&query=1436+W+Randolph+St+Chicago+IL+60607",
     atmosphere: "night",
-    soundProfile: "Chicago house roots, resident B2Bs & intimate vocal selections",
+    soundProfile:
+      "Chicago house roots, resident B2Bs & intimate vocal selections",
     attire: "Sharp evening casual to elevated club attire",
     arrivalWindow:
       "Intimate capacity — early arrival is strongly recommended for residency and pop-up nights.",
@@ -127,7 +161,8 @@ export const CHICAGO_ROOM_PROFILES: Record<ConciergeRoomId, RoomProfile> = {
     zones: [
       {
         name: "Intimate Lounge & Floor",
-        detail: "Warm architectural room built for close connection between selector and crowd.",
+        detail:
+          "Warm architectural room built for close connection between selector and crowd.",
       },
       {
         name: "Randolph Entry",
@@ -139,16 +174,18 @@ export const CHICAGO_ROOM_PROFILES: Record<ConciergeRoomId, RoomProfile> = {
 
 export function inferConciergeRoomForEvent(
   event?: ScheduledEvent | null
-): ConciergeRoomId {
+): ConciergeRoomId | null {
   if (!event) return "castaways";
   const venueLower = `${event.venue} ${event.location}`.toLowerCase();
-  if (venueLower.includes("castaways") || event.series === "chasing-sunsets") {
+  if (venueLower.includes("castaways")) {
     return "castaways";
   }
   if (venueLower.includes("kashmir")) {
     return "kashmir";
   }
-  return "west-loop";
+  if (venueLower.includes("alhambra")) return "alhambra";
+  if (venueLower.includes("hideaway")) return "west-loop";
+  return null;
 }
 
 interface RoomConciergeCardProps {
@@ -163,10 +200,22 @@ export default function RoomConciergeCard({
   compact = false,
 }: RoomConciergeCardProps) {
   const defaultRoom = inferConciergeRoomForEvent(event);
-  const [selectedRoomId, setSelectedRoomId] =
-    useState<ConciergeRoomId>(defaultRoom);
-  const room =
-    CHICAGO_ROOM_PROFILES[allowRoomSwitch ? selectedRoomId : defaultRoom];
+  const [selectedRoomId, setSelectedRoomId] = useState<ConciergeRoomId>(
+    defaultRoom ?? "castaways"
+  );
+  const roomId = allowRoomSwitch ? selectedRoomId : defaultRoom;
+  if (!roomId)
+    return (
+      <section className="editorial-status-note">
+        <h3>Follow the event confirmation.</h3>
+        <p>
+          {event?.venueAddress?.streetAddress ||
+            "Arrival details will be published with the confirmed venue."}
+        </p>
+        <Link href="/contact">Ask the host team →</Link>
+      </section>
+    );
+  const room = CHICAGO_ROOM_PROFILES[roomId];
 
   return (
     <section
@@ -190,7 +239,7 @@ export default function RoomConciergeCard({
 
         {allowRoomSwitch && (
           <div
-            role="tablist"
+            role="group"
             aria-label="Choose a Chicago Monolith venue"
             className="flex flex-wrap gap-2"
           >
@@ -202,8 +251,7 @@ export default function RoomConciergeCard({
                   <button
                     key={id}
                     type="button"
-                    role="tab"
-                    aria-selected={active}
+                    aria-pressed={active}
                     onClick={() => setSelectedRoomId(id)}
                     className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors cursor-pointer ${
                       active
@@ -220,8 +268,10 @@ export default function RoomConciergeCard({
                       {id === "castaways"
                         ? "Castaways"
                         : id === "west-loop"
-                          ? "West Loop"
-                          : "Kashmir"}
+                          ? "Hideaway"
+                          : id === "alhambra"
+                            ? "Alhambra"
+                            : "Kashmir"}
                     </span>
                   </button>
                 );
@@ -269,7 +319,10 @@ export default function RoomConciergeCard({
               className="rounded-xl border border-white/10 bg-white/[0.025] p-4 space-y-1.5"
             >
               <p className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.15em] text-[#ffd8a6]">
-                <CheckCircle2 className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                <CheckCircle2
+                  className="h-3.5 w-3.5 shrink-0"
+                  aria-hidden="true"
+                />
                 <span>{zone.name}</span>
               </p>
               <p className="text-xs leading-relaxed text-white/70">

@@ -25,7 +25,10 @@ export function buildEventSeoDescription(event: ScheduledEvent) {
       "This event was cancelled. Read the official event update."
     );
   if (event.confirmationStatus === "pending")
-    return `The next announcement for ${event.title} will include the confirmed date, venue and lineup. Get official updates from The Monolith Project.`;
+    return (
+      event.eventNotice ||
+      `The next announcement for ${event.title} will include the confirmed date, venue and lineup. Get official updates from The Monolith Project.`
+    );
   const shortDate = event.date.replace(/,\s*\d{4}$/, "");
   if (event.status === "past")
     return `Archive details for ${event.headline || event.title} at ${event.id === "us-s3e3" ? "Hideaway Chicago" : event.venue} on ${shortDate}, from The Monolith Project.`;

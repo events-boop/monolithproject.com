@@ -3,6 +3,7 @@ import {
   Headphones,
   CalendarDays,
   MoveUpRight,
+  Globe2,
 } from "lucide-react";
 import { Link } from "wouter";
 import { ROUTES } from "@shared/routes";
@@ -17,6 +18,9 @@ import "@/styles/home-entry-points.css";
 /** Permanent entrances stay visible whichever hero slide is showing. */
 export default function HomeEntryPoints() {
   const catalogue = getPublishedCatalogue(getPublicEvents());
+  const hasAnnouncedShows = catalogue.upcoming.some(
+    ({ event }) => event.confirmationStatus !== "pending"
+  );
   const notice = catalogue.notices.find(entry =>
     needsTicketHolderUpdate(entry.state)
   );
@@ -26,7 +30,7 @@ export default function HomeEntryPoints() {
       <div className="container layout-wide">
         <nav
           className="home-entry-grid"
-          aria-label="Shows, radio and first access"
+          aria-label="Shows, radio, SUNSETS.FM and first access"
         >
           <Link href={ROUTES.schedule} className="home-entry-link">
             <span className="home-entry-label">
@@ -35,7 +39,7 @@ export default function HomeEntryPoints() {
             </span>
             <span className="home-entry-title">Find your next night.</span>
             <span className="home-entry-description">
-              {catalogue.upcoming.length
+              {hasAnnouncedShows
                 ? "Explore the calendar, lineups and event details."
                 : "New dates are taking shape. Explore the calendar and updates."}
             </span>
@@ -59,13 +63,31 @@ export default function HomeEntryPoints() {
             </span>
           </Link>
           <Link
+            href={ROUTES.sunsetsFM}
+            className="home-entry-link home-entry-network"
+          >
+            <span className="home-entry-label">
+              <Globe2 size={16} aria-hidden="true" />
+              03 / Discover
+            </span>
+            <span className="home-entry-title">SUNSETS.FM</span>
+            <span className="home-entry-description">
+              A wider world of music, places and people. Explore the network
+              we’re building.
+            </span>
+            <span className="home-entry-action">
+              Discover SUNSETS.FM
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </span>
+          </Link>
+          <Link
             href={ROUTES.newsletter}
             data-first-access="true"
             className="home-entry-link home-entry-access"
           >
             <span className="home-entry-label">
               <MoveUpRight size={16} aria-hidden="true" />
-              03 / First access
+              04 / First access
             </span>
             <span className="home-entry-title">Be here for what’s next.</span>
             <span className="home-entry-description">

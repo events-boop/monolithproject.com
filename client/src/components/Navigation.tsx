@@ -1,4 +1,5 @@
 import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
+import GlyphBackdrop from "./GlyphBackdrop";
 import {
   lazy,
   Suspense,
@@ -65,7 +66,7 @@ const MenuCyclingText = ({
   return (
     <span
       className={cn(
-        "hidden sm:inline font-mono text-[11px] font-bold tracking-[0.18em] uppercase",
+        "site-nav-menu-label hidden sm:inline",
         isOpen && accentClass
       )}
     >
@@ -296,7 +297,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
       return;
     }
 
-    if (href.startsWith("/go/") || href.startsWith(ROUTES.openNetwork)) {
+    if (href.startsWith("/go/")) {
       window.location.href = href;
       return;
     }
@@ -496,9 +497,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
           <div
             className={`rounded-3xl sm:rounded-[2rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
           >
-            <div className="flex min-h-[3rem] w-full items-center justify-between px-2 py-1 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
+            <GlyphBackdrop surface="nav" />
+            <div className="site-nav-row flex min-h-[3rem] w-full items-center justify-between px-2 py-1 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
               {/* LEFT: LOGO */}
-              <div className="mr-2 flex shrink-0 items-center gap-2.5 min-[360px]:mr-3 min-[360px]:gap-3 lg:mr-8 xl:mr-12">
+              <div className="site-nav-brand mr-2 flex shrink-0 items-center gap-2.5 min-[360px]:mr-3 min-[360px]:gap-3 lg:mr-8 xl:mr-12">
                 <MagneticButton strength={0.25}>
                   <button
                     type="button"
@@ -595,7 +597,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               </div>
 
               {/* CENTER: NAV ITEMS */}
-              <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2.5 2xl:gap-4 pr-3 whitespace-nowrap">
+              <div className="site-nav-links hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2.5 2xl:gap-4 pr-3 whitespace-nowrap">
                 <NavigationMegamenu
                   label="SHOWS"
                   href={ROUTES.schedule}
@@ -708,7 +710,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     feature: {
                       title: "Kiko Franco",
                       subtitle: "Chapter One Headliner — Archive",
-                      image: "/images/artist-kiko-franco-card.webp",
+                      image: "/images/artist-kiko-franco.webp",
+                      imagePosition: "50% 0%",
                       href: "/artists/kiko-franco",
                       ctaText: "View Profile",
                       icon: "arrow",
@@ -821,7 +824,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 <NavigationMegamenu
                   label="RADIO"
                   href={ROUTES.radio}
-                  isActive={location.startsWith(ROUTES.radio)}
+                  isActive={
+                    location.startsWith(ROUTES.radio) ||
+                    location.startsWith(ROUTES.sunsetsFM) ||
+                    location.startsWith(ROUTES.openNetwork)
+                  }
                   isLight={isLight}
                   brand={resolvedBrand}
                   type="chasing-radio"
@@ -831,8 +838,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     feature: {
                       title: "Chasing Sunsets Radio",
                       subtitle: "powered by sunsets.fm",
-                      image:
-                        "/media/chasing-radio/sommers-uk-episode-011-640.webp",
+                      image: "/images/artists/benchek/benchek-portrait.jpg",
+                      imagePosition: "50% 0%",
                       href: `${ROUTES.radio}#radio-featured`,
                       ctaText: "Listen Now",
                       icon: "play",
@@ -843,7 +850,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               </div>
 
               {/* RIGHT: SEARCH, SAVED, CTA & MOBILE TOGGLE */}
-              <div className="flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-2.5 md:gap-3 shrink-0">
+              <div className="site-nav-actions flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-2.5 md:gap-3 shrink-0">
                 {/* Search / ⌘K trigger */}
                 <button
                   type="button"

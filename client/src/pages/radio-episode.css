@@ -28,8 +28,16 @@
   border: 1px solid rgba(255, 228, 194, 0.18);
   border-radius: 26px;
   background:
-    radial-gradient(90% 120% at 0% 0%, rgba(243, 158, 78, 0.2) 0%, transparent 62%),
-    linear-gradient(155deg, rgba(24, 19, 15, 0.86) 0%, rgba(11, 10, 9, 0.94) 100%);
+    radial-gradient(
+      90% 120% at 0% 0%,
+      rgba(243, 158, 78, 0.2) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      155deg,
+      rgba(24, 19, 15, 0.86) 0%,
+      rgba(11, 10, 9, 0.94) 100%
+    );
   box-shadow:
     0 32px 90px rgba(0, 0, 0, 0.56),
     inset 0 1px 0 rgba(255, 245, 230, 0.14);
@@ -130,5 +138,144 @@
   .radio-episode-page .episode-next img {
     width: 72px;
     height: 72px;
+  }
+}
+/* Open listening layout: artwork is the object; the page does not need a frame. */
+#app-shell .radio-episode-page {
+  background: #090b0c;
+}
+#app-shell .radio-episode-page .episode-hero {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 24px 0 48px;
+  min-height: 0;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: 64px;
+  border-bottom: 1px solid #ffffff20;
+}
+#app-shell .radio-episode-page .episode-cover {
+  border-radius: 5px;
+  max-width: 420px;
+}
+#app-shell .radio-episode-page .episode-title {
+  font-family: Syne, "General Sans", sans-serif;
+  letter-spacing: -0.045em;
+  font-size: clamp(32px, 3.5vw, 52px);
+  line-height: 1.12;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+#app-shell .radio-episode-page :is(.luxe-surface-dark, .season-panel-nocturne) {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+#app-shell .radio-episode-page .luxe-surface-dark::before,
+#app-shell .radio-episode-page .luxe-surface-dark::after {
+  display: none;
+}
+#app-shell .radio-episode-page .radio-deck {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+}
+#app-shell .radio-episode-page .radio-deck-main {
+  padding: 0;
+}
+#app-shell .radio-episode-page .radio-deck-foot {
+  padding: 14px 0 0;
+  color: #b8b1a7;
+}
+#app-shell .radio-episode-page .radio-deck-play {
+  border-radius: 100%;
+  background: #f0a580;
+  color: #23150e;
+  box-shadow: none;
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+}
+#app-shell .radio-episode-page .episode-chip {
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  margin-right: 16px;
+}
+#app-shell .radio-episode-page .episode-columns {
+  gap: 64px;
+  margin-top: 48px;
+}
+#app-shell .radio-episode-page .episode-columns h2 {
+  font-family: Syne, "General Sans", sans-serif;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+#app-shell .radio-episode-page #story article {
+  padding: 0;
+  line-height: 1.85;
+  color: #c4bdb3;
+}
+#app-shell .radio-episode-page .episode-next {
+  padding: 24px 0;
+  border-top: 1px solid #ffffff24;
+  border-radius: 0;
+}
+#app-shell .radio-episode-page .text-muted-foreground {
+  color: #c3b7aa;
+}
+#app-shell .radio-episode-page .season-anchor-link {
+  min-height: 44px !important;
+  border: 0;
+  background: none;
+  border-radius: 0;
+  padding-left: 0 !important;
+  margin-right: 20px;
+  border-bottom: 1px solid #ffffff30;
+}
+@media (max-width: 767px) {
+  #app-shell .radio-episode-page .episode-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 0;
+  }
+  #app-shell .radio-episode-page .episode-cover {
+    width: 136px;
+    height: 136px;
+  }
+  #app-shell .radio-episode-page .episode-title {
+    font-size: 32px;
+    margin-block: 14px;
+  }
+  #app-shell .radio-episode-page .episode-guest {
+    font-size: 16px;
+  }
+  #app-shell .radio-episode-page .episode-columns {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  #app-shell .radio-episode-page .episode-hero-copy > p:first-child {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+  #app-shell .radio-episode-page .episode-next img {
+    width: 72px;
+    height: 72px;
+  }
+  #app-shell .radio-episode-page main {
+    padding-top: calc(var(--shell-nav-height, 96px) + 40px);
+  }
+  #app-shell .radio-episode-page .episode-track {
+    padding: 16px 0;
+    gap: 8px;
+    grid-template-columns: 24px 54px minmax(0, 1fr);
   }
 }

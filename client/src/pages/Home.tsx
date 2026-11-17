@@ -11,6 +11,7 @@ import {
 import ViewportLazy from "@/components/ViewportLazy";
 const HomeArtists = lazy(() => import("@/components/HomeArtists"));
 import HomeUpcomingShows from "@/components/HomeUpcomingShows";
+import HomeYearThanks from "@/components/HomeYearThanks";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import SEO from "@/components/SEO";
 import { buildSitewideIdentitySchema } from "@/lib/schema";
@@ -47,6 +48,7 @@ export default function Home() {
         <div id="season">
           <HomeUpcomingShows />
         </div>
+        <HomeYearThanks />
         <HomeSeries />
         <SunsetsLaunchSignup />
         <div id="showcase">

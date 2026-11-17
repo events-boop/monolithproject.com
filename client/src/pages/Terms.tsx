@@ -11,8 +11,12 @@ export default function Terms() {
         description="Terms of Service for The Monolith Project website and events."
         canonicalPath="/terms"
       />
-      <Navigation />
-      <section className="page-shell-start pb-20 px-6">
+      <Navigation variant="dark" />
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="page-shell-start pb-20 px-6"
+      >
         <div className="container layout-narrow">
           <p className="font-mono text-xs tracking-widest uppercase text-primary mb-4">
             Legal
@@ -24,9 +28,18 @@ export default function Terms() {
             Last updated: October 3, 2026.
           </p>
 
+          <nav className="legal-toc" aria-label="On this page">
+            <a href="#use-of-site">Use of Site</a>
+            <a href="#tickets-and-events">Tickets and Events</a>
+            <a href="#intellectual-property">Intellectual Property</a>
+            <a href="#contact">Contact</a>
+          </nav>
           <div className="space-y-8 text-muted-foreground leading-relaxed">
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="use-of-site"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Use of Site
               </h2>
               <p>
@@ -36,7 +49,10 @@ export default function Terms() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="tickets-and-events"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Tickets and Events
               </h2>
               <p>
@@ -64,7 +80,10 @@ export default function Terms() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="intellectual-property"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Intellectual Property
               </h2>
               <p>
@@ -74,7 +93,10 @@ export default function Terms() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="contact"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Contact
               </h2>
               <p>
@@ -90,7 +112,7 @@ export default function Terms() {
             </section>
           </div>
         </div>
-      </section>
+      </main>
       <EntityBoostStrip tone="dark" className="pb-20" />
     </div>
   );

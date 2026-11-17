@@ -13,6 +13,7 @@ import {
   getEventEyebrow,
   getExperienceEvent,
   getPrimaryTicketUrl,
+  getEventWindowStatus,
 } from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import { ROUTES } from "@shared/routes";
@@ -53,12 +54,19 @@ function formatIsoTime(value?: string) {
   return new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: "America/Chicago",
   }).format(date);
 }
 
 export default function Guide() {
   usePublicSiteDataVersion();
-  const guideEvent = getExperienceEvent("guide");
+  const candidate = getExperienceEvent("guide");
+  const guideEvent =
+    candidate &&
+    candidate.confirmationStatus !== "pending" &&
+    ["live", "upcoming"].includes(getEventWindowStatus(candidate))
+      ? candidate
+      : undefined;
   const ticketUrl = getPrimaryTicketUrl(guideEvent);
   const isPostponed = guideEvent?.eventStatus === "EventPostponed";
 
@@ -95,11 +103,7 @@ export default function Guide() {
       />
       <Navigation />
 
-      <main
-        id="main-content"
-        tabIndex={-1}
-        className="relative z-10 pb-36"
-      >
+      <main id="main-content" tabIndex={-1} className="relative z-10 pb-36">
         <section className="lg-cinematic-masthead px-6 mb-16 md:mb-20">
           <div className="container layout-wide">
             <header className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
@@ -112,9 +116,9 @@ export default function Guide() {
                   Know The Room.
                 </h1>
                 <p className="mt-6 max-w-2xl text-base md:text-xl text-white/76 leading-relaxed">
-                  Every Monolith session is built around the room, the light, and
-                  how people arrive together. Explore our Chicago lakefront and
-                  West Loop room guides below.
+                  Every Monolith session is built around the room, the light,
+                  and how people arrive together. Explore our Chicago lakefront
+                  and West Loop room guides below.
                 </p>
               </div>
 
@@ -144,8 +148,20 @@ export default function Guide() {
         </section>
 
         <div className="container layout-wide px-6 space-y-16 md:space-y-20">
-
           {/* Interactive Chicago Room Switcher & Arrival Concierge */}
+          {!guideEvent && (
+            <aside className="editorial-status-note">
+              <h2>Plan around the confirmed show.</h2>
+              <p>
+                No current arrival schedule is published. The room profiles
+                below are venue references; your event confirmation will provide
+                the final address and hours.
+              </p>
+              <Link href="/sunsets#event-update">
+                September ticket-holder update →
+              </Link>
+            </aside>
+          )}
           <RoomConciergeCard event={guideEvent} allowRoomSwitch />
 
           {/* Night Pacing & Entry Checklist */}
@@ -156,6 +172,13 @@ export default function Guide() {
                 <span>How The Night Moves</span>
               </h2>
               <div className="space-y-0 relative border-l border-[#f3a659]/25 ml-2 pl-7 pb-1">
+                {timeline.length === 0 && (
+                  <p className="text-sm leading-relaxed text-white/75">
+                    Doors, set times, and closing will appear here when a new
+                    show is confirmed. All published times use Chicago local
+                    time.
+                  </p>
+                )}
                 {timeline.map((slot, idx) => (
                   <div key={slot.event} className="relative mb-8 last:mb-0">
                     <span
@@ -211,7 +234,10 @@ export default function Guide() {
                 <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/65">
                   Questions on group arrival or accessibility?
                 </span>
-                <Link href={ROUTES.contact} className="lg-pill-glass !min-h-[38px] !px-4 !py-1.5">
+                <Link
+                  href={ROUTES.contact}
+                  className="lg-pill-glass !min-h-[38px] !px-4 !py-1.5"
+                >
                   <span>Contact Host Team</span>
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </Link>

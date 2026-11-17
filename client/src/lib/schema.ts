@@ -311,9 +311,8 @@ export function buildArtistSchema(artist: ArtistData, pagePath: string) {
   };
 }
 
-// The July 4 Untold Story late-night chapter is the official Chasing
-// Sun(Sets) afterparty — superEvent ties the two listings together for
-// search engines.
+// Only a confirmed July 4 chapter can link to the documented lakefront event.
+// Pending records exit buildScheduledEventSchema before this relationship.
 const SUNSETS_JULY4_SUPER_EVENT = {
   "@type": "MusicEvent",
   name: "SUN(SETS) I — Chasing Sun(Sets) 2026",
@@ -349,28 +348,8 @@ export function buildUntoldStoryEventSchema(pagePath: string) {
   const event = getEventById("us-jul04");
   if (event) return buildScheduledEventSchema(event, pagePath);
 
-  return {
-    ...buildEventSchema({
-      pagePath,
-      name: "Untold Story: Late Night Continuation",
-      description:
-        "The Monolith Project presents the next Untold Story late-night chapter in Chicago.",
-      startDate: "2026-07-04T22:30:00-05:00",
-      endDate: "2026-07-05T04:00:00-05:00",
-      image: [
-        "/images/untold-story-moody.webp",
-        "/images/untold-story-hero-post1.webp",
-      ],
-      performer: ["The Monolith Project"],
-      locationName: "Venue Reveal Soon",
-      streetAddress: "Chicago IL",
-      addressLocality: "Chicago",
-      addressRegion: "IL",
-      postalCode: "60607",
-      addressCountry: "US",
-    }),
-    superEvent: SUNSETS_JULY4_SUPER_EVENT,
-  };
+  // Missing data is not evidence that the proposed after-party took place.
+  return {};
 }
 
 export function buildFaqSchema(faqEntries: Array<[string, string]>) {

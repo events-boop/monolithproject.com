@@ -88,19 +88,16 @@ export default function ChasingSunsetsFacts() {
         <motion.section className="container layout-default" {...sectionReveal}>
           <div className="luxe-surface-dark px-6 py-6 md:px-8 md:py-8">
             <p className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-5">
-              Official Entity & Disambiguation
+              The music. The place. The project.
             </p>
             <h1 className="font-display text-[clamp(2.6rem,7vw,5.3rem)] leading-[0.9] uppercase mb-6">
-              Chasing Sun(Sets) — Official Facts & Identity
+              Chasing <span className="whitespace-nowrap">Sun(Sets).</span>
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl">
               Chasing Sun(Sets) is a Chicago-based sunset house music event
               series and radio show by The Monolith Project.
             </p>
-            <p className="text-base md:text-lg text-white/70 mt-3 max-w-3xl">
-              If you&apos;re looking for the fragrance with a similar name, this
-              page is for the music brand.
-            </p>
+
             <div className="mt-5 flex flex-wrap gap-2.5">
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-3 py-1.5 ui-chip text-white/80">
                 Chicago Based
@@ -108,17 +105,14 @@ export default function ChasingSunsetsFacts() {
               <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-3 py-1.5 ui-chip text-white/80">
                 Event Series + Radio Show
               </span>
-              <span className="inline-flex items-center rounded-full border border-primary/28 bg-primary/10 px-3 py-1.5 ui-chip text-primary">
-                Not a Fragrance Product
-              </span>
             </div>
             <div className="mt-6 cta-stack">
               <Link href="/radio" className="btn-pill-radio">
                 {CTA_LABELS.radioHub}
               </Link>
-              <a href={POSH_TICKET_URL} className="btn-pill-monolith">
-                Tickets
-              </a>
+              <Link href="/schedule" className="btn-pill-monolith">
+                Explore the calendar
+              </Link>
             </div>
           </div>
         </motion.section>

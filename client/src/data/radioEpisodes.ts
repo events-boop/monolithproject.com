@@ -301,7 +301,11 @@ function fromLibrary(entry: LibraryEpisode): RadioEpisode {
       : entry.description,
     image: "/images/radio-show-gear.webp",
     coverImage: entry.image,
-    embedUrl: `https://w.soundcloud.com/player/?url=${encodeURIComponent(entry.source).replace(/%3A%2F%2F/, "%3A//").replace(/%2F/g, "/")}${SOUNDCLOUD_EMBED_OPTIONS}`,
+    embedUrl: `https://w.soundcloud.com/player/?url=${encodeURIComponent(
+      entry.source
+    )
+      .replace(/%3A%2F%2F/, "%3A//")
+      .replace(/%2F/g, "/")}${SOUNDCLOUD_EMBED_OPTIONS}`,
     audioUrl: entry.source,
     guestLinks: [
       ...(entry.profile?.url
@@ -322,7 +326,9 @@ function fromLibrary(entry: LibraryEpisode): RadioEpisode {
   };
 }
 
-const curatedCovers = new Set(curatedEpisodes.map(episode => episode.coverImage));
+const curatedCovers = new Set(
+  curatedEpisodes.map(episode => episode.coverImage)
+);
 
 const libraryEpisodes = (chasingRadioEpisodes as readonly LibraryEpisode[])
   .filter(entry => !curatedCovers.has(entry.image))
@@ -331,7 +337,9 @@ const libraryEpisodes = (chasingRadioEpisodes as readonly LibraryEpisode[])
 
 /** Hand-written episodes first (they feed the featured rotation), then the rest, newest first. */
 export const radioEpisodes: RadioEpisode[] = [
-  ...curatedEpisodes,
+  // Legacy editorial track entries have no recording-verification receipt.
+  // Keep the drafts above for review; publish an unavailable state until verified.
+  ...curatedEpisodes.map(episode => ({ ...episode, tracklist: [] })),
   ...libraryEpisodes,
 ];
 

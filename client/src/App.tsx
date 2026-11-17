@@ -36,6 +36,7 @@ const RadioEpisode = lazyRoute("RadioEpisode");
 const UntoldStory = lazyRoute("UntoldStory");
 const UntoldVipLanding = lazyRoute("UntoldVipLanding");
 const SunsetsVipBio = lazyRoute("SunsetsVipBio");
+const HouseOfFriendsBio = lazyRoute("HouseOfFriendsBio");
 const Booking = lazyRoute("Booking");
 const Partners = lazyRoute("Partners");
 const Lineup = lazyRoute("Lineup");
@@ -134,6 +135,7 @@ const RadioEpisodeTransition = withTransition(RadioEpisode);
 const UntoldStoryTransition = withTransition(UntoldStory);
 const UntoldVipLandingTransition = withTransition(UntoldVipLanding);
 const SunsetsVipBioTransition = withTransition(SunsetsVipBio);
+const HouseOfFriendsBioTransition = withTransition(HouseOfFriendsBio);
 const BookingTransition = withTransition(Booking);
 const SubmitTransition = withTransition(Submit);
 const LineupTransition = withTransition(Lineup);
@@ -210,8 +212,9 @@ function getCampaignHostLandingPath(location: string) {
 }
 
 function RootRoute() {
-  return getCampaignHostLandingPath(ROUTES.home) === ROUTES.houseOfFriends ? (
-    <HouseOfFriendsTransition />
+  return getCampaignHostLandingPath(ROUTES.home) ===
+    ROUTES.houseOfFriendsBio ? (
+    <HouseOfFriendsBioTransition />
   ) : (
     <HomeTransition />
   );
@@ -279,6 +282,10 @@ function Router() {
       <Route path="/radio/:slug" component={RadioEpisodeTransition} />
       <Route path={ROUTES.untoldVip} component={UntoldVipLandingTransition} />
       <Route path={ROUTES.sunsetsBio} component={SunsetsVipBioTransition} />
+      <Route
+        path={ROUTES.houseOfFriendsBio}
+        component={HouseOfFriendsBioTransition}
+      />
       <Route path="/story/">
         <Redirect to={ROUTES.untoldStory} />
       </Route>
@@ -487,6 +494,7 @@ function MainContentWrapper() {
     landingPath === ROUTES.lake ||
     landingPath === ROUTES.untoldVip ||
     landingPath === ROUTES.sunsetsBio ||
+    landingPath === ROUTES.houseOfFriendsBio ||
     isUntoldRootLanding;
   const isHouseOfFriendsRoute = landingPath.startsWith(ROUTES.houseOfFriends);
   const isApeDrumsRoute =
@@ -538,6 +546,20 @@ function MainContentWrapper() {
       )}
       <div
         id="app-shell"
+        data-page={landingPath.split("?")[0]}
+        data-world={
+          landingPath.startsWith("/house-of-friends")
+            ? "friends"
+            : ["/sunsets-fm", "/open-network"].includes(landingPath)
+              ? "network"
+              : isUntoldStoryRoute ||
+                  landingPath === ROUTES.untoldVip ||
+                  landingPath.startsWith("/untold-")
+                ? "untold"
+                : /^\/(chasing-sunsets|sunsets|radio)(\/|$|-)/.test(landingPath)
+                  ? "sunsets"
+                  : "monolith"
+        }
         className="w-full origin-top transition-[transform,opacity,filter] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] min-h-screen relative"
         style={{
           transform: shellTransform,
@@ -558,6 +580,8 @@ function MainContentWrapper() {
             <LakeLandingTransition />
           ) : landingPath === ROUTES.untoldVip ? (
             <UntoldVipLandingTransition />
+          ) : landingPath === ROUTES.houseOfFriendsBio ? (
+            <HouseOfFriendsBioTransition />
           ) : landingPath === ROUTES.sunsetsBio ? (
             <SunsetsVipBioTransition />
           ) : (
@@ -595,12 +619,9 @@ function MainContentWrapper() {
 
 function PersistentAudioBar() {
   const { activeTrack } = useGlobalAudio();
-  const [location] = useLocation();
-  const pathname = location.split(/[?#]/)[0] || "/";
-  const isRadioRoute =
-    pathname === ROUTES.radio || pathname.startsWith(`${ROUTES.radio}/`);
-
-  if (!activeTrack || isRadioRoute) return null;
+  // The dock owns the only audio transport, including on Radio routes.
+  // Page decks are controls for this persistent instance.
+  if (!activeTrack) return null;
 
   return (
     <Suspense fallback={null}>

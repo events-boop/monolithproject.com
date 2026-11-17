@@ -1,3 +1,4 @@
+import { uniqueHistoricalNights } from "@shared/events/publicIntegrity";
 import type { ScheduledEvent, SiteExperienceSlot } from "@shared/events/types";
 import { getFeaturedEventForSlot, getPublicEvents } from "./siteData";
 import {
@@ -58,21 +59,27 @@ export function getScheduledEvents(now: Date = new Date()) {
     .filter(
       event =>
         !["draft", "hidden", "past"].includes(event.status) &&
+        (event.confirmationStatus !== "pending" ||
+          needsTicketHolderUpdate(getPublishedEventState(event, now))) &&
         getEventWindowStatus(event, now) !== "past"
     )
     .sort(compareEvents);
 }
 
 export function getPastEvents(now: Date = new Date()) {
-  return [...getPublicEvents()]
-    .filter(
-      event =>
-        !["draft", "hidden"].includes(event.status) &&
-        event.eventStatus !== "EventCancelled" &&
-        event.eventStatus !== "EventPostponed" &&
-        (event.status === "past" || getEventWindowStatus(event, now) === "past")
-    )
-    .sort((a, b) => compareEvents(b, a));
+  return uniqueHistoricalNights(
+    [...getPublicEvents()]
+      .filter(
+        event =>
+          !["draft", "hidden"].includes(event.status) &&
+          event.confirmationStatus !== "pending" &&
+          event.eventStatus !== "EventCancelled" &&
+          event.eventStatus !== "EventPostponed" &&
+          (event.status === "past" ||
+            getEventWindowStatus(event, now) === "past")
+      )
+      .sort((a, b) => compareEvents(b, a))
+  );
 }
 
 export function getSeriesEvents(

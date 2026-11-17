@@ -42,10 +42,11 @@
 
 .lg-glass-card-interactive:hover {
   border-color: var(--lg-surface-border-strong);
+  transform: translateY(-2px);
   box-shadow:
-    0 24px 56px rgba(0, 0, 0, 0.52),
-    inset 0 1px 0 rgba(255, 246, 232, 0.22),
-    0 8px 28px -12px rgba(243, 166, 89, 0.24);
+    0 28px 64px rgba(0, 0, 0, 0.56),
+    inset 0 1px 0 rgba(255, 246, 232, 0.26),
+    0 10px 32px -12px rgba(243, 166, 89, 0.32);
 }
 
 .lg-pill-amber {
@@ -364,10 +365,10 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: max(780px, 88svh);
-  padding-top: calc(var(--shell-page-top-hero, 104px) + clamp(96px, 16vh, 180px));
-  padding-bottom: clamp(76px, 10vh, 124px);
-  border-bottom: 1px solid rgba(255, 228, 194, 0.14);
+  min-height: max(820px, 92svh);
+  padding-top: calc(var(--shell-page-top-hero, 104px) + clamp(108px, 18vh, 200px));
+  padding-bottom: clamp(84px, 11vh, 136px);
+  border-bottom: 1px solid rgba(255, 228, 194, 0.16);
 }
 
 .lg-cinematic-masthead::before {
@@ -422,11 +423,21 @@
   --masthead-photo: url("/images/chasing-sunsets-castaways-hero.png");
 }
 
+.archive-index .lg-cinematic-masthead {
+  --masthead-photo: url("/images/archive/chasing-sunsets/css-s3-1.jpg");
+}
+
 @media (max-width: 767px) {
   .lg-cinematic-masthead {
-    min-height: max(560px, 76svh);
-    padding-top: calc(var(--shell-page-top-hero, 92px) + 72px);
-    padding-bottom: 56px;
+    min-height: max(600px, 82svh);
+    padding-top: calc(var(--shell-page-top-hero, 92px) + 80px);
+    padding-bottom: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-glass-card-interactive:hover {
+    transform: none;
   }
 }
 

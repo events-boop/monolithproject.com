@@ -43,7 +43,7 @@ const router = Router();
 const BRAND_PIXEL_ID =
   process.env.META_BRAND_PIXEL_ID?.trim() ||
   process.env.META_PIXEL_ID?.trim() ||
-  "166134370742863";
+  "1049241148606250";
 
 const leadsLimiter = createRateLimitMiddleware({
   scope: "api:leads",

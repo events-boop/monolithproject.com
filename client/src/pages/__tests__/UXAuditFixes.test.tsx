@@ -88,12 +88,10 @@ describe("UX audit surgical fixes", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("toggles Radio playback heading from FEATURED EPISODE to NOW SPINNING on player load", () => {
+  it("starts the selected Radio session only after an explicit play action", () => {
     renderWithProviders(<Radio />);
 
-    expect(
-      screen.getByRole("heading", { name: /featured episode/i })
-    ).toBeInTheDocument();
+    expect(screen.getByText("Ready to play")).toBeInTheDocument();
 
     // The deck's own play button replaced the "Load the player" prompt.
     fireEvent.click(
@@ -102,9 +100,7 @@ describe("UX audit surgical fixes", () => {
       })
     );
 
-    expect(
-      screen.getByRole("heading", { name: /now spinning/i })
-    ).toBeInTheDocument();
+    expect(screen.getByText("Now playing")).toBeInTheDocument();
   });
 
   it("renders StickyPlayer when an active track is loaded in GlobalAudioProvider", () => {

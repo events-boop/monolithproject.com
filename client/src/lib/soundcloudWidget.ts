@@ -62,11 +62,12 @@ export function loadSoundCloudWidgetApi(): Promise<SoundCloudAPI> {
 
 export interface SoundCloudBindingOptions {
   iframe: HTMLIFrameElement;
-  resumePositionMs?: number;
-  shouldPlayOnReady?: boolean;
+  resumePositionMs?: number | (() => number);
+  shouldPlayOnReady?: boolean | (() => boolean);
   onWidgetReady?: (widget: SoundCloudWidget) => void;
   onPlayingChange?: (playing: boolean) => void;
   onPositionChange?: (positionMs: number) => void;
+  onError?: (message: string) => void;
 }
 
 function isFrameLive(iframe: HTMLIFrameElement): boolean {
@@ -103,6 +104,7 @@ export function attachSoundCloudWidget({
   onWidgetReady,
   onPlayingChange,
   onPositionChange,
+  onError,
 }: SoundCloudBindingOptions): () => void {
   let cancelled = false;
   let widget: SoundCloudWidget | undefined;
@@ -118,10 +120,18 @@ export function attachSoundCloudWidget({
       const onReady = () => {
         if (cancelled || !widget || !isFrameLive(iframe)) return;
         try {
-          if (resumePositionMs > 0) {
-            widget.seekTo(resumePositionMs);
+          const position =
+            typeof resumePositionMs === "function"
+              ? resumePositionMs()
+              : resumePositionMs;
+          const play =
+            typeof shouldPlayOnReady === "function"
+              ? shouldPlayOnReady()
+              : shouldPlayOnReady;
+          if (position > 0) {
+            widget.seekTo(position);
           }
-          if (shouldPlayOnReady) {
+          if (play) {
             widget.play();
           }
         } catch {
@@ -158,10 +168,23 @@ export function attachSoundCloudWidget({
         widget.bind(boundEvents.PLAY_PROGRESS, onProgress);
       if (boundEvents.PAUSE) widget.bind(boundEvents.PAUSE, onPauseOrEnd);
       if (boundEvents.FINISH) widget.bind(boundEvents.FINISH, onPauseOrEnd);
-      if (boundEvents.ERROR) widget.bind(boundEvents.ERROR, onPauseOrEnd);
+      if (boundEvents.ERROR)
+        widget.bind(boundEvents.ERROR, () => {
+          if (cancelled) return;
+          onPauseOrEnd();
+          onError?.(
+            "SoundCloud could not play this session. Retry or open the original recording."
+          );
+        });
     })
     .catch(() => {
-      // Keep the embedded iframe usable even if the Widget API script fails to load.
+      // Do not leave custom controls claiming playback after a connection failure.
+      if (!cancelled) {
+        onPlayingChange?.(false);
+        onError?.(
+          "The player could not connect. Retry or open the original recording."
+        );
+      }
     });
 
   return () => {

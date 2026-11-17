@@ -500,28 +500,65 @@
   padding-top: 0;
 }
 #app-shell .artist-index-masthead .section-display-title {
-  font-size: clamp(72px, 10vw, 144px);
+  font-size: clamp(84px, 12vw, 168px);
   font-weight: 500;
-  letter-spacing: -0.06em;
-  line-height: 0.88;
+  letter-spacing: -0.065em;
+  line-height: 0.84;
   max-width: none;
+  text-shadow:
+    0 2px 28px rgba(255, 174, 92, 0.12),
+    0 16px 48px rgba(0, 0, 0, 0.4);
 }
 #app-shell .artist-index-masthead .section-kicker {
   color: #f3b572;
   font-size: 11px;
+  letter-spacing: 0.28em;
 }
 #app-shell .artist-index .artist-index-search {
-  border-radius: 0;
-  border-inline: 0;
-  border-top: 0;
-  padding-inline: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 228, 194, 0.18);
+  background: rgba(16, 13, 12, 0.55);
+  padding-inline: 18px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+#app-shell .artist-index .artist-index-search:focus-within {
+  border-color: rgba(243, 166, 89, 0.55);
+  box-shadow: 0 0 0 1px rgba(243, 166, 89, 0.18);
 }
 #app-shell .artist-index article {
-  border-radius: 5px;
-  border-color: #f4ecd92e;
+  border-radius: 1.15rem;
+  border-color: rgba(255, 228, 194, 0.14);
 }
 #app-shell .artist-index article h2 {
   letter-spacing: -0.04em;
+}
+#app-shell .artist-index .artist-index-empty {
+  border: 1px solid rgba(255, 228, 194, 0.16);
+  background: linear-gradient(
+    145deg,
+    rgba(24, 18, 14, 0.62) 0%,
+    rgba(12, 10, 11, 0.78) 100%
+  );
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 245, 230, 0.12);
+}
+#app-shell .artist-index .artist-index-empty h2 {
+  font: 500 clamp(1.75rem, 3vw, 2.4rem) / 1.1 var(--font-hero, sans-serif);
+  letter-spacing: -0.035em;
+  color: #fff8ee;
+}
+#app-shell .artist-index .artist-index-list-row + .artist-index-list-row {
+  margin-top: 0.65rem;
+}
+#app-shell .artist-index .artist-index-filter {
+  min-height: 42px;
+}
+#app-shell .artist-index .sticky {
+  border-color: rgba(255, 228, 194, 0.16);
+  background: rgba(12, 10, 9, 0.72);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
 }
 #app-shell .signal-invitation {
   background: #191713;

@@ -10,7 +10,7 @@ import {
 import { Link } from "wouter";
 import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { getPublicEvents } from "@/lib/siteData";
+import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
 import { getScheduleDate, getScheduleVenue } from "@/lib/schedulePresentation";
 import {
   getPublishedCatalogue,
@@ -54,9 +54,15 @@ const CONSOLE_GLIDE_MS = 1_400;
 
 function buildConsoleRecords(): ConsoleRecord[] {
   const catalogue = getPublishedCatalogue(getPublicEvents());
+  const announcedShows = catalogue.upcoming.filter(
+    ({ event }) => event.confirmationStatus !== "pending"
+  );
+  const completedShows = catalogue.past.filter(
+    ({ event }) => event.confirmationStatus !== "pending"
+  );
   const records: ConsoleRecord[] = [];
 
-  for (const entry of catalogue.upcoming) {
+  for (const entry of announcedShows) {
     const { event, state } = entry;
     const isFinale = isCurrentSunsetsEvent(event);
     const title = isFinale
@@ -158,8 +164,8 @@ function buildConsoleRecords(): ConsoleRecord[] {
     firstAccess: true,
   });
 
-  if (catalogue.upcoming.length === 0 && catalogue.past.length > 0) {
-    const recentPast = catalogue.past[0];
+  if (announcedShows.length === 0 && completedShows.length > 0) {
+    const recentPast = completedShows[0];
     if (recentPast && recentPast.state.kind === "past") {
       records.push({
         id: recentPast.event.id,
@@ -309,9 +315,7 @@ function ConsoleRecordRow({
           <Clock size={15} aria-hidden="true" />
           <div>
             <span className="lg-console-fact-primary">{record.timeText}</span>
-            <span className="lg-console-fact-secondary">
-              Official status
-            </span>
+            <span className="lg-console-fact-secondary">Official status</span>
           </div>
         </div>
       </div>
@@ -332,7 +336,8 @@ export default function HeroEventConsole({
   reducedMotion,
   pausedExternal = false,
 }: HeroEventConsoleProps) {
-  const records = useMemo(() => buildConsoleRecords(), []);
+  const siteDataVersion = usePublicSiteDataVersion();
+  const records = useMemo(() => buildConsoleRecords(), [siteDataVersion]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [outgoingIndex, setOutgoingIndex] = useState<number | null>(null);
   const [glideDirection, setGlideDirection] = useState<"ltr" | "rtl">("ltr");
@@ -424,9 +429,7 @@ export default function HeroEventConsole({
       onMouseLeave={() => setHovering(false)}
       onFocusCapture={() => setFocusWithin(true)}
       onBlurCapture={event => {
-        if (
-          !consoleRef.current?.contains(event.relatedTarget as Node | null)
-        ) {
+        if (!consoleRef.current?.contains(event.relatedTarget as Node | null)) {
           setFocusWithin(false);
         }
       }}

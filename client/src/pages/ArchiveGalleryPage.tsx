@@ -6,7 +6,15 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import MixedMediaGallery from "@/components/MixedMediaGallery";
 import { Link } from "wouter";
-import { ArrowLeft, BookOpen, Camera, Headphones, Pause, Play, UploadCloud } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  Camera,
+  Headphones,
+  Pause,
+  Play,
+  UploadCloud,
+} from "lucide-react";
 import {
   archiveCollectionsBySlug,
   type ArchiveCollection,
@@ -106,7 +114,7 @@ export default function ArchiveGalleryPage() {
 
   return (
     <div
-      className="min-h-screen text-white relative overflow-hidden"
+      className="archive-gallery-page min-h-screen text-white relative overflow-hidden"
       style={{ background: "#050505" }}
     >
       <SEO
@@ -121,7 +129,11 @@ export default function ArchiveGalleryPage() {
       />
       <Navigation variant="dark" brand={navBrand} />
 
-      <main id="main-content" tabIndex={-1} className="pb-32 lg-dusk-atmosphere">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="pb-32 lg-dusk-atmosphere"
+      >
         {/* Full-Bleed Cinematic Season Cover Hero */}
         <section className="relative flex min-h-[max(760px,96svh)] flex-col justify-between overflow-hidden border-b border-white/10 px-6 pb-12 pt-[calc(var(--shell-page-top-hero)+12px)] md:pb-16">
           <div className="absolute inset-0 z-0">
@@ -175,7 +187,8 @@ export default function ArchiveGalleryPage() {
                         artist: soundtrackEpisode.guest,
                         src: soundtrackEpisode.embedUrl,
                         coverImage:
-                          soundtrackEpisode.coverImage || soundtrackEpisode.image,
+                          soundtrackEpisode.coverImage ||
+                          soundtrackEpisode.image,
                         duration: soundtrackEpisode.duration,
                       });
                     }
@@ -184,12 +197,18 @@ export default function ArchiveGalleryPage() {
                 >
                   {isSoundtrackPlaying ? (
                     <>
-                      <Pause className="h-3 w-3 fill-current" aria-hidden="true" />
+                      <Pause
+                        className="h-3 w-3 fill-current"
+                        aria-hidden="true"
+                      />
                       <span>Pause</span>
                     </>
                   ) : (
                     <>
-                      <Play className="h-3 w-3 fill-current" aria-hidden="true" />
+                      <Play
+                        className="h-3 w-3 fill-current"
+                        aria-hidden="true"
+                      />
                       <span>Listen while browsing</span>
                     </>
                   )}

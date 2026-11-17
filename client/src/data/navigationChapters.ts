@@ -1,4 +1,4 @@
-import { CAMPAIGN_HOSTS, ROUTES, routeRadioEpisode } from "@shared/routes";
+import { CAMPAIGN_HOSTS, ROUTES } from "@shared/routes";
 
 export const SUNSETS_FM_SITE = "https://sunsets.fm/";
 export const HOUSE_OF_FRIENDS_SITE = `https://${CAMPAIGN_HOSTS.houseOfFriendsVip}/`;
@@ -58,7 +58,7 @@ export const navigationChapters: NavigationChapter[] = [
     description:
       "Explore artists across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio.",
     proof: "A direct view of the artists shaping the sound.",
-    image: "/images/artists-collective.webp",
+    image: "/images/artists/benchek/benchek-portrait.jpg",
     accent: "#F2F0E8",
     ctaLabel: "Explore Artists",
     secondaryLinks: [
@@ -109,12 +109,12 @@ export const navigationChapters: NavigationChapter[] = [
     description:
       "Episodes, guest mixes, tracklists, and artist context that keep the sound moving between nights.",
     proof: "A direct way to hear the artists before you are in the room.",
-    image: "/images/radio-show-gear.webp",
+    image: "/images/artists/benchek/benchek-portrait.jpg",
     accent: "#FB7185",
     ctaLabel: "Play the radio",
     secondaryLinks: [
-      { label: "Latest Episode", href: routeRadioEpisode("ep-01-benchek") },
       { label: "Browse Episodes", href: ROUTES.radio },
+      { label: "Discover SUNSETS.FM", href: ROUTES.sunsetsFM },
     ],
   },
   {
@@ -143,7 +143,7 @@ export const navigationChapters: NavigationChapter[] = [
     description:
       "A home for emerging artists to collaborate, share the stage, and build lasting connections.",
     proof: "Meet the community at houseoffriends.vip.",
-    image: "/images/artists-collective.webp",
+    image: "/images/artists/joezi/joezi-portrait.jpg",
     accent: "#E1A59B",
     ctaLabel: "Visit houseoffriends.vip",
     secondaryLinks: [],

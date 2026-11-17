@@ -1,3 +1,4 @@
+import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -19,8 +20,12 @@ import { ROUTES } from "@shared/routes";
 import "./open-network.css";
 
 export default function OpenNetwork() {
+  const audio = useOptionalGlobalAudio();
   const [selectedId, setSelectedId] = useState(networkEpisodes[0].id);
   const [active, setActive] = useState<"radio" | "featured" | null>(null);
+  useEffect(() => {
+    if (audio?.isPlaying) setActive(null);
+  }, [audio?.isPlaying]);
   useEffect(() => {
     const series = new URLSearchParams(window.location.search).get("series");
     const requestedEpisode = networkEpisodes.find(
@@ -44,6 +49,7 @@ export default function OpenNetwork() {
     };
   }, []);
   function selectEpisode(id: string, play = false) {
+    if (play) audio?.setPlaying(false);
     setSelectedId(id);
     setActive(play ? "radio" : null);
   }
@@ -128,19 +134,23 @@ export default function OpenNetwork() {
             </li>
           </ol>
         </section>
-        <NetworkVision />
-        <RafaelSet
-          active={active === "featured"}
-          onPlay={() => setActive("featured")}
-          onStop={() => setActive(null)}
-        />
-        <NetworkPillars />
         <RadioLibrary
           selectedId={selectedId}
           active={active === "radio"}
           onSelect={selectEpisode}
           onStop={() => setActive(null)}
         />
+        <NetworkVision />
+        <RafaelSet
+          active={active === "featured"}
+          onPlay={() => {
+            audio?.setPlaying(false);
+            setActive("featured");
+          }}
+          onStop={() => setActive(null)}
+        />
+        <NetworkPillars />
+
         <NetworkJourney />
         <NetworkCreators />
         <NetworkPrinciples />

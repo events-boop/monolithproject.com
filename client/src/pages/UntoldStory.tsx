@@ -1,3 +1,4 @@
+import WorldEtching from "@/components/WorldEtching";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -43,6 +44,7 @@ export default function UntoldStory() {
   const candidate = getSeriesExperienceEvent("untold-story", "funnel");
   const event =
     candidate &&
+    candidate.confirmationStatus !== "pending" &&
     !["draft", "hidden", "past"].includes(candidate.status) &&
     getEventWindowStatus(candidate) !== "past"
       ? candidate
@@ -76,6 +78,7 @@ export default function UntoldStory() {
           className="chasing-series-hero"
           aria-labelledby="untold-hero-title"
         >
+          <WorldEtching />
           <ResponsiveImage
             {...hero}
             alt="The chandelier and dancefloor at a previous Untold Story night"

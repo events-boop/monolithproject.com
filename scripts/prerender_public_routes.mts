@@ -1,3 +1,4 @@
+import { CAMPAIGN_BIOS, MONOLITH_ORIGIN } from "../shared/campaign-bios.ts";
 import {
   buildEventSeoTitle,
   buildEventSeoDescription,
@@ -90,6 +91,7 @@ if (!/<div id="root">\s*<\/div>/i.test(template)) {
 
 const futureEvents = upcomingEvents.filter(
   event =>
+    event.confirmationStatus !== "pending" &&
     event.status !== "past" &&
     event.status !== "draft" &&
     event.status !== "hidden" &&
@@ -210,7 +212,7 @@ function buildRadioEpisodeSeoTitle(episode: (typeof radioEpisodes)[number]) {
 function buildRadioEpisodeSeoDescription(
   episode: (typeof radioEpisodes)[number]
 ) {
-  return `Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Tracklist, story, and direct listening links.`;
+  return `Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Guest story and direct listening links.`;
 }
 
 function renderParagraphs(paragraphs: string[]) {
@@ -570,7 +572,7 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
       description:
         "House of Friends opened with a July 31 give-back pop-up at Kashmir; the Founding Class preview lands August 22, 2026.",
       absoluteTitle: true,
-      canonicalUrl: "https://houseoffriends.vip/",
+      canonicalUrl: "https://monolithproject.com/house-of-friends",
       image: "https://houseoffriends.vip/og-image.jpg",
       bodyHtml: renderBaseLayout(
         "Artist development / Founding Class 2026",
@@ -1224,6 +1226,39 @@ const staticRoutes = new Map<string, Omit<RouteDefinition, "path">>([
   ],
 ]);
 
+// Campaign roots keep real branded HTML before JavaScript starts.
+for (const bio of Object.values(CAMPAIGN_BIOS)) {
+  staticRoutes.set(bio.path, {
+    title: `${bio.name} | The Monolith Project`,
+    description: bio.description,
+    absoluteTitle: true,
+    canonicalUrl: `${bio.domain}/`,
+    bodyHtml: renderBaseLayout(
+      "The Monolith Project · Chicago",
+      bio.name,
+      [
+        bio.description,
+        bio.status,
+        bio.note,
+        "SUNSETS.FM — Coming soon. Music, people and places.",
+      ],
+      [
+        { href: MONOLITH_ORIGIN + "/newsletter", label: "Be first to know" },
+        bio.fullPage,
+        { href: MONOLITH_ORIGIN + "/radio", label: "Chasing Sunsets Radio" },
+        {
+          href: MONOLITH_ORIGIN + "/open-network",
+          label: "SUNSETS.FM — Coming soon",
+        },
+        ...Object.values(CAMPAIGN_BIOS).map(world => ({
+          href: world.domain + "/",
+          label: world.name,
+        })),
+      ]
+    ),
+  });
+}
+
 function buildArtistRoutes(): RouteDefinition[] {
   return ARTIST_ENTRIES.map(artist => ({
     path: `/artists/${artist.id}`,
@@ -1306,14 +1341,18 @@ function buildRadioEpisodeRoutes(): RouteDefinition[] {
       `
         <section>
           <h2>Tracklist</h2>
-          ${renderLinkList(
-            episode.tracklist.map(track => ({
-              href: episode.audioUrl,
-              label: `${track.timecode} · ${track.artist} — ${track.title}`,
-              external: true,
-            })),
-            true
-          )}
+          ${
+            episode.tracklist.length
+              ? renderLinkList(
+                  episode.tracklist.map(track => ({
+                    href: episode.audioUrl,
+                    label: `${track.timecode} · ${track.artist} — ${track.title}`,
+                    external: true,
+                  })),
+                  true
+                )
+              : "<p>The verified tracklist has not been published.</p>"
+          }
         </section>
       `
     ),

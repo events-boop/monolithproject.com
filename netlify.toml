@@ -77,7 +77,7 @@
 
 [[redirects]]
   from = "https://houseoffriends.vip/"
-  to = "/house-of-friends/index.html"
+  to = "/house-of-friends/links/index.html"
   status = 200
   force = true
 
@@ -120,21 +120,31 @@
   status = 301
   force = true
 
-# sunsets.vip is the campaign front door. The root opens the link in bio at
-# /sunsets-links (2026-11-10); the /SUNSETS aliases still redirect to
-# the canonical /sunsets page while non-root paths such as /go/* remain
-# available for short-link handling.
+# Campaign roots serve the shared bio design on their own hostnames.
+# Full series, program, historical pages and /go/* links remain available.
 
 [[redirects]]
   from = "https://sunsets.vip/"
-  to = "https://monolithproject.com/sunsets-links"
-  status = 301
+  to = "/sunsets-links/index.html"
+  status = 200
   force = true
 
 [[redirects]]
   from = "https://www.sunsets.vip/"
-  to = "https://monolithproject.com/sunsets-links"
+  to = "https://sunsets.vip/"
   status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.untold.vip/*"
+  to = "https://untold.vip/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://untold.vip/"
+  to = "/untold/index.html"
+  status = 200
   force = true
 
 [[redirects]]

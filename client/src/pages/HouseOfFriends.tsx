@@ -167,7 +167,7 @@ export default function HouseOfFriends() {
         title="House of Friends | Artist Development by The Monolith Project"
         description="House of Friends is The Monolith Project's emerging-artist platform — explore the founding program, the July 31 pop-up and the August 22 chapter, and opportunities for artists and partners."
         absoluteTitle
-        canonicalUrl="https://houseoffriends.vip/"
+        canonicalPath={ROUTES.houseOfFriends}
         image="/og-image.jpg"
       />
 
@@ -292,6 +292,15 @@ export default function HouseOfFriends() {
             </div>
           </div>
         </section>
+        <nav
+          className="hof-section-navigation container layout-wide"
+          aria-label="House of Friends sections"
+        >
+          <a href="#vision">The idea</a>
+          <a href="#artist-program">Artist programme</a>
+          <a href="#launch-day">August chapter</a>
+          <a href="#founding-partners">Partners</a>
+        </nav>
 
         <section
           className="hof-signal-strip"

@@ -197,7 +197,7 @@
   font-family: "Syne";
   font-style: normal;
   font-weight: 700;
-  font-display: optional;
+  font-display: swap;
   src: url("/fonts/syne-latin.woff2") format("woff2");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
@@ -209,7 +209,7 @@
   font-family: "Syne";
   font-style: normal;
   font-weight: 800;
-  font-display: optional;
+  font-display: swap;
   src: url("/fonts/syne-latin.woff2") format("woff2");
   unicode-range:
     U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,

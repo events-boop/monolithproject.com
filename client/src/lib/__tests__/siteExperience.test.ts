@@ -1,7 +1,12 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import type { PublicSiteData, ScheduledEvent } from "@shared/events/types";
 import { primePublicSiteData } from "@/lib/siteData";
-import { getSeriesExperienceEvent } from "@/lib/siteExperience";
+import {
+  getEventById,
+  getPastEvents,
+  getScheduledEvents,
+  getSeriesExperienceEvent,
+} from "@/lib/siteExperience";
 
 const TEST_NOW = new Date("2026-04-23T12:00:00-05:00");
 
@@ -74,5 +79,60 @@ describe("siteExperience", () => {
     expect(
       getSeriesExperienceEvent("chasing-sunsets", "hero", TEST_NOW)?.id
     ).toBe("css-jul04");
+  });
+
+  it("omits unconfirmed placeholder shows without losing their permanent records", () => {
+    const placeholder: ScheduledEvent = {
+      ...chasingPlaceholderEvent,
+      confirmationStatus: "pending",
+    };
+    primePublicSiteData({
+      path: "/schedule",
+      events: [placeholder, untoldHeroEvent],
+      featuredEvents: {},
+    });
+
+    expect(getScheduledEvents(TEST_NOW).map(event => event.id)).toEqual([
+      untoldHeroEvent.id,
+    ]);
+    expect(getEventById(placeholder.id)).toEqual(placeholder);
+  });
+
+  it("keeps ticket-holder notices visible while their replacement date is unconfirmed", () => {
+    const postponed: ScheduledEvent = {
+      ...untoldHeroEvent,
+      id: "postponed-show",
+      confirmationStatus: "pending",
+      eventStatus: "EventPostponed",
+      ticketHolderNotice:
+        "Existing tickets remain valid. Contact support for options.",
+    };
+    primePublicSiteData({
+      path: "/schedule",
+      events: [postponed],
+      featuredEvents: {},
+    });
+
+    expect(getScheduledEvents(TEST_NOW).map(event => event.id)).toEqual([
+      postponed.id,
+    ]);
+  });
+
+  it("does not turn expired placeholders into completed shows", () => {
+    const placeholder: ScheduledEvent = {
+      ...chasingWaitlistEvent,
+      confirmationStatus: "pending",
+    };
+    const now = new Date("2026-11-16T12:00:00-06:00");
+    primePublicSiteData({
+      path: "/schedule",
+      events: [placeholder, untoldHeroEvent],
+      featuredEvents: {},
+    });
+
+    expect(getPastEvents(now).map(event => event.id)).toEqual([
+      untoldHeroEvent.id,
+    ]);
+    expect(getEventById(placeholder.id)).toEqual(placeholder);
   });
 });

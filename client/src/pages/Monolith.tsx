@@ -63,8 +63,8 @@ export default function Monolith() {
 
             {/* Visual element representing the Monolith */}
             <ResponsiveImage
-              src="/images/hero-monolith.webp"
-              alt="The Monolith Core Visual"
+              src="/images/archive/chasing-sunsets/css-s3-1.jpg"
+              alt="The Chasing Sun(Sets) community beside Lake Michigan"
               priority
               sizes="100vw"
               loading="eager"

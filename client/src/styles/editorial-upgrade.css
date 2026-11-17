@@ -1,0 +1,608 @@
+/* Spacious film-led home and artist index. Ember is a trim, never a brown wash. */
+#app-shell .monolith-home,
+#app-shell .artist-index {
+  --editorial-display: "Syne", "General Sans", sans-serif;
+  --ember: #ed805f;
+  --ember-line: rgba(221, 96, 61, 0.35);
+}
+
+#app-shell .monolith-home .home-carousel.lg-hero-shell {
+  min-height: max(820px, 100svh);
+  background: #090a0b;
+  border-bottom: 1px solid var(--ember-line);
+}
+#app-shell .monolith-home .lg-scene-stage {
+  justify-content: flex-end;
+  min-height: calc(100svh - 112px);
+  padding-top: 180px;
+  padding-bottom: clamp(48px, 8vh, 96px);
+}
+#app-shell .monolith-home .lg-opening-inner {
+  padding-inline: clamp(24px, 5vw, 96px);
+}
+#app-shell .monolith-home .lg-opening-copy {
+  max-width: 100%;
+}
+#app-shell .monolith-home .lg-opening-eyebrow-row {
+  margin-bottom: 32px;
+}
+#app-shell .monolith-home .lg-opening-eyebrow {
+  color: #ffd1bb;
+  letter-spacing: 0.2em;
+}
+#app-shell .monolith-home .lg-opening-eyebrow-row .lg-frequency-svg {
+  display: none;
+}
+#app-shell .monolith-home .home-carousel .lg-opening-title {
+  font-family: var(--editorial-display);
+  font-size: clamp(48px, 9.2vw, 168px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.065em;
+  text-shadow: 0 8px 50px #0005;
+}
+#app-shell .monolith-home .home-carousel .lg-opening-subtitle {
+  font-family: "General Sans", sans-serif;
+  font-size: clamp(22px, 2.3vw, 34px);
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+  max-width: 30ch;
+  margin: 36px 0 32px;
+}
+#app-shell .monolith-home .lg-opening-actions {
+  gap: 16px;
+}
+#app-shell .monolith-home .lg-opening-actions > * {
+  min-height: 56px;
+  padding-inline: 28px;
+}
+#app-shell .monolith-home .lg-btn-amber {
+  background: linear-gradient(115deg, #f4b58e, #ef8059 78%, #d96647);
+  border-color: #ffc7a681;
+  color: #21100b;
+  box-shadow:
+    0 8px 36px #bc432325,
+    inset 0 1px 0 #ffe4cc8a;
+}
+#app-shell .monolith-home .lg-opening-awareness {
+  margin-top: 26px;
+  border-color: #ef805936;
+  gap: 28px;
+}
+#app-shell .monolith-home .lg-opening-awareness a {
+  min-height: 44px;
+  font-size: 12px;
+}
+#app-shell .monolith-home .lg-opening-local-scrim {
+  background: linear-gradient(
+    180deg,
+    #07080b66,
+    #07080b05 25%,
+    #07080b45 50%,
+    #07080bbd 85%,
+    #07080bf0
+  );
+}
+#app-shell
+  .monolith-home
+  .lg-scene-plate-monolith-opening
+  .monolith-hero-photo::after {
+  background: linear-gradient(90deg, #07080b38, transparent 65%);
+}
+#app-shell
+  .monolith-home
+  .lg-scene-plate-monolith-opening
+  .monolith-hero-photo
+  :is(img, video) {
+  filter: saturate(0.95) contrast(1.06) brightness(0.98);
+}
+#app-shell .monolith-home .lg-persistent-deck {
+  padding-bottom: 28px;
+}
+#app-shell .monolith-home .lg-slide-selectors {
+  border-color: #ee9b7138;
+}
+#app-shell .monolith-home .lg-slide-selectors button {
+  min-height: 44px;
+}
+#app-shell .monolith-home .home-status-rail {
+  padding: 24px clamp(20px, 4vw, 64px);
+  background: #0b0c0d;
+}
+#app-shell .monolith-home .home-status-rail .lg-console-shell {
+  max-width: 1552px;
+  margin-inline: auto;
+  border-color: var(--ember-line);
+  background: linear-gradient(115deg, #cf5d3610, #ffffff03 55%);
+  box-shadow: none;
+}
+#app-shell .monolith-home .home-status-rail .lg-console-cta {
+  background: linear-gradient(115deg, #f5c39d, #eb895f);
+}
+#app-shell .monolith-home .home-section-heading h2,
+#app-shell .monolith-home .home-discovery-body h3,
+#app-shell .artist-index .section-display-title,
+#app-shell .artist-index .section-display-title-compact {
+  font-family: var(--editorial-display);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.04;
+}
+#app-shell .monolith-home .home-section-heading h2 {
+  font-size: clamp(42px, 5vw, 76px);
+}
+#app-shell .monolith-home .home-upcoming {
+  padding-block: 32px 64px;
+}
+#app-shell .monolith-home .home-next-chapter {
+  margin-top: 0;
+  border-color: var(--ember-line);
+}
+#app-shell .monolith-home .home-next-chapter + .home-section-heading {
+  margin-top: 64px;
+}
+#app-shell .monolith-home .home-launch-signup .home-network-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 8px;
+  color: #244338;
+  margin-right: 20px;
+}
+#app-shell .monolith-home .home-launch-signup .home-network-link:hover {
+  color: #8f3825;
+}
+#app-shell .monolith-home .home-discovery-grid {
+  gap: 40px;
+}
+#app-shell .monolith-home .home-discovery-body {
+  padding-top: 28px;
+}
+#app-shell .monolith-home .home-discovery-body h3 {
+  font-size: clamp(36px, 3vw, 48px);
+  margin-block: 16px 20px;
+}
+#app-shell .monolith-home .home-discovery-copy {
+  font-size: 16px;
+  line-height: 1.75;
+}
+#app-shell .monolith-home .home-discovery-portrait {
+  border-radius: 12px;
+  aspect-ratio: 4/5;
+}
+#app-shell .monolith-home .home-discovery-listen {
+  padding-block: 20px;
+}
+#app-shell .monolith-home .home-discovery-appearance {
+  padding-block: 20px;
+  gap: 20px;
+}
+
+/* A portrait, then a readable caption. Actions never sit over the artist name. */
+#app-shell .artist-index .artist-grid-card {
+  background: #101113;
+  border: 1px solid #ffffff19;
+  box-shadow: none;
+}
+#app-shell .artist-index .artist-grid-card:hover {
+  border-color: var(--ember-line);
+  box-shadow: 0 24px 64px #0004;
+}
+#app-shell .artist-index .artist-grid-portrait {
+  aspect-ratio: 4/4.5;
+}
+#app-shell .artist-index .artist-grid-copy h2 {
+  font-size: clamp(30px, 2.7vw, 46px);
+  overflow-wrap: anywhere;
+}
+#app-shell .artist-index .artist-grid-copy > p {
+  min-height: 3em;
+  color: #bfc0c1;
+}
+#app-shell .artist-index .artist-grid-copy > div {
+  min-height: 44px;
+  color: #ffb69a;
+}
+#app-shell .artist-index .artist-grid-series > span {
+  font-family: "General Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+#app-shell .artist-index .artist-grid-controls button {
+  width: 44px;
+  height: 44px;
+}
+#app-shell .artist-index .artist-index-filter {
+  min-height: 44px;
+}
+
+@media (max-width: 767px) {
+  #app-shell .monolith-home .home-carousel.lg-hero-shell {
+    min-height: 100svh;
+  }
+  #app-shell .monolith-home .lg-scene-stage {
+    min-height: calc(100svh - 140px);
+    padding-top: max(180px, 23svh);
+    padding-bottom: 40px;
+    justify-content: flex-end;
+  }
+  #app-shell .monolith-home .lg-opening-inner {
+    padding-inline: 24px;
+  }
+  #app-shell .monolith-home .lg-opening-eyebrow-row {
+    margin-bottom: 24px;
+  }
+  #app-shell .monolith-home .home-carousel .lg-opening-title {
+    font-size: 9vw;
+    letter-spacing: -0.065em;
+  }
+  #app-shell .monolith-home .home-carousel .lg-opening-subtitle {
+    font-size: 24px;
+    margin: 28px 0 32px;
+    max-width: 23ch;
+  }
+  #app-shell .monolith-home .lg-opening-actions {
+    gap: 14px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #app-shell .monolith-home .lg-opening-actions > * {
+    flex: none;
+    min-height: 56px;
+    width: 100%;
+    font-size: 12px;
+  }
+  #app-shell .monolith-home .lg-opening-awareness {
+    display: none;
+  }
+  #app-shell .monolith-home .lg-persistent-deck {
+    padding: 12px 24px 24px;
+  }
+  #app-shell .monolith-home .lg-hud-bar {
+    gap: 12px;
+  }
+  #app-shell .monolith-home .lg-slide-selectors {
+    flex-basis: 100%;
+    border-radius: 12px;
+    padding: 4px;
+  }
+  #app-shell .monolith-home .lg-slide-selectors button {
+    flex: 1;
+    padding-inline: 5px;
+    justify-content: center;
+  }
+  #app-shell .monolith-home .lg-selector-dot {
+    display: none;
+  }
+  #app-shell .monolith-home .lg-selector-label {
+    font-size: 11px;
+  }
+  #app-shell .monolith-home .lg-hud-actions {
+    justify-content: center;
+    width: 100%;
+  }
+  #app-shell .monolith-home .lg-hud-actions button {
+    width: 44px;
+    height: 44px;
+  }
+  #app-shell .monolith-home .home-status-rail {
+    padding: 24px 20px;
+  }
+  #app-shell .monolith-home .home-status-rail .lg-console-record {
+    gap: 20px;
+    padding: 24px;
+  }
+  #app-shell .monolith-home .home-status-rail .lg-console-fact-venue,
+  #app-shell .monolith-home .home-status-rail .lg-console-fact-time {
+    display: none;
+  }
+  #app-shell .monolith-home .home-status-rail .lg-console-actions {
+    gap: 16px;
+  }
+  #app-shell .monolith-home .home-editorial-section {
+    padding-block: 72px;
+  }
+  #app-shell .monolith-home .home-section-heading {
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  #app-shell .monolith-home .home-upcoming {
+    padding-top: 24px;
+  }
+  #app-shell .monolith-home .home-discovery-grid {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+  #app-shell .monolith-home .home-discovery-card {
+    display: block;
+  }
+  #app-shell .monolith-home .home-discovery-body h3 {
+    font-size: 40px;
+  }
+  #app-shell .monolith-home .home-discovery-sound {
+    line-height: 1.7;
+  }
+  #app-shell .artist-index .artist-index-masthead {
+    padding-bottom: 56px;
+  }
+  #app-shell .artist-index .artist-index-masthead .section-display-title {
+    font-size: clamp(52px, 14vw, 88px);
+  }
+  #app-shell .artist-index .artist-index-toolbar {
+    position: relative;
+    top: auto;
+    padding: 24px;
+  }
+  #app-shell .artist-index .artist-index-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+  #app-shell .artist-index .artist-index-filter {
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.06em;
+  }
+  #app-shell .artist-index .artist-grid-card {
+    margin-bottom: 12px;
+  }
+  #app-shell .artist-index .artist-grid-copy h2 {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+  #app-shell .artist-index .artist-grid-copy {
+    padding: 16px 24px 28px;
+  }
+  #app-shell .artist-index .artist-index-list-row article {
+    padding: 24px;
+    gap: 28px;
+  }
+}
+/* A year-end credit roll: warm light at the edges, space around every name. */
+#app-shell .monolith-home .home-year-thanks {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(64px, 8vw, 128px);
+  background:
+    radial-gradient(ellipse at 92% 0, #a3432b1a, transparent 45%), #0c0c0e;
+  scroll-margin-top: 100px;
+}
+#app-shell .monolith-home .home-year-thanks::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #a84330,
+    #ed9c71,
+    #a84330,
+    transparent
+  );
+}
+#app-shell .monolith-home .year-thanks-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(48px, 6vw, 88px);
+}
+#app-shell .monolith-home .year-thanks-topline .home-eyebrow {
+  margin: 0;
+  color: #d3b9ac;
+}
+#app-shell .monolith-home .year-thanks-heading h2 {
+  font-family: var(--editorial-display);
+  font-size: clamp(36px, 5.5vw, 84px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+  color: #f7eee3;
+  margin: 0;
+}
+#app-shell .monolith-home .year-thanks-year {
+  display: block;
+  width: fit-content;
+  margin: 24px 0 36px -0.035em;
+  font-family: "General Sans", sans-serif;
+  font-weight: 600;
+  font-size: clamp(130px, 27vw, 420px);
+  line-height: 0.83;
+  letter-spacing: -0.08em;
+  background: linear-gradient(
+    115deg,
+    #f2cfb3 5%,
+    #ed9770 42%,
+    #d36144 72%,
+    #a83e2a
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#app-shell .monolith-home .year-thanks-heading > p {
+  max-width: 52ch;
+  color: #bcb5af;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.75;
+  margin: 0 0 64px;
+}
+#app-shell .monolith-home .year-thanks-credits {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 4fr;
+  gap: 48px;
+  padding-block: 48px;
+  border-top: 1px solid #c982573d;
+}
+#app-shell .monolith-home .year-thanks-label h3 {
+  margin: 0 0 12px;
+  color: #f0b69a;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+}
+#app-shell .monolith-home .year-thanks-label p {
+  font-size: 13px;
+  color: #a99e97;
+  line-height: 1.7;
+}
+#app-shell .monolith-home .year-thanks-artists {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: -8px 0 0;
+}
+#app-shell .monolith-home .year-thanks-artists li {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+#app-shell .monolith-home .year-thanks-artists li::after {
+  content: "/";
+  font-size: 20px;
+  color: #965640;
+  font-weight: 300;
+}
+#app-shell .monolith-home .year-thanks-artists li:last-child::after {
+  content: none;
+}
+#app-shell .monolith-home .year-thanks-artists a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding-block: 8px;
+  font-size: clamp(22px, 2.35vw, 36px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
+  color: #eae2d9;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+#app-shell .monolith-home .home-year-thanks a:hover {
+  color: #ffb18b;
+}
+#app-shell .monolith-home .home-year-thanks a:focus-visible {
+  outline: 2px solid #f4ac86;
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+#app-shell .monolith-home .year-thanks-still-to-come {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid #ffffff14;
+}
+#app-shell .monolith-home .year-thanks-still-to-come > p {
+  color: #b2a59c;
+  font-size: 13px;
+}
+#app-shell .monolith-home .year-thanks-still-to-come > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+#app-shell .monolith-home .year-thanks-still-to-come > div a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  font-size: 22px;
+  color: #eae2d9;
+}
+#app-shell .monolith-home .year-thanks-postponed {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 12px;
+  color: #c5a99a;
+}
+#app-shell .monolith-home .year-thanks-rooms ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#app-shell .monolith-home .year-thanks-rooms li {
+  font-size: clamp(18px, 1.8vw, 26px);
+  line-height: 1.5;
+  color: #d5c9be;
+}
+#app-shell .monolith-home .year-thanks-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  padding-top: 40px;
+  border-top: 1px solid #c982573d;
+}
+#app-shell .monolith-home .year-thanks-footer > p {
+  color: #f5e9db;
+  font-family: var(--editorial-display);
+  font-size: clamp(36px, 4vw, 56px);
+  letter-spacing: -0.045em;
+  line-height: 1.2;
+}
+#app-shell .monolith-home .year-thanks-footer > p span {
+  display: block;
+  margin-top: 16px;
+  color: #aba097;
+  font-family: "General Sans", sans-serif;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 1.7;
+}
+#app-shell .monolith-home .year-thanks-footer .home-text-link {
+  min-height: 44px;
+  color: #f0b69a;
+}
+@media (max-width: 767px) {
+  #app-shell .monolith-home .year-thanks-topline {
+    flex-direction: column;
+    gap: 12px;
+  }
+  #app-shell .monolith-home .year-thanks-topline > span {
+    display: none;
+  }
+  #app-shell .monolith-home .year-thanks-heading > p {
+    margin-bottom: 40px;
+  }
+  #app-shell .monolith-home .year-thanks-credits {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-block: 32px;
+  }
+  #app-shell .monolith-home .year-thanks-artists {
+    column-gap: 16px;
+    row-gap: 4px;
+  }
+  #app-shell .monolith-home .year-thanks-artists li {
+    gap: 16px;
+  }
+  #app-shell .monolith-home .year-thanks-artists a {
+    font-size: clamp(20px, 5.8vw, 28px);
+    min-height: 44px;
+  }
+  #app-shell .monolith-home .year-thanks-artists li::after {
+    font-size: 16px;
+  }
+  #app-shell .monolith-home .year-thanks-rooms ul {
+    gap: 16px 24px;
+  }
+  #app-shell .monolith-home .year-thanks-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell .artist-index .artist-grid-portrait img {
+    transform: none;
+  }
+}

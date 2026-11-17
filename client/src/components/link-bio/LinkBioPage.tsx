@@ -1,45 +1,34 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Radio } from "lucide-react";
 import { Link } from "wouter";
+import GlyphBackdrop from "../GlyphBackdrop";
+import {
+  CAMPAIGN_BIOS,
+  MONOLITH_ORIGIN,
+  type CampaignBioTheme,
+} from "@shared/campaign-bios";
+import { ROUTES } from "@shared/routes";
 import "./link-bio.css";
 
-/**
- * One link-in-bio layout for every campaign domain (sunsets.vip, untold.vip).
- * A bio page is a short list of places to go, not a full page: one brand block, one status badge,
- * a handful of big links, the socials. The series supply their own theme, words and links.
- */
 export interface LinkBioLink {
   label: string;
   detail?: string;
   href: string;
-  /** The one link we most want tapped right now. */
   primary?: boolean;
-  /** A short status chip on the link itself, e.g. "Postponed". */
-  badge?: string;
 }
-
 export interface LinkBioProps {
-  theme: "sunsets" | "untold";
+  theme: CampaignBioTheme;
   kicker: string;
   title: string;
   titleAccent?: string;
   tagline: string;
-  /** Short status chip above the links, e.g. "New show updates incoming". */
   badge?: string;
-  /** One line under the badge that says what the badge means. */
   tease?: string;
-  links: LinkBioLink[];
+  links: readonly LinkBioLink[];
+  notice?: LinkBioLink;
   socials: { label: string; href: string }[];
   footnote: string;
-  logo?: { src: string; alt: string; width: number; height: number };
   showDestinations?: boolean;
-  motif?: "rings";
 }
-
-const isExternal = (href: string) =>
-  /^https?:\/\//i.test(href) || href.startsWith("/go/");
-/** Standalone documents and in-page anchors must be real navigations, not client-side routes. */
-const isDocument = (href: string) =>
-  href.includes("#") || href.endsWith(".html");
 
 function BioLink({
   link,
@@ -52,40 +41,26 @@ function BioLink({
   const body = (
     <>
       <span className="link-bio-link-text">
-        <strong>
-          {link.label}
-          {link.badge && <em className="link-bio-link-badge">{link.badge}</em>}
-        </strong>
+        <strong>{link.label}</strong>
         {link.detail && <small>{link.detail}</small>}
         {showDestination && (
-          <span className="link-bio-destination">
+          <small>
             {link.href.startsWith("/")
               ? `monolithproject.com${link.href}`
               : link.href.replace(/^https?:\/\//, "")}
-          </span>
+          </small>
         )}
       </span>
-      <ArrowUpRight size={18} aria-hidden="true" />
+      <ArrowUpRight size={19} aria-hidden="true" />
     </>
   );
-  if (isExternal(link.href))
-    return (
-      <a
-        className={className}
-        href={link.href}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {body}
-      </a>
-    );
-  if (isDocument(link.href))
-    return (
-      <a className={className} href={link.href}>
-        {body}
-      </a>
-    );
-  return (
+  return /^https?:\/\//i.test(link.href) ||
+    link.href.includes("#") ||
+    link.href.startsWith("/go/") ? (
+    <a className={className} href={link.href}>
+      {body}
+    </a>
+  ) : (
     <Link className={className} href={link.href}>
       {body}
     </Link>
@@ -101,72 +76,109 @@ export default function LinkBioPage({
   badge,
   tease,
   links,
+  notice,
   socials,
   footnote,
-  logo,
   showDestinations = false,
-  motif,
 }: LinkBioProps) {
   return (
     <div className={`link-bio link-bio--${theme}`}>
+      <GlyphBackdrop surface="bio" />
       <main className="link-bio-card">
         <header className="link-bio-head">
+          <a className="link-bio-parent" href={MONOLITH_ORIGIN}>
+            MONOLITH <span>PROJECT</span>
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
           <p className="link-bio-kicker">{kicker}</p>
-          {motif && (
-            <div
-              className={`link-bio-motif link-bio-motif--${motif}`}
-              aria-hidden="true"
-            />
-          )}
-          {logo ? (
-            <h1 className="link-bio-logo">
-              <img
-                src={logo.src}
-                alt={logo.alt}
-                width={logo.width}
-                height={logo.height}
-              />
-            </h1>
-          ) : (
-            <h1 className="link-bio-title">
-              {title}
-              {titleAccent && <span> {titleAccent}</span>}
-            </h1>
-          )}
+          <h1 className="link-bio-title">
+            {title}
+            {titleAccent && <span>{titleAccent}</span>}
+          </h1>
           <p className="link-bio-tagline">{tagline}</p>
+          {badge && (
+            <div className="link-bio-status">
+              <span className="link-bio-badge">
+                <span aria-hidden="true" />
+                {badge}
+              </span>
+              {tease && <p>{tease}</p>}
+            </div>
+          )}
         </header>
-
-        {badge && (
-          <div className="link-bio-status">
-            <span className="link-bio-badge">
-              <span className="link-bio-badge-dot" aria-hidden="true" />
-              {badge}
-            </span>
-            {tease && <p>{tease}</p>}
-          </div>
-        )}
-
-        <nav className="link-bio-links" aria-label={`${title} links`}>
+        <nav
+          className="link-bio-links"
+          aria-label={`${title} ${titleAccent || ""} links`}
+        >
           {links.map(link => (
             <BioLink
-              key={`${link.label}-${link.href}`}
+              key={link.href}
               link={link}
               showDestination={showDestinations}
             />
           ))}
         </nav>
-
+        <a
+          className="link-bio-network"
+          href={MONOLITH_ORIGIN + ROUTES.openNetwork}
+        >
+          <span className="link-bio-network-label">
+            <Radio size={16} aria-hidden="true" /> SUNSETS.FM{" "}
+            <span>Coming soon</span>
+          </span>
+          <strong>A wider world of music.</strong>
+          <span>
+            Music, people & places. See what we’re building.
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </span>
+        </a>
+        {notice && (
+          <a className="link-bio-notice" href={notice.href}>
+            <span>
+              <strong>{notice.label}</strong>
+              <small>{notice.detail}</small>
+            </span>
+            <ArrowUpRight size={17} aria-hidden="true" />
+          </a>
+        )}
+        <nav
+          className="link-bio-worlds"
+          aria-label="Explore the Monolith collective"
+        >
+          <p>
+            Explore the collective <ArrowRight size={16} aria-hidden="true" />
+          </p>
+          <div>
+            {Object.values(CAMPAIGN_BIOS).map(world => (
+              <a
+                key={world.theme}
+                href={world.domain + "/"}
+                data-theme={world.theme}
+                aria-current={theme === world.theme ? "page" : undefined}
+              >
+                <i aria-hidden="true" />
+                {world.name}
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        </nav>
         <footer className="link-bio-foot">
           <ul className="link-bio-socials">
             {socials.map(social => (
               <li key={social.href}>
                 <a href={social.href} target="_blank" rel="noopener noreferrer">
                   {social.label}
+                  <ArrowUpRight size={13} aria-hidden="true" />
                 </a>
               </li>
             ))}
           </ul>
           <p>{footnote}</p>
+          <nav aria-label="Legal">
+            <a href={MONOLITH_ORIGIN + ROUTES.privacy}>Privacy</a>
+            <a href={MONOLITH_ORIGIN + ROUTES.terms}>Terms</a>
+          </nav>
         </footer>
       </main>
     </div>

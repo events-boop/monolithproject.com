@@ -1,3 +1,4 @@
+import { isUpcomingEvent } from "@shared/events/lifecycle";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -107,7 +108,10 @@ export default function VIP() {
     () =>
       getPublicEvents()
         .filter(
-          event => event.status !== "past" && Boolean(event.vipPackages?.length)
+          event =>
+            event.confirmationStatus !== "pending" &&
+            isUpcomingEvent(event) &&
+            Boolean(event.vipPackages?.length)
         )
         .sort(
           (left, right) =>
@@ -240,94 +244,143 @@ export default function VIP() {
       ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  if (vipEvents.length === 0)
+    return (
+      <div className="vip-between-shows min-h-screen bg-background text-foreground">
+        <SEO
+          title="VIP & Group Hosting"
+          description="Plan a future Monolith group experience. New packages are announced with confirmed shows."
+          canonicalPath="/vip"
+        />
+        <Navigation />
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="container layout-default page-shell-start-loose px-6 pb-28"
+        >
+          <p className="section-kicker">Good company. A place of your own.</p>
+          <h1>
+            Make a night
+            <br />
+            of it.
+          </h1>
+          <p className="vip-intro">
+            Tables, cabanas, and group hosting take their shape from each room.
+            New packages will appear with the next confirmed show.
+          </p>
+          <div className="vip-between-actions">
+            <Link href="/contact">
+              Talk to the host team <ArrowUpRight size={18} />
+            </Link>
+            <Link href="/newsletter" data-first-access="true">
+              Get First Access <ArrowUpRight size={18} />
+            </Link>
+          </div>
+          <div className="vip-between-details">
+            <div>
+              <h2>Planning for a group?</h2>
+              <p>
+                Share your preferred date, group size, and the kind of night you
+                have in mind. The team can discuss options when a show is
+                announced.
+              </p>
+            </div>
+            <div>
+              <h2>Already have tickets?</h2>
+              <p>
+                For the postponed September show, the ticket-holder update
+                remains the source for next steps.
+              </p>
+              <Link href="/sunsets#event-update">Read the update →</Link>
+            </div>
+          </div>
+          <p className="vip-disclosure">
+            An inquiry does not reserve a table or include admission. Pricing,
+            availability, and entry terms are confirmed for each event.
+          </p>
+        </main>
+      </div>
+    );
+
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+    <div className="relative min-h-screen overflow-hidden bg-background text-foreground lg-dusk-atmosphere">
       <SEO
         title="VIP Experience"
         description="Choose your Monolith event, explore its venue model, compare live VIP packages, and send one clear request to the host."
       />
       <Navigation />
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[58rem] bg-[radial-gradient(circle_at_78%_18%,rgba(238,85,37,0.16),transparent_34%),radial-gradient(circle_at_20%_8%,rgba(255,255,255,0.05),transparent_28%)]" />
-
-      <main
-        id="main-content"
-        tabIndex={-1}
-        className="relative z-10 pb-36"
-      >
+      <main id="main-content" tabIndex={-1} className="relative z-10 pb-36">
         <section className="lg-cinematic-masthead px-4 sm:px-6 mb-24 md:mb-32">
           <div className="container layout-default">
-          <div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="mb-6 block font-mono text-[10px] uppercase tracking-[0.22em] text-primary sm:tracking-[0.3em]">
-                — Elevated access · built around your group
-              </span>
-              <h1 className="mb-8 max-w-none text-balance font-display text-[clamp(2.6rem,5.2vw,4.75rem)] uppercase leading-[0.88] text-white">
-                <span className="block whitespace-nowrap">The VIP</span>
-                <span className="block whitespace-nowrap">Experience</span>
-              </h1>
-              <p className="mb-10 max-w-xl text-lg leading-relaxed text-white/72">
-                Start with the date. Explore the venue, confirm live
-                availability, and choose the package that fits your group before
-                sending one clear request to the host.
-              </p>
-
-              <div className="grid gap-7 sm:grid-cols-2">
-                {perks.map(perk => (
-                  <div key={perk.title}>
-                    <div className="mb-2 flex items-center gap-2 font-display text-lg uppercase text-white">
-                      <perk.icon className="h-4 w-4 text-primary" />{" "}
-                      {perk.title}
-                    </div>
-                    <p className="text-sm leading-relaxed text-white/62">
-                      {perk.desc}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <a
-                href="#vip-dates"
-                className="mt-10 inline-flex items-center gap-2 border-b border-primary/60 pb-2 font-mono text-[10px] font-bold uppercase tracking-[0.24em] text-primary transition hover:border-primary hover:text-white"
+            <div className="grid gap-14 lg:grid-cols-2 lg:items-center lg:gap-20">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
               >
-                Choose your date <ChevronRight className="h-4 w-4" />
-              </a>
-            </motion.div>
+                <span className="section-kicker mb-6 block text-[#f3b572]">
+                  Elevated access · built around your group
+                </span>
+                <h1 className="section-display-title mb-8 max-w-[9ch] text-[#fbf6ee]">
+                  The VIP Experience
+                </h1>
+                <p className="mb-10 max-w-xl text-base leading-relaxed text-[#f4e9d8]/78 md:text-lg">
+                  Start with the date. Explore the venue, confirm live
+                  availability, and choose the package that fits your group
+                  before sending one clear request to the host.
+                </p>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="relative aspect-[4/5] overflow-hidden border border-white/12 bg-white/[0.04]"
-            >
-              <SmartImage
-                src="/images/chasing-sunsets-premium.webp"
-                alt="A private Monolith group experience overlooking the Chicago skyline"
-                priority
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="absolute inset-0 h-full w-full object-cover"
-                containerClassName="absolute inset-0"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/5 to-black/10" />
-              <div className="absolute left-5 top-5 border border-white/20 bg-black/55 px-3 py-2 backdrop-blur-md sm:left-8 sm:top-8">
-                <p className="font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-white/80">
-                  Chicago · Private hosting
-                </p>
-              </div>
-              <div className="absolute inset-x-5 bottom-5 border border-white/12 bg-black/65 p-5 backdrop-blur-md sm:inset-x-8 sm:bottom-8 sm:p-6">
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-primary">
-                  Your night, sized correctly
-                </p>
-                <p className="mt-2 font-display text-2xl uppercase text-white sm:text-3xl">
-                  Select · Explore · Request
-                </p>
-              </div>
-            </motion.div>
-          </div>
+                <div className="grid gap-7 sm:grid-cols-2">
+                  {perks.map(perk => (
+                    <div key={perk.title}>
+                      <div className="mb-2 flex items-center gap-2 font-display text-lg uppercase text-[#fbf6ee]">
+                        <perk.icon className="h-4 w-4 text-[#f3a659]" />{" "}
+                        {perk.title}
+                      </div>
+                      <p className="text-sm leading-relaxed text-white/62">
+                        {perk.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <a href="#vip-dates" className="lg-pill-amber mt-10">
+                  <span>Choose your date</span>
+                  <ChevronRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.15 }}
+                className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-[rgba(255,228,194,0.18)] bg-[#0d0c0b] shadow-[0_28px_64px_rgba(0,0,0,0.45)]"
+              >
+                <SmartImage
+                  src="/images/chasing-sunsets-premium.webp"
+                  alt="A private Monolith group experience overlooking the Chicago skyline"
+                  priority
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="absolute inset-0 h-full w-full object-cover object-top origin-top"
+                  containerClassName="absolute inset-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/5 to-black/10" />
+                <div className="absolute left-5 top-5 rounded-full border border-[rgba(255,228,194,0.22)] bg-black/55 px-3 py-2 backdrop-blur-md sm:left-8 sm:top-8">
+                  <p className="font-mono text-[9px] font-bold uppercase tracking-[0.24em] text-[#f8efe2]">
+                    Chicago · Private hosting
+                  </p>
+                </div>
+                <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-[rgba(255,228,194,0.16)] bg-black/65 p-5 backdrop-blur-md sm:inset-x-8 sm:bottom-8 sm:p-6">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#f3b572]">
+                    Your night, sized correctly
+                  </p>
+                  <p className="mt-2 font-display text-2xl uppercase text-[#fbf6ee] sm:text-3xl">
+                    Select · Explore · Request
+                  </p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 

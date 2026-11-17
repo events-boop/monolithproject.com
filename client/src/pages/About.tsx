@@ -1,3 +1,4 @@
+import ProjectStories from "@/components/ProjectStories";
 import { useRef, useState, useEffect } from "react";
 import {
   AnimatePresence,
@@ -146,12 +147,12 @@ export default function About() {
                 preload="metadata"
                 src={activeHeroVideo}
                 className="w-full h-full object-cover scale-105"
-                poster="/images/hero-monolith.webp"
+                poster="/images/archive/chasing-sunsets/css-s3-1.jpg"
               />
             ) : (
               <ResponsiveImage
-                src="/images/hero-monolith.webp"
-                alt="The Monolith Project hero image at dusk"
+                src="/images/archive/chasing-sunsets/css-s3-1.jpg"
+                alt="A Chasing Sun(Sets) crowd by the Chicago lakefront"
                 priority
                 sizes="100vw"
                 loading="eager"
@@ -197,7 +198,7 @@ export default function About() {
                 transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                 className="section-display-title max-w-[10ch] break-words text-white drop-shadow-[0_0_50px_rgba(0,0,0,0.8)]"
               >
-                MONOLITH
+                Made in Chicago.
               </motion.h1>
               <BrandTranslatorLabel className="mt-5" tone="neutral">
                 Chicago Music Company
@@ -222,6 +223,7 @@ export default function About() {
             </motion.div>
           </div>
         </section>
+        <ProjectStories />
 
         {/* Philosophy / Story Section */}
         <section className="relative py-40 px-6 z-30" id="story">

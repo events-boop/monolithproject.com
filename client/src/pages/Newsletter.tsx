@@ -1,3 +1,4 @@
+import WorldEtching from "@/components/WorldEtching";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -38,6 +39,7 @@ export default function Newsletter() {
           className="first-access-hero page-shell-start-loose"
           aria-labelledby="first-access-title"
         >
+          <WorldEtching />
           <div className="container layout-wide first-access-hero-grid">
             <div className="first-access-intro">
               <p className="first-access-kicker">
@@ -49,43 +51,48 @@ export default function Newsletter() {
                 <br />
                 to know.
               </h1>
-              <a
-                href={hostedForms.newsletter || "#newsletter-signup"}
-                target={hostedForms.newsletter ? "_blank" : undefined}
-                rel={hostedForms.newsletter ? "noopener noreferrer" : undefined}
-                data-first-access="true"
-                className="first-access-primary editorial-action"
-              >
-                Get First Access
-                {hostedForms.newsletter && (
-                  <span className="sr-only"> (opens in a new tab)</span>
-                )}
-                <ArrowUpRight size={20} aria-hidden="true" />
-              </a>
+              <p className="first-access-description">
+                The next room. The next artist. The next recording you keep
+                coming back to. Stay close to what moves you.
+              </p>
             </div>
-            <figure className="first-access-signal">
-              <img
-                src="/brand/sunsets-fm/sunsets-fm-warm-signal-master.svg"
-                width={1974}
-                height={1974}
-                alt="SUNSETS.FM — gold sunset arc above the original waveform"
-              />
-              <figcaption>
-                <p>One signal. Infinite connections.</p>
+            <div
+              className="first-access-choice"
+              aria-label="Choose your updates"
+            >
+              <p className="first-access-kicker">Choose what brings you here</p>
+              <article id="newsletter-signup">
+                <span>01 / The nights</span>
+                <h2>Be in the room.</h2>
+                <p>
+                  Lineup announcements, ticket windows, and show updates from
+                  Monolith.
+                </p>
+                <a
+                  href={hostedForms.newsletter || "#newsletter"}
+                  target={hostedForms.newsletter ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  data-first-access="true"
+                >
+                  Get First Access <ArrowUpRight size={18} />
+                </a>
+              </article>
+              <article id="radio-updates">
+                <span>02 / The music</span>
+                <h2>Keep listening.</h2>
+                <p>New radio sessions and music updates from SUNSETS.FM.</p>
                 <a
                   href={hostedForms.radio}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Get music updates
-                  <span className="sr-only">
-                    {" "}
-                    from SUNSETS.FM (opens in a new tab)
-                  </span>
-                  <ArrowUpRight size={16} aria-hidden="true" />
+                  Get music updates <ArrowUpRight size={18} />
                 </a>
-              </figcaption>
-            </figure>
+              </article>
+              <p className="first-access-choice-note">
+                Each opens its own signup form. Choose the updates you want.
+              </p>
+            </div>
           </div>
           <div className="container layout-wide first-access-programmes">
             <ProgrammeLinks />

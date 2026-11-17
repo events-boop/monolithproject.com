@@ -159,6 +159,9 @@ function toKb(bytes) {
 }
 
 function getWidthsForImage(baseName) {
+  if (baseName.startsWith("media-chasing-radio-")) {
+    return [160, 320, 640, 1024];
+  }
   const desktopWidths = desktopWidthsByBaseName.get(baseName);
   if (desktopWidths) return desktopWidths;
 

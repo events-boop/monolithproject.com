@@ -11,10 +11,7 @@ import {
   getArtistRecording,
   getArtistAudioTrack,
 } from "@/lib/artistEventDiscovery";
-import {
-  buildGoogleCalendarUrl,
-  downloadEventCalendar,
-} from "@/lib/calendar";
+import { buildGoogleCalendarUrl, downloadEventCalendar } from "@/lib/calendar";
 import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
 import { capturePostHogEvent } from "@/lib/posthog";
 import { useEffect } from "react";
@@ -221,7 +218,12 @@ export default function EventDetails() {
   const isHouseOfFriendsPopup = event.id === "hof-kashmir-jul31";
   const usesEntryLanguage =
     event.series === "monolith-project" && !event.ticketUrl;
-  const isPastEvent = event.status === "past";
+  const isPending = event.confirmationStatus === "pending";
+  const isPastEvent =
+    event.status === "past" &&
+    !isPending &&
+    !postponed &&
+    event.eventStatus !== "EventCancelled";
   const isDisrupted = postponed || event.eventStatus === "EventCancelled";
   const archiveHref =
     event.recapUrl ||
@@ -262,7 +264,9 @@ export default function EventDetails() {
         },
         {
           label: event.capacity ? "Scale" : "Archive Record",
-          value: event.capacity || "Recap & gallery indexed",
+          value:
+            event.capacity ||
+            (event.archiveSlug ? "Gallery available" : "Event record"),
           icon: <Camera className="h-4 w-4" />,
         },
       ]
@@ -425,7 +429,8 @@ export default function EventDetails() {
                 </div>
                 {event.lineup && (
                   <div className="flex items-center gap-2">
-                    <Star className="w-4 h-4 text-[#f3b572] shrink-0" /> {event.lineup}
+                    <Star className="w-4 h-4 text-[#f3b572] shrink-0" />{" "}
+                    {event.lineup}
                   </div>
                 )}
                 {!isPastEvent &&
@@ -509,40 +514,57 @@ export default function EventDetails() {
               </div>
             </div>
           )}
-              {isPastEvent && (
-                <div className="mx-auto mt-6 flex w-full max-w-7xl flex-col justify-between gap-6 border border-[#E8B86D]/35 bg-[#11100e] p-6 md:flex-row md:items-center md:p-8">
-                  <div className="max-w-2xl">
-                    <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
-                      Verified Chapter Receipt
-                    </p>
-                    <p className="font-display text-2xl uppercase tracking-tight text-white">
-                      {event.date} · {venueLabel}
-                      {event.capacity ? ` · ${event.capacity}` : ""}
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-white/75">
-                      This chapter is part of the permanent Monolith Project
-                      archive. Explore the room gallery, lineup dossier, or join
-                      the signal for upcoming dates.
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    <Link
-                      href={archiveHref}
-                      className="inline-flex min-h-11 items-center gap-2 rounded bg-[#E8B86D] px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black transition hover:bg-[#f0c784]"
-                    >
-                      View Chapter Recap <ArrowUpRight size={15} aria-hidden="true" />
-                    </Link>
-                    <Link
-                      href="/newsletter"
-                      className="inline-flex min-h-11 items-center rounded border border-white/25 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-white/90 hover:border-white/50"
-                    >
-                      Notify Me Next Date
-                    </Link>
-                  </div>
-                </div>
-              )}
+          {isPastEvent && (
+            <div className="mx-auto mt-6 flex w-full max-w-7xl flex-col justify-between gap-6 border border-[#E8B86D]/35 bg-[#11100e] p-6 md:flex-row md:items-center md:p-8">
+              <div className="max-w-2xl">
+                <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.28em] text-[#E8B86D]">
+                  From the archive
+                </p>
+                <p className="font-display text-2xl uppercase tracking-tight text-white">
+                  {event.date} · {venueLabel}
+                  {event.capacity ? ` · ${event.capacity}` : ""}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-white/75">
+                  This chapter is part of the permanent Monolith Project
+                  archive. Explore the room gallery, lineup dossier, or join the
+                  signal for upcoming dates.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  href={archiveHref}
+                  className="inline-flex min-h-11 items-center gap-2 rounded bg-[#E8B86D] px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-black transition hover:bg-[#f0c784]"
+                >
+                  {event.archiveSlug
+                    ? "View Chapter Recap"
+                    : "Explore the Archive"}{" "}
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </Link>
+                <Link
+                  href="/newsletter"
+                  className="inline-flex min-h-11 items-center rounded border border-white/25 px-5 py-2.5 text-xs font-bold uppercase tracking-[0.16em] text-white/90 hover:border-white/50"
+                >
+                  Notify Me Next Date
+                </Link>
+              </div>
+            </div>
+          )}
         </section>
 
+        {isPending && (
+          <aside
+            className="event-pending-note container layout-wide px-6"
+            aria-label="Event status"
+          >
+            <p className="section-kicker">Unconfirmed announcement</p>
+            <h2>Details were never confirmed.</h2>
+            <p>
+              {event.eventNotice ||
+                "This page preserves a provisional announcement. A completed performance, venue, and ticket sale have not been confirmed."}
+            </p>
+            <Link href="/schedule">See the current calendar →</Link>
+          </aside>
+        )}
         <div className="relative z-10 max-w-7xl mx-auto w-full px-6 xl:px-12 py-28 md:py-36 grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-24">
           <div className="lg:col-span-7 flex flex-col gap-20 md:gap-24">
             {eventArtists.length > 0 && (
@@ -570,8 +592,8 @@ export default function EventDetails() {
                     const audioTrack = getArtistAudioTrack(artist);
                     const isPlayingTrack = Boolean(
                       audioTrack &&
-                        audio?.activeTrack?.src === audioTrack.src &&
-                        audio.isPlaying
+                      audio?.activeTrack?.src === audioTrack.src &&
+                      audio.isPlaying
                     );
                     return (
                       <article className="event-artist-card" key={artist.id}>
@@ -587,8 +609,7 @@ export default function EventDetails() {
                             height={750}
                             sizes="(min-width: 1024px) 220px, (min-width: 640px) 40vw, 80vw"
                             style={{
-                              objectPosition:
-                                artist.imagePosition || "50% 0%",
+                              objectPosition: artist.imagePosition || "50% 0%",
                             }}
                           />
                         </Link>
@@ -735,7 +756,9 @@ export default function EventDetails() {
                     id="event-ticket-releases"
                     className="font-mono text-[10px] tracking-[0.4em] text-white/70 uppercase mb-8 border-b border-white/10 pb-4"
                   >
-                    {isPastEvent ? "Historical Ticket Tiers" : "Ticket Releases"}
+                    {isPastEvent
+                      ? "Historical Ticket Tiers"
+                      : "Ticket Releases"}
                   </h3>
                   <div className="grid gap-4 sm:grid-cols-2">
                     {event.ticketTiers.map(tier => (
@@ -1016,7 +1039,9 @@ export default function EventDetails() {
         {/* Chicago Room & Arrival Concierge */}
         <section className="relative z-10 px-6 pb-12 xl:px-12">
           <div className="mx-auto w-full max-w-7xl">
-            <RoomConciergeCard event={event} compact={isPastEvent} />
+            {!isPending && !isDisrupted && (
+              <RoomConciergeCard event={event} compact={isPastEvent} />
+            )}
           </div>
         </section>
 

@@ -1,4 +1,5 @@
 import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
+import GlyphBackdrop from "./GlyphBackdrop";
 import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import {
@@ -74,7 +75,7 @@ const links: FooterLinkGroup[] = [
       { name: "Untold Story", href: ROUTES.untoldStory },
       { name: "Chasing Sunsets Radio", href: ROUTES.radio },
       { name: "SUNSETS.FM", href: ROUTES.sunsetsFM },
-      { name: "Open Network", href: ROUTES.openNetwork, fullPage: true },
+      { name: "Open Network", href: ROUTES.openNetwork },
     ],
   },
   {
@@ -137,6 +138,7 @@ export default function Footer() {
           : "MONOLITH";
   return (
     <footer className="site-footer-refined" data-brand={brand}>
+      <GlyphBackdrop surface="footer" />
       <div className="container layout-wide">
         <div className="footer-refined-grid">
           <div className="footer-refined-brand">
@@ -210,17 +212,6 @@ export default function Footer() {
         ref={signatureRef}
         className="footer-mega-wordmark"
         aria-hidden="true"
-        onMouseMove={event => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          event.currentTarget.style.setProperty(
-            "--mouse-x",
-            `${event.clientX - rect.left}px`
-          );
-          event.currentTarget.style.setProperty(
-            "--mouse-y",
-            `${event.clientY - rect.top}px`
-          );
-        }}
       >
         <motion.div
           className="footer-mega-text"
@@ -230,6 +221,7 @@ export default function Footer() {
               : { scale: textScale, y: textY, opacity: textOpacity }
           }
         >
+          <span className="footer-mega-glow">{title}</span>
           <span className="footer-mega-fill">{title}</span>
           <span className="footer-mega-outline">{title}</span>
         </motion.div>

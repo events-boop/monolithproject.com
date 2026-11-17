@@ -1,11 +1,6 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useParams } from "wouter";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Instagram,
   Globe,
@@ -24,7 +19,6 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
-import WordScrubReveal from "@/components/ui/WordScrubReveal";
 import MagneticButton from "@/components/MagneticButton";
 import { ARTISTS } from "@/data/artists";
 import { getEventPillToneClass } from "@/lib/ctaTone";
@@ -67,6 +61,8 @@ export default function ArtistProfile() {
   const [, setLocation] = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
   const [lightboxIndex, setLightboxIndex] = useState(-1);
+  const audio = useOptionalGlobalAudio();
+  const passport = useSavedPassport();
 
   const resolvedId = resolveArtistId(id);
   const artist = resolvedId ? ARTISTS[resolvedId] : undefined;
@@ -75,15 +71,6 @@ export default function ArtistProfile() {
     : id
       ? `/artists/${id}`
       : "/lineup";
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const heroImageY = useTransform(scrollYProgress, [0, 0.5], ["0%", "18%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.42], [1, 0.14]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.45], [1, 1.06]);
 
   useEffect(() => {
     if (!id || !resolvedId) return;
@@ -202,9 +189,9 @@ export default function ArtistProfile() {
   };
   const artistRecording = getArtistRecording(artist);
   const inlineAudioTrack = getArtistAudioTrack(artist);
-  const audio = useOptionalGlobalAudio();
-  const passport = useSavedPassport();
-  const isArtistSaved = Boolean(resolvedId && passport.artists.includes(resolvedId));
+  const isArtistSaved = Boolean(
+    resolvedId && passport.artists.includes(resolvedId)
+  );
   const isArtistTrackActive = Boolean(
     inlineAudioTrack && audio?.activeTrack?.src === inlineAudioTrack.src
   );
@@ -226,19 +213,17 @@ export default function ArtistProfile() {
     { label: "Spotify", href: artist.socials.spotify, icon: Music },
   ].filter(link => link.href);
 
-  const galleryMedia = useMemo<MediaItem[]>(
-    () =>
-      (artist.gallery ?? []).map((photo, index) => ({
-        id: `${artist.id}-gallery-${index}`,
-        kind: "image" as const,
-        src: photo.src,
-        width: 2560,
-        height: 3840,
-        alt: photo.alt,
-        caption: photo.alt,
-        credit: artist.galleryCredit,
-      })),
-    [artist.gallery, artist.galleryCredit, artist.id]
+  const galleryMedia: MediaItem[] = (artist.gallery ?? []).map(
+    (photo, index) => ({
+      id: `${artist.id}-gallery-${index}`,
+      kind: "image" as const,
+      src: photo.src,
+      width: 2560,
+      height: 3840,
+      alt: photo.alt,
+      caption: photo.alt,
+      credit: artist.galleryCredit,
+    })
   );
 
   return (
@@ -260,260 +245,98 @@ export default function ArtistProfile() {
       </div>
 
       <main id="main-content" tabIndex={-1}>
-        {/* Full-Viewport Cinematic Liquid-Glass Artist Stage */}
-        <section className="artist-profile-hero relative w-full flex flex-col justify-between overflow-hidden px-4 sm:px-6 lg:px-10 bg-[#050505]">
-          <motion.div
-            style={{ y: heroImageY, scale: heroScale, opacity: heroOpacity }}
-            className="artist-profile-media absolute inset-0 z-0 h-full w-full origin-top"
-          >
-            {/* Layer 1: Seamless dark charcoal-to-obsidian studio stage */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background: `radial-gradient(ellipse 46% 62% at 72% 48%, rgba(44, 42, 42, 0.72) 0%, rgba(16, 15, 16, 0.45) 54%, #050505 84%), radial-gradient(ellipse 56% 44% at 22% 84%, ${accentColor}2c 0%, rgba(243,166,89,0.11) 42%, transparent 74%)`,
-              }}
-            />
-
-            {/* Layer 2: Uncropped Headroom-Safe Portrait Stage — generous open studio air between the top HUD and the artist's head */}
-            <div
-              className="artist-profile-portrait-stage absolute inset-x-0 bottom-0 pointer-events-none flex justify-center md:justify-end md:pr-[4vw] xl:pr-[7vw]"
-              style={{
-                top: "calc(var(--shell-nav-offset, 16px) + var(--shell-nav-height, 96px) + clamp(36px, 5vh, 68px))",
-              }}
-            >
+        <section className="artist-editorial-hero container layout-wide">
+          <Link href="/artists" className="artist-roster-back">
+            <ArrowLeft size={16} aria-hidden="true" /> The artists
+          </Link>
+          <div className="artist-editorial-stage">
+            <div className="artist-editorial-portrait">
               <ResponsiveImage
                 src={artist.image}
                 alt={artist.name}
                 priority
-                sizes="(min-width: 1024px) 62vw, 100vw"
-                style={{ objectPosition: "50% 0%" }}
-                className="artist-profile-key-portrait h-full w-auto max-w-full object-contain object-top"
+                sizes="(min-width: 900px) 48vw, 100vw"
+                className="w-full h-full object-contain object-bottom"
               />
             </div>
-
-            {/* Directional cinematic vignette: anchors bottom console without darkening the top of the head */}
-            <div
-              className="absolute inset-0 z-10 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(5,5,5,0.28) 0%, rgba(5,5,5,0) 18%, rgba(5,5,5,0.12) 62%, rgba(5,5,5,0.88) 88%, #050505 100%), linear-gradient(90deg, #050505 0%, rgba(5,5,5,0.78) 26%, rgba(5,5,5,0.18) 48%, rgba(5,5,5,0) 72%, rgba(5,5,5,0.48) 100%)",
-              }}
-            />
-          </motion.div>
-
-          {/* Subtle Monolith celestial orbital arc */}
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 1440 900"
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-0 z-10 h-full w-full opacity-35"
-          >
-            <path
-              d="M -120 760 Q 680 120 1560 640"
-              fill="none"
-              stroke="rgba(255, 226, 188, 0.24)"
-              strokeWidth="1"
-            />
-          </svg>
-
-          {/* Top-left subtle roster return link */}
-          <div className="container layout-wide relative z-20 pt-2 md:pt-4">
-            <Link
-              href="/artists"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-white/80 backdrop-blur-md transition-colors hover:border-[#f3a659]/50 hover:text-white"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-              <span>All Artists</span>
-            </Link>
-          </div>
-
-          {/* Open cinematic breathing room so the artist portrait commands the stage */}
-          <div className="flex-1 min-h-[18vh]" aria-hidden="true" />
-
-          {/* Bottom Horizon Stage + Smoked Liquid-Glass Dossier Console */}
-          <div className="container layout-wide relative z-20">
-            <motion.div
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.95, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="flex flex-wrap items-center gap-3 mb-4 md:mb-5">
-                <span
-                  className="font-mono text-[10.5px] tracking-[0.34em] uppercase px-4 py-1.5 rounded-full border bg-black/45 backdrop-blur-md"
-                  style={{
-                    color: accentColor,
-                    borderColor: `${accentColor}55`,
-                  }}
-                >
-                  {primarySeries === "sunsets-radio"
-                    ? "Chasing Sunsets Radio"
-                    : getSeriesLabel(primarySeries)}
-                </span>
-
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.26em] text-[#fbf6ee]/90 backdrop-blur-md">
-                  {artist.role === "RESIDENT" && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#f3a659] shadow-[0_0_8px_#f3a659] animate-pulse" />
-                  )}
-                  <span>
-                    {artist.role === "RESIDENT"
-                      ? "Monolith Resident · Season 01"
-                      : artist.role === "HEADLINER"
-                        ? "Headliner · Featured Roster"
-                        : artist.role}
-                  </span>
-                </span>
-              </div>
-
-              <h1 className="font-display uppercase tracking-tight text-[#fbf6ee] drop-shadow-[0_18px_48px_rgba(0,0,0,0.72)] mb-6 md:mb-7">
-                {artist.name}
-              </h1>
-
-              {/* Smoked Liquid-Glass Horizon Console */}
-              <div className="lg-glass-card rounded-2xl p-5 sm:px-7 sm:py-5 flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
-                <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-                  <div className="flex flex-col gap-1">
-                    <span className="font-mono text-[10px] tracking-[0.3em] text-[#f3c68f]/80 uppercase">
-                      Based In
-                    </span>
-                    <span className="font-mono text-xs uppercase tracking-[0.16em] text-[#fbf6ee] flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-[#f3b572]" aria-hidden="true" />
-                      {artist.origin}
-                    </span>
-                  </div>
-
-                  <div className="hidden sm:block h-8 w-px bg-white/12" aria-hidden="true" />
-
-                  <div className="flex flex-col gap-1">
-                    <span className="font-mono text-[10px] tracking-[0.3em] text-[#f3c68f]/80 uppercase">
-                      Sound
-                    </span>
-                    <span className="font-mono text-xs uppercase tracking-[0.16em] text-[#fbf6ee] flex items-center gap-2">
-                      <Music className="w-3.5 h-3.5 text-[#f3b572]" aria-hidden="true" />
-                      {artist.genre}
-                    </span>
-                  </div>
-
-                  <div className="hidden md:block h-8 w-px bg-white/12" aria-hidden="true" />
-
-                  <div className="flex flex-col gap-1">
-                    <span className="font-mono text-[10px] tracking-[0.3em] text-[#f3c68f]/80 uppercase">
-                      Standing
-                    </span>
-                    <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/85">
-                      {artist.role === "RESIDENT"
-                        ? "Core Resident · Active"
-                        : artist.role === "HEADLINER"
-                          ? "Featured Booking"
-                          : artist.role}
-                    </span>
-                  </div>
+            <div className="artist-editorial-intro">
+              <p className="artist-editorial-kicker">
+                {primarySeries === "sunsets-radio"
+                  ? "Chasing Sunsets Radio"
+                  : getSeriesLabel(primarySeries)}{" "}
+                <span>/ {artist.role.toLowerCase()}</span>
+              </p>
+              <h1>{artist.name}</h1>
+              <dl className="artist-editorial-facts">
+                <div>
+                  <dt>Based in</dt>
+                  <dd>{artist.origin}</dd>
                 </div>
-
-                <div className="flex flex-wrap items-center gap-3">
-                  {inlineAudioTrack ? (
-                    <MagneticButton strength={0.22}>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (isArtistTrackActive) {
-                            audio?.setPlaying(!isArtistTrackPlaying);
-                          } else {
-                            audio?.loadTrack(inlineAudioTrack);
-                          }
-                        }}
-                        className="lg-pill-amber"
-                      >
-                        <Headphones className="w-4 h-4" aria-hidden="true" />
-                        <span>
-                          {isArtistTrackPlaying
-                            ? "Pause in Deck"
-                            : "Play in Deck"}
-                        </span>
-                        {isArtistTrackPlaying ? (
-                          <Pause className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-                        ) : (
-                          <Play className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-                        )}
-                      </button>
-                    </MagneticButton>
-                  ) : null}
-
-                  <MagneticButton strength={0.25}>
-                    <a
-                      href={recordingHref}
-                      target={
-                        recordingHref.startsWith("http") ? "_blank" : undefined
-                      }
-                      rel={
-                        recordingHref.startsWith("http")
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                      className={inlineAudioTrack ? "lg-pill-glass" : `${primaryPillClass} group`}
-                    >
-                      {recordingLabel}
-                      <Play
-                        className="w-3.5 h-3.5 fill-current"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </MagneticButton>
-
-                  {resolvedId && (
-                    <button
-                      type="button"
-                      onClick={() => toggleSavedArtist(resolvedId)}
-                      aria-label={
-                        isArtistSaved
-                          ? `Remove ${artist.name} from saved artists`
-                          : `Save ${artist.name} to your list`
-                      }
-                      aria-pressed={isArtistSaved}
-                      className={`inline-flex min-h-[44px] px-4 items-center gap-2 rounded-full border transition-all cursor-pointer ${
-                        isArtistSaved
-                          ? "border-[#f3a659]/55 bg-[#f3a659]/18 text-[#ffd8a6]"
-                          : "border-white/18 bg-white/[0.06] backdrop-blur-md text-white/85 hover:border-white/35 hover:text-white"
-                      }`}
-                    >
-                      <Bookmark
-                        className="w-4 h-4"
-                        fill={isArtistSaved ? "currentColor" : "none"}
-                        aria-hidden="true"
-                      />
-                      <span className="font-mono text-[11px] uppercase tracking-[0.14em]">
-                        {isArtistSaved ? "Saved" : "Save"}
-                      </span>
-                    </button>
-                  )}
-
-                  {artist.socials.instagram && (
-                    <MagneticButton strength={0.3}>
-                      <a
-                        href={artist.socials.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${artist.name} on Instagram`}
-                        className="w-11 h-11 rounded-full border border-white/18 flex items-center justify-center bg-white/[0.06] backdrop-blur-md hover:bg-white hover:text-black transition-all"
-                      >
-                        <Instagram className="w-4 h-4" />
-                      </a>
-                    </MagneticButton>
-                  )}
+                <div>
+                  <dt>Sound</dt>
+                  <dd>{artist.genre}</dd>
                 </div>
+              </dl>
+              <div className="artist-editorial-actions">
+                {inlineAudioTrack ? (
+                  <button
+                    type="button"
+                    className="lg-pill-amber"
+                    onClick={() =>
+                      isArtistTrackActive
+                        ? audio?.setPlaying(!isArtistTrackPlaying)
+                        : audio?.loadTrack(inlineAudioTrack)
+                    }
+                  >
+                    {isArtistTrackPlaying ? (
+                      <Pause size={16} />
+                    ) : (
+                      <Play size={16} />
+                    )}{" "}
+                    {isArtistTrackPlaying
+                      ? "Pause recording"
+                      : "Play recording"}
+                  </button>
+                ) : (
+                  <a
+                    href={recordingHref}
+                    target={
+                      recordingHref.startsWith("http") ? "_blank" : undefined
+                    }
+                    rel={
+                      recordingHref.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    className="lg-pill-amber"
+                  >
+                    <Headphones size={16} />
+                    {recordingLabel}
+                  </a>
+                )}
+                {resolvedId && (
+                  <button
+                    type="button"
+                    onClick={() => toggleSavedArtist(resolvedId)}
+                    aria-pressed={isArtistSaved}
+                    aria-label={`${isArtistSaved ? "Unsave" : "Save"} ${artist.name}`}
+                    className="artist-editorial-save"
+                  >
+                    <Bookmark
+                      size={16}
+                      fill={isArtistSaved ? "currentColor" : "none"}
+                    />{" "}
+                    {isArtistSaved ? "Saved" : "Save artist"}
+                  </button>
+                )}
               </div>
-            </motion.div>
+              {inlineAudioTrack && (
+                <a className="artist-editorial-secondary" href={recordingHref}>
+                  {recordingLabel} <ArrowRight size={16} />
+                </a>
+              )}
+            </div>
           </div>
-
-          {/* Scroll Indicator */}
-          <motion.div
-            style={{ opacity: heroOpacity }}
-            className="absolute bottom-8 right-8 z-20 flex-col items-center gap-3 hidden 2xl:flex pointer-events-none"
-          >
-            <span className="font-mono text-[10px] tracking-[0.5em] text-white/60 uppercase vertical-rl">
-              The Roster
-            </span>
-            <div className="w-px h-12 bg-gradient-to-b from-[#f3b572]/60 to-transparent" />
-          </motion.div>
         </section>
 
         {/* Main Content: Bento Glass System */}
@@ -526,14 +349,15 @@ export default function ArtistProfile() {
               <div className="space-y-12">
                 <div className="flex items-center gap-4 text-white/70">
                   <span className="font-mono text-[10px] tracking-[0.4em] uppercase">
-                    01 / Concept
+                    01 / Artist profile
                   </span>
                   <div className="h-px w-20 bg-current" />
                 </div>
-                <WordScrubReveal
-                  text={artist.bio}
-                  className="font-sans text-2xl md:text-3xl lg:text-4xl leading-[1.3] text-white/80 font-light text-balance"
-                />
+                <p className="artist-editorial-bio">
+                  {/bio coming soon/i.test(artist.bio)
+                    ? `Explore ${artist.name}'s music and Monolith appearances below.`
+                    : artist.bio}
+                </p>
                 <div className="flex flex-wrap gap-2 pt-6">
                   {artist.tags.map(tag => (
                     <span
@@ -581,7 +405,7 @@ export default function ArtistProfile() {
                             <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
                               <div className="flex items-center gap-3">
                                 <span className="font-mono text-[10px] tracking-[0.4em] uppercase px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary">
-                                  {evt.badge || evt.status || "UPCOMING"}
+                                  {evt.badge || evt.status || "Appearance"}
                                 </span>
                                 <span className="font-mono text-[10px] tracking-[0.3em] text-white/50 uppercase">
                                   {evt.date}
@@ -603,27 +427,31 @@ export default function ArtistProfile() {
                             )}
 
                             <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/5">
-                              {evt.ticketUrl && (
-                                <MagneticButton strength={0.25}>
-                                  <a
-                                    href={evt.ticketUrl}
-                                    target={
-                                      evt.ticketUrl.startsWith("http")
-                                        ? "_blank"
-                                        : "_self"
-                                    }
-                                    rel={
-                                      evt.ticketUrl.startsWith("http")
-                                        ? "noreferrer"
-                                        : undefined
-                                    }
-                                    className="btn-pill-monolith group inline-flex items-center gap-2"
-                                  >
-                                    <span>Get Tickets</span>
-                                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                                  </a>
-                                </MagneticButton>
-                              )}
+                              {evt.ticketUrl &&
+                                Date.parse(evt.date) > Date.now() &&
+                                !/postponed|cancelled/i.test(
+                                  `${evt.badge} ${evt.status}`
+                                ) && (
+                                  <MagneticButton strength={0.25}>
+                                    <a
+                                      href={evt.ticketUrl}
+                                      target={
+                                        evt.ticketUrl.startsWith("http")
+                                          ? "_blank"
+                                          : "_self"
+                                      }
+                                      rel={
+                                        evt.ticketUrl.startsWith("http")
+                                          ? "noreferrer"
+                                          : undefined
+                                      }
+                                      className="btn-pill-monolith group inline-flex items-center gap-2"
+                                    >
+                                      <span>Get Tickets</span>
+                                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                                    </a>
+                                  </MagneticButton>
+                                )}
 
                               {evt.eventUrl && (
                                 <Link href={evt.eventUrl} asChild>
@@ -722,9 +550,7 @@ export default function ArtistProfile() {
                     {artist.gallery.map((photo, i) => {
                       const isLandscape = photo.orientation === "landscape";
                       const isFeaturedBento =
-                        artist.gallery!.length >= 3 &&
-                        i === 0 &&
-                        !isLandscape;
+                        artist.gallery!.length >= 3 && i === 0 && !isLandscape;
                       return (
                         <motion.button
                           key={photo.src}
@@ -748,8 +574,7 @@ export default function ArtistProfile() {
                                 : "(min-width: 1024px) 36vw, 60vw"
                             }
                             style={{
-                              objectPosition:
-                                photo.objectPosition || "50% 0%",
+                              objectPosition: photo.objectPosition || "50% 0%",
                             }}
                             className={`w-full h-full object-top origin-top group-hover:scale-[1.03] transition-transform duration-700 ${
                               photo.fit === "contain" || isLandscape
@@ -846,7 +671,7 @@ export default function ArtistProfile() {
                     {artist.tracks.map((track, i) => (
                       <div
                         key={track.title}
-                        className="group flex items-center justify-between p-8 bg-[#050505] hover:bg-white/[0.02] transition-colors duration-500 cursor-pointer"
+                        className="group flex items-center justify-between p-8 bg-[#050505]"
                       >
                         <div className="flex items-center gap-8">
                           <span className="font-mono text-xs text-white/70 group-hover:text-primary transition-colors">
@@ -865,9 +690,6 @@ export default function ArtistProfile() {
                           <span className="font-mono text-xs text-white/70">
                             {track.duration}
                           </span>
-                          <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-500">
-                            <Play className="w-4 h-4 text-white/70 group-hover:text-black fill-current" />
-                          </div>
                         </div>
                       </div>
                     ))}

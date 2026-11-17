@@ -62,7 +62,7 @@ export default function Contact() {
         description="Get in touch with The Monolith Project for bookings, partnerships, and general inquiries."
         canonicalPath="/contact"
       />
-      <Navigation />
+      <Navigation variant="dark" />
 
       {/* Atmosphere */}
       <div className="pointer-events-none fixed inset-0 z-0 atmo-surface opacity-35" />
@@ -79,7 +79,7 @@ export default function Contact() {
               <span className="section-kicker text-[#f3b572] block mb-5">
                 Get In Touch
               </span>
-              <h1 className="section-display-title text-foreground">CONTACT</h1>
+              <h1 className="section-display-title text-foreground">Contact</h1>
               <p className="mt-6 text-foreground/80 text-base md:text-xl leading-relaxed max-w-2xl">
                 Use the form for general inquiries, or jump directly to booking,
                 partners, or legal.

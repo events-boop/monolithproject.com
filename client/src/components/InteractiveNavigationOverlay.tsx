@@ -42,8 +42,10 @@ import MagneticButton from "./MagneticButton";
 import { ROUTES } from "@shared/routes";
 import { HOME_NEXT_CHAPTER } from "@shared/home-next-chapter";
 import ResponsiveImage from "./ResponsiveImage";
+import GlyphBackdrop from "./GlyphBackdrop";
 import { useUI } from "@/contexts/UIContext";
 import { useSavedPassport } from "@/lib/savedPassport";
+import "@/styles/menu-overlay.css";
 
 interface InteractiveNavigationOverlayProps {
   activePath: string;
@@ -318,91 +320,104 @@ export default function InteractiveNavigationOverlay({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={reduceMotion ? undefined : { opacity: 0, y: -12, scale: 0.99 }}
         transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-        className="relative h-full min-h-[30rem] overflow-hidden rounded-[2rem] border border-white/10 bg-black/60 shadow-[0_34px_90px_rgba(0,0,0,0.42)]"
+        className="lg-menu-preview"
         style={accentStyle}
       >
-        <ResponsiveImage
-          src={view.image}
-          alt={view.previewTitle}
-          sizes="(min-width: 768px) 50vw, 100vw"
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-68 transition-transform duration-700 ease-out"
-          decoding="async"
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_18%,color-mix(in_srgb,var(--chapter-accent)_32%,transparent),transparent_34%),linear-gradient(90deg,rgba(0,0,0,0.82),rgba(0,0,0,0.24)),linear-gradient(0deg,rgba(0,0,0,0.92),transparent_58%)]" />
-        <div className="absolute right-8 top-8 rounded-full border border-white/20 bg-black/45 px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/80 backdrop-blur-md">
-          {view.status}
-        </div>
-
-        <div className="relative z-10 flex h-full flex-col justify-end p-7 md:p-9">
-          <div className="mb-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/60 backdrop-blur-md">
-            <PrimaryIcon
-              className="h-3.5 w-3.5"
-              style={{ color: view.accent }}
-            />
-            {view.eyebrow}
-          </div>
-
-          <div className="max-w-2xl">
+        <div className="lg-menu-preview-copy">
+          <div>
+            <div className="lg-menu-status">
+              <PrimaryIcon
+                className="h-3.5 w-3.5"
+                style={{ color: view.accent }}
+              />
+              {view.eyebrow}
+            </div>
             <p
-              className="mb-4 max-w-xl font-mono text-[11px] font-bold uppercase tracking-[0.3em]"
+              className="lg-menu-preview-tagline"
               style={{ color: view.accent }}
             >
               {view.tagline}
             </p>
-            <h2 className="font-display text-[clamp(2.5rem,4.8vw,5.8rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
-              {view.previewTitle}
-            </h2>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70 md:text-lg">
-              {view.description}
-            </p>
-
+            <h2 className="lg-menu-preview-title">{view.previewTitle}</h2>
+            <p className="lg-menu-preview-body">{view.description}</p>
             {view.meta.length > 0 && (
-              <div className="mt-6 flex flex-wrap gap-2">
+              <div className="lg-menu-preview-meta">
                 {view.meta.slice(0, 3).map(item => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-white/10 bg-black/36 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-white/70"
-                  >
+                  <span key={item} className="lg-menu-chip">
                     {item}
                   </span>
                 ))}
               </div>
             )}
+          </div>
 
-            <div className="mt-7 flex flex-col gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="lg-menu-preview-footer">
+            <div className="flex min-w-0 flex-col gap-3">
               {view.id === "sunsets-fm" ? (
                 <a
                   href={SUNSETS_FM_SITE}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={handleLinkClick(SUNSETS_FM_SITE)}
-                  className="inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold text-[#e8b86d] underline underline-offset-4 hover:text-white focus-visible:outline focus-visible:outline-2"
+                  className="inline-flex min-h-11 items-center gap-2 font-mono text-xs font-bold text-[#f3b572] underline underline-offset-4 hover:text-white focus-visible:outline focus-visible:outline-2"
                 >
                   Visit sunsets.fm
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                 </a>
               ) : (
-                <p className="max-w-sm font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
-                  {view.proof}
-                </p>
+                <p className="lg-menu-proof">{view.proof}</p>
               )}
-              <a
-                href={view.primaryHref}
-                target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
-                rel={
-                  isExternalHref(view.primaryHref)
-                    ? "noopener noreferrer"
-                    : undefined
-                }
-                onClick={handleLinkClick(view.primaryHref)}
-                className="btn-pill-monolith btn-pill-compact"
-              >
-                {view.primaryLabel}
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
+              {view.secondaryLinks.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {view.secondaryLinks.slice(0, 2).map(link => (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target={isExternalHref(link.href) ? "_blank" : undefined}
+                      rel={
+                        isExternalHref(link.href)
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                      onClick={handleLinkClick(link.href)}
+                      className="lg-pill-glass !min-h-[36px] !px-3.5 !py-1.5"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
+            <a
+              href={view.primaryHref}
+              target={isExternalHref(view.primaryHref) ? "_blank" : undefined}
+              rel={
+                isExternalHref(view.primaryHref)
+                  ? "noopener noreferrer"
+                  : undefined
+              }
+              onClick={handleLinkClick(view.primaryHref)}
+              className="lg-btn-amber shrink-0"
+            >
+              <span>{view.primaryLabel}</span>
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
           </div>
+        </div>
+
+        <div className="lg-menu-preview-media">
+          <ResponsiveImage
+            src={view.image}
+            alt={view.previewTitle}
+            sizes="(min-width: 1100px) 28vw, 50vw"
+            loading="lazy"
+            style={{ objectPosition: "50% 0%" }}
+            className="h-full w-full object-cover object-top origin-top"
+            decoding="async"
+          />
+          <span className="absolute right-4 top-4 z-10 rounded-full border border-[rgba(255,228,194,0.22)] bg-black/55 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-[#f8efe2] backdrop-blur-md">
+            {view.status}
+          </span>
         </div>
       </motion.article>
     );
@@ -419,76 +434,73 @@ export default function InteractiveNavigationOverlay({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.22 }}
-      className="fixed inset-0 z-[10005] overflow-y-auto bg-[#030305] text-white backdrop-blur-2xl"
+      className="lg-menu-overlay fixed inset-0 z-[10005] overflow-y-auto bg-[#070608] text-[#fbf6ee] backdrop-blur-2xl"
       onKeyDown={handleDialogKeyDown}
       style={{
-        background:
-          "radial-gradient(circle at 16% 12%, rgba(224,90,58,0.14), transparent 30%), radial-gradient(circle at 82% 20%, rgba(34,211,238,0.12), transparent 32%), linear-gradient(135deg, rgba(3,3,5,0.995), rgba(7,7,11,0.998) 45%, rgba(1,1,3,1))",
         paddingTop:
           "calc(var(--shell-nav-offset) + var(--shell-nav-height) + 0.75rem)",
         paddingBottom: "max(1.5rem, env(safe-area-inset-bottom, 0px))",
       }}
     >
-      <div className="pointer-events-none fixed inset-0 bg-[#030305]" />
-      <div
-        className="pointer-events-none fixed inset-0"
-        style={{
-          background:
-            "radial-gradient(circle at 16% 12%, rgba(224,90,58,0.16), transparent 30%), radial-gradient(circle at 82% 20%, rgba(34,211,238,0.13), transparent 32%), linear-gradient(135deg, rgba(3,3,5,0.98), rgba(7,7,11,0.995) 45%, rgba(1,1,3,1))",
-        }}
-      />
-      <div className="pointer-events-none fixed inset-0 bg-noise opacity-55" />
-      <div className="pointer-events-none fixed inset-x-0 top-0 h-48 bg-gradient-to-b from-black/78 to-transparent" />
+      <GlyphBackdrop surface="menu" />
 
-      <div className="fixed right-5 top-5 z-20 md:right-8 md:top-8">
-        <MagneticButton>
-          <button
-            type="button"
-            onClick={() => {
-              signalChirp.click();
-              onClose();
-            }}
-            aria-label="Close navigation menu"
-            ref={closeButtonRef}
-            data-cursor-text="CLOSE"
-            className="rounded-full border border-white/10 bg-white/[0.06] p-3 text-white/60 backdrop-blur-md transition-colors hover:bg-white hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-          >
-            <X size={24} />
-          </button>
-        </MagneticButton>
-      </div>
-
-      <div className="relative z-10 mx-auto flex min-h-[calc(100svh-var(--shell-nav-height)-3rem)] w-full max-w-[1800px] flex-col px-4 py-6 sm:px-6 lg:px-10">
-        <header className="mb-6 flex flex-col gap-5 border-b border-white/10 pb-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-white/70">
-              Explore Monolith
-            </p>
-            <h1 className="mt-2 font-display text-[clamp(2rem,4.2vw,4.35rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
-              Shows, radio & the network
-            </h1>
-          </div>
-          <Link
-            href={HOME_NEXT_CHAPTER.signupHref}
-            onClick={onClose}
-            data-first-access="true"
-            className="group flex min-h-14 shrink-0 items-center justify-between gap-5 rounded-2xl bg-[#e8b86d] px-5 py-3 text-[#17110a] transition-colors hover:bg-[#f8d8a0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e8b86d]"
-          >
-            <span>
-              <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.16em]">
-                {HOME_NEXT_CHAPTER.year} / {HOME_NEXT_CHAPTER.signupLabel}
-              </span>
-              <span className="block text-base leading-tight">
-                Get First Access
-              </span>
-            </span>
-            <ArrowUpRight className="h-5 w-5 shrink-0" aria-hidden="true" />
-          </Link>
-        </header>
-        <nav
-          aria-label="Main pages"
-          className="mb-6 flex flex-wrap gap-2 lg:hidden"
+      <MagneticButton>
+        <button
+          type="button"
+          onClick={() => {
+            signalChirp.click();
+            onClose();
+          }}
+          aria-label="Close navigation menu"
+          ref={closeButtonRef}
+          data-cursor-text="CLOSE"
+          className="lg-menu-close"
         >
+          <X size={22} />
+        </button>
+      </MagneticButton>
+
+      <div className="lg-menu-stage">
+        <header className="lg-menu-header">
+          <div>
+            <p className="lg-menu-kicker">Explore Monolith</p>
+            <h1 className="lg-menu-title">Shows, radio & the network</h1>
+          </div>
+          <div className="lg-menu-header-actions">
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                openCommandPalette();
+              }}
+              className="lg-pill-glass hidden md:inline-flex"
+            >
+              <Search className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>Search</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                openDrawer("saved");
+              }}
+              className="lg-pill-glass hidden md:inline-flex"
+            >
+              <Bookmark className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>Saved ({savedPassport.total})</span>
+            </button>
+            <Link
+              href={HOME_NEXT_CHAPTER.signupHref}
+              onClick={onClose}
+              data-first-access="true"
+              className="lg-btn-amber"
+            >
+              <span>{HOME_NEXT_CHAPTER.year} · Get First Access</span>
+              <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </Link>
+          </div>
+        </header>
+        <nav aria-label="Main pages" className="lg-menu-mobile-quick">
           <button
             type="button"
             onClick={() => {
@@ -529,17 +541,14 @@ export default function InteractiveNavigationOverlay({
                 isExternalHref(link.href) ? "noopener noreferrer" : undefined
               }
               onClick={handleLinkClick(link.href)}
-              className="btn-pill-outline btn-pill-compact"
+              className="lg-pill-glass !min-h-[38px] !px-3.5 !py-1.5"
             >
               {link.label}
             </a>
           ))}
         </nav>
-        <div className="hidden min-h-[30rem] flex-1 grid-cols-[minmax(18rem,0.68fr)_minmax(0,1.32fr)] gap-6 lg:grid 2xl:gap-8">
-          <nav
-            aria-label="Primary worlds"
-            className="flex flex-col justify-center gap-1.5"
-          >
+        <div className="lg-menu-desktop">
+          <nav aria-label="Primary worlds" className="lg-menu-chapters">
             {navigationChapters.map((chapter, index) => {
               const isActive = chapter.id === activeChapterId;
               const Icon = chapterIconMap[chapter.id] ?? Sparkles;
@@ -570,37 +579,22 @@ export default function InteractiveNavigationOverlay({
                   }}
                   onFocus={() => setActiveChapterId(chapter.id)}
                   onClick={handleLinkClick(view.primaryHref)}
-                  className={cn(
-                    "group relative overflow-hidden rounded-3xl border px-4 py-3 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60",
-                    isActive
-                      ? "border-white/20 bg-white/[0.08] shadow-[0_18px_45px_rgba(0,0,0,0.26)]"
-                      : "border-white/10 bg-white/[0.025] hover:border-white/20 hover:bg-white/[0.05]"
-                  )}
+                  className={cn("lg-menu-chapter", isActive && "is-active")}
                   style={
                     { "--chapter-accent": chapter.accent } as CSSProperties
                   }
                 >
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "absolute inset-y-3 left-0 w-[3px] rounded-full transition-opacity duration-300",
-                      isActive
-                        ? "opacity-100"
-                        : "opacity-0 group-hover:opacity-60"
-                    )}
-                    style={{ background: chapter.accent }}
-                  />
-                  <span className="flex items-center justify-between gap-4">
+                  <span className="lg-menu-chapter-row">
                     <span>
-                      <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-white/70">
+                      <span className="lg-menu-chapter-meta">
                         {String(index + 1).padStart(2, "0")} / {chapter.eyebrow}
                       </span>
-                      <span className="block font-display text-[clamp(1.55rem,2.55vw,3.45rem)] uppercase leading-[0.8] tracking-[-0.04em] text-white">
+                      <span className="lg-menu-chapter-label">
                         {chapter.label}
                       </span>
                     </span>
                     <Icon
-                      className="h-5 w-5 shrink-0 opacity-45 transition-opacity group-hover:opacity-90"
+                      className="h-5 w-5 shrink-0 opacity-55 transition-opacity group-hover:opacity-95"
                       style={{ color: chapter.accent }}
                     />
                   </span>
@@ -609,14 +603,14 @@ export default function InteractiveNavigationOverlay({
             })}
           </nav>
 
-          <div className="relative">
+          <div className="relative min-h-0">
             <AnimatePresence mode="wait">
               {renderPreview(activeView)}
             </AnimatePresence>
           </div>
         </div>
 
-        <div className="space-y-3 lg:hidden">
+        <div className="lg-menu-mobile">
           {navigationChapters.map((chapter, index) => {
             const isExpanded = expandedChapterId === chapter.id;
             const view = resolveChapterView(chapter, ticketHref);
@@ -632,7 +626,10 @@ export default function InteractiveNavigationOverlay({
                   duration: 0.34,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035]"
+                className={cn(
+                  "lg-menu-mobile-chapter",
+                  isExpanded && "is-expanded"
+                )}
                 style={{ "--chapter-accent": chapter.accent } as CSSProperties}
               >
                 <button
@@ -643,18 +640,18 @@ export default function InteractiveNavigationOverlay({
                     setExpandedChapterId(isExpanded ? null : chapter.id);
                   }}
                   aria-expanded={isExpanded}
-                  className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                  className="lg-menu-mobile-trigger"
                 >
                   <span>
-                    <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.25em] text-white/70">
+                    <span className="lg-menu-mobile-meta">
                       {String(index + 1).padStart(2, "0")} / {chapter.eyebrow}
                     </span>
-                    <span className="font-display text-[clamp(2rem,9vw,3.6rem)] uppercase leading-[0.82] tracking-[-0.04em] text-white">
+                    <span className="lg-menu-mobile-label">
                       {chapter.label}
                     </span>
                   </span>
                   <Icon
-                    className="h-5 w-5 shrink-0"
+                    className="h-5 w-5 shrink-0 opacity-70"
                     style={{ color: chapter.accent }}
                   />
                 </button>
@@ -670,37 +667,32 @@ export default function InteractiveNavigationOverlay({
                       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-3 pb-3">
-                        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black">
+                      <div className="lg-menu-mobile-panel">
+                        <div className="lg-menu-mobile-media">
                           <ResponsiveImage
                             src={view.image}
                             alt={view.label}
                             sizes="100vw"
-                            className="h-48 w-full object-cover opacity-72"
+                            style={{ objectPosition: "50% 0%" }}
+                            className="object-cover object-top origin-top"
                             loading="lazy"
                             decoding="async"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/28 to-transparent" />
-                          <div className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
+                          <span className="lg-menu-mobile-status">
                             {view.status}
-                          </div>
-                          <div className="relative z-10 p-4 pt-28">
-                            <p
-                              className="font-mono text-[10px] font-bold uppercase tracking-[0.2em]"
-                              style={{ color: view.accent }}
-                            >
+                          </span>
+                          <div className="lg-menu-mobile-copy">
+                            <p className="lg-menu-mobile-tagline">
                               {view.tagline}
                             </p>
-                            <h2 className="mt-2 font-display text-3xl uppercase leading-[0.88] tracking-[-0.04em] text-white">
+                            <h2 className="lg-menu-mobile-title">
                               {view.previewTitle}
                             </h2>
-                            <p className="mt-3 text-sm leading-relaxed text-white/70">
+                            <p className="lg-menu-mobile-body">
                               {view.description}
                             </p>
-                            <p className="mt-4 border-t border-white/10 pt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">
-                              {view.proof}
-                            </p>
-                            <div className="mt-4 flex flex-col gap-2">
+                            <p className="lg-menu-mobile-proof">{view.proof}</p>
+                            <div className="lg-menu-mobile-actions">
                               <a
                                 href={view.primaryHref}
                                 target={
@@ -714,12 +706,12 @@ export default function InteractiveNavigationOverlay({
                                     : undefined
                                 }
                                 onClick={handleLinkClick(view.primaryHref)}
-                                className="btn-pill-monolith btn-pill-compact"
+                                className="lg-btn-amber"
                               >
-                                {view.primaryLabel}
+                                <span>{view.primaryLabel}</span>
                                 <ArrowUpRight className="h-4 w-4" />
                               </a>
-                              <div className="grid grid-cols-2 gap-2">
+                              <div className="lg-menu-mobile-secondary">
                                 {view.secondaryLinks.slice(0, 2).map(link => (
                                   <a
                                     key={link.href}
@@ -735,7 +727,7 @@ export default function InteractiveNavigationOverlay({
                                         : undefined
                                     }
                                     onClick={handleLinkClick(link.href)}
-                                    className="btn-pill-outline btn-pill-compact text-center"
+                                    className="lg-pill-glass !min-h-[42px] text-center"
                                   >
                                     {link.label}
                                   </a>
@@ -752,16 +744,13 @@ export default function InteractiveNavigationOverlay({
             );
           })}
         </div>
-        <nav
-          aria-label="Utility links"
-          className="mt-8 grid grid-cols-2 gap-2 border-t border-white/20 pt-6 sm:flex sm:flex-wrap"
-        >
+        <nav aria-label="Utility links" className="lg-menu-utilities">
           {utilityLinks.map(link => (
             <a
               key={link.href}
               href={link.href}
               onClick={handleLinkClick(link.href)}
-              className="btn-pill-outline btn-pill-compact flex justify-center text-center"
+              className="lg-menu-utility"
             >
               {link.label}
             </a>

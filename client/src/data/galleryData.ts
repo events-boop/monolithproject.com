@@ -45,6 +45,8 @@ export interface ArchiveCollection {
   accentColor: string;
   coverImage: string;
   date: string;
+  /** Documented venue; season compilations may span several rooms. */
+  venue?: string;
   media: MediaItem[];
   /** A tracked handoff to the photographer's complete hosted collection. */
   externalGallery?: ArchiveExternalGallery;
@@ -496,6 +498,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     accentColor: "#E8B86D",
     coverImage: "/images/artists/gene-farris/gene-farris-portrait.jpg",
     date: "August 22, 2026",
+    venue: "Castaways Beach Club",
     comingSoon: true,
     media: [
       image({
@@ -535,6 +538,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     accentColor: "#E8B86D",
     coverImage: "/images/events/ape-drums-july31-card.jpg",
     date: "July 31, 2026",
+    venue: "Kashmir",
     comingSoon: true,
     media: [
       image({
@@ -578,6 +582,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     accentColor: "#E8B86D",
     coverImage: "/images/sunsets-hero-beach.jpg",
     date: "July 4, 2026",
+    venue: "Castaways Beach Club",
     comingSoon: true,
     journalHref: "/insights/recap-sunsets-i-july-4-castaways",
     media: [
@@ -679,6 +684,7 @@ export const archiveCollectionsBySlug: Record<string, ArchiveCollection> = {
     accentColor: "#FFFFFF",
     coverImage: "/images/autograf-recap.jpg",
     date: "March 21, 2026",
+    venue: "Alhambra Palace",
     media: autografSpecial,
     externalGallery: {
       href: "/go/gallery/autograf-mar21",

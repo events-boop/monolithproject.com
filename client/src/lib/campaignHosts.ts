@@ -31,7 +31,7 @@ export function resolveCampaignHostPath(host: string, location: string) {
     return ROUTES.untoldVip;
   }
   if (normalizedLocation === ROUTES.home && isHouseOfFriendsHost) {
-    return ROUTES.houseOfFriends;
+    return ROUTES.houseOfFriendsBio;
   }
   if (normalizedLocation === "/apply" && isHouseOfFriendsHost) {
     return ROUTES.houseOfFriendsApply;

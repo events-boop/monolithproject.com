@@ -156,6 +156,13 @@ export function getPublishedEventState(
     archiveUrl: archivePath(event),
   };
 
+  if (
+    event.confirmationStatus === "pending" &&
+    event.eventStatus !== "EventPostponed" &&
+    event.eventStatus !== "EventCancelled"
+  ) {
+    return { kind: "first-access", listed: false, cta: "get-first-access" };
+  }
   if (event.status === "past") return past;
   if (event.eventStatus === "EventCancelled")
     return disrupted("cancelled", event);
@@ -267,7 +274,7 @@ export function getPublishedCatalogue<T extends ScheduledEvent>(
     if (state.kind === "past") past.push(entry);
     else if (state.kind === "postponed" || state.kind === "cancelled")
       notices.push(entry);
-    else upcoming.push(entry);
+    else if (state.listed) upcoming.push(entry);
   }
 
   upcoming.sort(soonestFirst);

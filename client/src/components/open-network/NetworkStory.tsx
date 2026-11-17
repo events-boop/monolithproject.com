@@ -1,8 +1,10 @@
 // Adapted from the approved Open Network page; rendered inside the Monolith shell.
+import WorldEtching from "@/components/WorldEtching";
 
 export function NetworkHero({ onListen }: { onListen: () => void }) {
   return (
     <section className="hero" aria-labelledby="hero-title">
+      <WorldEtching />
       <div className="hero-orbits" aria-hidden="true">
         <i></i>
         <i></i>

@@ -107,7 +107,7 @@
   grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
   gap: 24px;
   padding: 28px 0;
-  border-bottom: 1px solid #f4ecd92e;
+  border-bottom: 1px solid rgba(255, 228, 194, 0.14);
 }
 #app-shell .schedule-discovery-search label {
   display: grid;
@@ -115,9 +115,9 @@
   min-width: 0;
 }
 #app-shell .schedule-discovery-search label > span {
-  color: #bfb5a5;
-  font: 500 11px/1.5 var(--font-mono);
-  letter-spacing: 0.08em;
+  color: #d8ab83;
+  font: 600 11px/1.5 var(--font-mono);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 #app-shell .schedule-discovery-search input,
@@ -125,16 +125,26 @@
   width: 100%;
   min-width: 0;
   min-height: 54px;
-  padding: 14px 16px;
-  border: 1px solid #f4ecd94d;
-  border-radius: 5px;
-  background: #161510;
-  color: #f4ecd9;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 228, 194, 0.18);
+  border-radius: 999px;
+  background: rgba(16, 13, 12, 0.62);
+  color: #fbf6ee;
   font: 400 16px/1.5 var(--font-body);
   color-scheme: dark;
+  box-shadow: inset 0 1px 0 rgba(255, 245, 230, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+#app-shell .schedule-discovery-search input:focus,
+#app-shell .schedule-discovery-search select:focus {
+  outline: none;
+  border-color: rgba(243, 166, 89, 0.55);
+  box-shadow: 0 0 0 1px rgba(243, 166, 89, 0.18);
 }
 #app-shell .schedule-discovery-search input::placeholder {
-  color: #aaa195;
+  color: rgba(244, 233, 216, 0.48);
 }
 #app-shell .schedule-result-summary {
   display: flex;

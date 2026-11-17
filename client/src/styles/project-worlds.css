@@ -1,0 +1,1048 @@
+/* The review's charcoal, illuminated relief and fine trim become a shared
+   language. Light changes by project; photography and artwork keep their color. */
+#app-shell {
+  --world-paper: #f3e9dd;
+  --world-muted: #c5bcb2;
+  --world-ground: #0b0c0e;
+  --world-surface: #101113;
+  --world-accent: #e99a73;
+  --world-bright: #f3c4a1;
+  --world-deep: #b9593e;
+  --world-line: #79503e70;
+  --world-glow: #b9593e13;
+  --world-hue: 0deg;
+  --world-display: "General Sans", Arial, sans-serif;
+  --page-display: var(--world-display);
+  background: var(--world-ground);
+}
+#app-shell[data-world="sunsets"] {
+  --world-accent: #f2a38d;
+  --world-bright: #ffd8b5;
+  --world-deep: #d56d64;
+  --world-line: #b5776470;
+  --world-glow: #d8736814;
+  --world-hue: -12deg;
+}
+#app-shell[data-world="untold"] {
+  --world-accent: #c0a5e8;
+  --world-bright: #e4d5fa;
+  --world-deep: #8463b5;
+  --world-line: #9576b866;
+  --world-glow: #9973d312;
+  --world-hue: 238deg;
+}
+#app-shell[data-world="network"] {
+  --world-accent: #93cec8;
+  --world-bright: #d0eee4;
+  --world-deep: #4c9293;
+  --world-line: #6dada966;
+  --world-glow: #76b7b513;
+  --world-hue: 145deg;
+}
+#app-shell[data-world="friends"] {
+  --world-accent: #b8c9a7;
+  --world-bright: #e4ebd5;
+  --world-deep: #869c78;
+  --world-line: #8ca77d66;
+  --world-glow: #9bb58012;
+  --world-hue: 65deg;
+}
+
+#app-shell .world-etching {
+  position: absolute;
+  inset: 0 -6% 0 auto;
+  width: 70%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.85;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 35%,
+    #000 80%,
+    transparent
+  );
+  animation: world-etch-reveal 1.8s ease-out both;
+}
+#app-shell .world-etching img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 48%;
+  filter: hue-rotate(var(--world-hue)) saturate(0.78);
+  mix-blend-mode: screen;
+}
+#app-shell .world-etching::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    var(--world-ground),
+    transparent 28%,
+    transparent 80%,
+    var(--world-ground)
+  );
+}
+@keyframes world-etch-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Generous copy, open space and a single light source, as in the review hero. */
+#app-shell
+  :is(
+    .radio-editorial-heading,
+    .first-access-hero,
+    .chasing-series-hero,
+    .lg-opening-stage
+  ) {
+  position: relative;
+  isolation: isolate;
+}
+#app-shell
+  :is(.radio-editorial-heading, .first-access-hero, .chasing-series-hero)
+  > :not(.world-etching):not(.chasing-series-backdrop) {
+  position: relative;
+  z-index: 2;
+}
+#app-shell .radio-editorial {
+  --radio-accent: var(--world-accent);
+  background: var(--world-ground);
+}
+#app-shell .radio-editorial-heading {
+  padding-block: calc(var(--shell-nav-height, 96px) + 88px) 64px;
+}
+#app-shell .radio-editorial-heading .world-etching {
+  top: 120px;
+  bottom: -24px;
+}
+#app-shell .radio-editorial-heading h1 {
+  max-width: 10ch;
+  font-family: var(--world-display);
+  font-weight: 600;
+  font-size: clamp(64px, 7.6vw, 112px);
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+}
+#app-shell .radio-editorial-heading h1 span,
+#app-shell .first-access-intro h1 span {
+  color: var(--world-bright);
+  background: linear-gradient(110deg, var(--world-bright), var(--world-deep));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#app-shell .radio-editorial-heading > p {
+  max-width: 34ch;
+  color: var(--world-muted);
+}
+#app-shell .radio-topline {
+  color: var(--world-accent);
+}
+#app-shell .radio-feature,
+#app-shell .radio-record,
+#app-shell .radio-network,
+#app-shell .radio-faq details {
+  border-color: var(--world-line);
+}
+#app-shell .radio-record-select {
+  border-color: var(--world-line);
+  border-radius: 6px;
+}
+#app-shell :is(.radio-editorial, .radio-episode-page) .radio-deck-play {
+  background: linear-gradient(120deg, var(--world-bright), var(--world-accent));
+  color: #21130e;
+}
+
+/* Text mastheads share the relief; reading and form areas remain quiet. */
+#app-shell[data-page] main .lg-cinematic-masthead {
+  isolation: isolate;
+  background: var(--world-ground);
+  border-color: var(--world-line);
+}
+#app-shell[data-page] main .lg-cinematic-masthead > .container {
+  position: relative;
+  z-index: 2;
+}
+#app-shell[data-page] main .lg-cinematic-masthead::before {
+  background: radial-gradient(
+    ellipse at 90% 40%,
+    var(--world-glow),
+    transparent 65%
+  );
+}
+#app-shell[data-page] main .lg-cinematic-masthead::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 0;
+  inset: 0 0 0 auto;
+  width: 64%;
+  background: url("/images/world-etchings.webp") 75% 52% / cover no-repeat;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 55%),
+    linear-gradient(0deg, transparent, #000 30%, #000 75%, transparent);
+  mask-composite: intersect;
+  filter: hue-rotate(var(--world-hue)) saturate(0.6);
+  opacity: 0.33;
+  pointer-events: none;
+}
+#app-shell[data-page] main .lg-cinematic-masthead h1 {
+  font-family: var(--world-display);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  text-transform: none;
+}
+#app-shell[data-page] main .lg-cinematic-masthead p {
+  max-width: 54ch;
+}
+#app-shell :is(.lg-pill-amber, .lg-btn-amber, .btn-pill-monolith) {
+  background: linear-gradient(115deg, var(--world-bright), var(--world-accent));
+  border-color: var(--world-line);
+  box-shadow: none;
+  color: #21170f;
+}
+
+/* Series stay photographic, with etched light visible in the empty right side. */
+#app-shell .chasing-series-page {
+  --home-accent: var(--world-accent);
+  background: var(--world-ground);
+  color: var(--world-paper);
+}
+#app-shell .chasing-series-hero {
+  background: var(--world-ground);
+}
+#app-shell .chasing-series-hero .world-etching {
+  z-index: 1;
+  width: 60%;
+  opacity: 0.58;
+}
+#app-shell .chasing-series-hero .chasing-series-backdrop {
+  opacity: 0.44;
+}
+#app-shell .chasing-series-hero::after {
+  background:
+    linear-gradient(90deg, #0b0c0eb3, transparent 55%),
+    linear-gradient(0deg, #0b0c0e, transparent 55%);
+}
+#app-shell .chasing-series-page .home-primary {
+  background: linear-gradient(120deg, var(--world-bright), var(--world-accent));
+  border-color: var(--world-line);
+  color: #20151a;
+  border-radius: 5px;
+}
+#app-shell .chasing-series-page :is(.home-text-link, .home-eyebrow) {
+  color: var(--world-accent);
+}
+#app-shell .chasing-series-page .home-secondary {
+  border-color: var(--world-line);
+  color: var(--world-paper);
+  background: #0b0c0eaa;
+}
+#app-shell
+  .chasing-series-page
+  :is(.chasing-section-nav, .home-etched-band, .home-editorial-section) {
+  border-color: var(--world-line);
+}
+#app-shell .untold-series-page .untold-wordmark h1 {
+  font-family: var(--world-display);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+  background: linear-gradient(110deg, #f3e9dd, var(--world-accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#app-shell .untold-series-page .untold-wordmark > span {
+  color: var(--world-accent);
+}
+#app-shell .monolith-home:not(.chasing-series-page) {
+  background: var(--world-ground);
+}
+#app-shell .home-carousel > .world-etching {
+  inset: 0 -3% 0 auto;
+  width: 56%;
+  z-index: 1;
+  opacity: 0.384; /* Twenty percent softer than the approved 0.48. */
+  mix-blend-mode: screen;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 50%,
+    #000 84%,
+    transparent
+  );
+}
+#app-shell .home-carousel > .world-etching img {
+  position: absolute;
+  top: 50%;
+  height: auto;
+  transform: translateY(-50%);
+  object-fit: contain;
+  object-position: 70% 50%;
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    #000 18%,
+    #000 78%,
+    transparent
+  );
+}
+#app-shell .home-carousel > .world-etching::after {
+  background: linear-gradient(
+    0deg,
+    var(--world-ground),
+    transparent 28%,
+    transparent 86%,
+    var(--world-ground)
+  );
+}
+#app-shell .lg-opening-inner {
+  position: relative;
+  z-index: 2;
+}
+#app-shell .first-access-hero {
+  background: var(--world-ground);
+  overflow: hidden;
+}
+#app-shell .first-access-hero .world-etching {
+  width: 65%;
+  opacity: 0.55;
+}
+#app-shell .first-access-intro h1 {
+  font-family: var(--world-display);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+}
+#app-shell .first-access-choice {
+  border-color: var(--world-line);
+  background: var(--world-surface);
+  border-radius: 8px;
+}
+#app-shell .monolith-network {
+  --green: #0c1415;
+  --deep: #091012;
+  --gold: var(--world-accent);
+  --line: var(--world-line);
+}
+#app-shell .monolith-network .hero {
+  position: relative;
+  isolation: isolate;
+}
+#app-shell .monolith-network .hero .world-etching {
+  opacity: 0.45;
+}
+#app-shell .monolith-network .hero-orbits {
+  opacity: 0.2;
+}
+#app-shell .monolith-network {
+  /* Legacy section styles share this token, including the listening mockup. */
+  --serif: var(--world-display);
+}
+#app-shell .monolith-network h2 {
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+#app-shell .monolith-network :is(h1, h2) em {
+  font-style: normal;
+}
+#app-shell .monolith-network .hero h1 {
+  font-family: var(--world-display);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+}
+#app-shell .monolith-network .hero h1 em {
+  font-style: normal;
+  color: var(--world-accent);
+}
+#app-shell .monolith-home {
+  --editorial-display: var(--world-display);
+}
+#app-shell .monolith-home .home-network-copy h1,
+#app-shell .monolith-home .home-launch-signup h2 {
+  font-family: var(--world-display);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+#app-shell .monolith-home .home-network-copy h1 {
+  font-size: clamp(44px, 5.2vw, 80px);
+}
+#app-shell .monolith-home .home-network-copy h1 em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  color: var(--world-accent);
+}
+#app-shell .monolith-home .lg-hero-shell .monolith-hero-display {
+  font-family: var(--world-display);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+}
+#app-shell .monolith-home .home-network-copy .home-eyebrow {
+  font-family: var(--world-display);
+  color: var(--world-accent);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+#app-shell .monolith-home .home-network-copy .home-network-wordmark {
+  letter-spacing: 0.12em;
+}
+#app-shell[data-page="/sponsors"] .text-muted-foreground {
+  color: #c5bcb2;
+}
+#app-shell .archive-index [aria-pressed="true"] {
+  background: var(--world-accent);
+  border-color: var(--world-line);
+  box-shadow: none;
+}
+
+@media (max-width: 767px) {
+  #app-shell .radio-editorial-heading {
+    padding-top: calc(var(--shell-nav-height, 96px) + 48px);
+    padding-bottom: 36px;
+  }
+  #app-shell .radio-editorial-heading h1 {
+    font-size: clamp(60px, 14vw, 88px);
+    max-width: 8ch;
+  }
+  #app-shell .radio-editorial-heading .world-etching {
+    inset: 105px -20px 0 auto;
+    width: 70%;
+    opacity: 0.26;
+  }
+  #app-shell .radio-topline {
+    font-size: 9px;
+  }
+  #app-shell[data-page] main .lg-cinematic-masthead::after {
+    width: 80%;
+    opacity: 0.14;
+  }
+  #app-shell .chasing-series-hero .world-etching {
+    width: 100%;
+    opacity: 0.3;
+  }
+  #app-shell .first-access-hero .world-etching {
+    width: 90%;
+    opacity: 0.18;
+  }
+  #app-shell .home-carousel > .world-etching {
+    opacity: 0.144;
+    width: 80%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell .world-etching {
+    animation: none;
+  }
+}
+
+#app-shell .radio-editorial-heading h1 {
+  max-width: 900px;
+}
+#app-shell .radio-editorial-heading h1 .radio-title-brand {
+  font-size: 0.58em;
+  letter-spacing: -0.04em;
+  line-height: 1.3;
+  color: var(--world-paper);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+#app-shell .radio-editorial :is(h2, h3) {
+  font-family: var(--world-display);
+}
+#app-shell .chasing-series-page .home-launch-signup .home-secondary {
+  color: #244338;
+  border-color: #24433855;
+}
+#app-shell .archive-discovery {
+  flex-wrap: wrap;
+}
+#app-shell .archive-discovery label {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+@media (max-width: 767px) {
+  #app-shell .radio-editorial-heading h1 {
+    font-size: 76px;
+  }
+  #app-shell .radio-editorial-heading h1 .radio-title-brand {
+    font-size: 0.46em;
+  }
+  #app-shell .archive-discovery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  #app-shell .archive-discovery label,
+  #app-shell .archive-discovery select {
+    width: 100%;
+  }
+}
+.radio-deck-foot:has([role="alert"]) {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.radio-deck-foot > [role="alert"] {
+  flex-basis: 100%;
+  color: #f2bfa5;
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+/* Carry the project palette through the navigation, links and hero controls. */
+#app-shell nav .shell-frame {
+  background: #0b0c0ee8;
+  border-color: #f3e9dd24;
+  box-shadow: 0 12px 36px #0003;
+}
+#app-shell nav :is(.shell-frame, .shell-frame-light) {
+  position: relative;
+  isolation: isolate;
+  border-radius: 20px;
+}
+#app-shell .site-nav-row {
+  position: relative;
+  z-index: 1;
+}
+#app-shell .site-nav-actions {
+  gap: 4px;
+}
+#app-shell
+  .site-nav-actions
+  :is(
+    [data-nav-search-trigger],
+    [data-nav-saved-trigger],
+    [data-nav-menu-toggle]
+  ) {
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  padding-inline: 11px;
+  color: var(--world-paper);
+}
+#app-shell
+  .shell-frame-light
+  .site-nav-actions
+  :is(
+    [data-nav-search-trigger],
+    [data-nav-saved-trigger],
+    [data-nav-menu-toggle]
+  ) {
+  color: #252322;
+}
+#app-shell
+  .site-nav-actions
+  :is(
+    [data-nav-search-trigger],
+    [data-nav-saved-trigger],
+    [data-nav-menu-toggle]
+  ):hover {
+  background: #f3e9dd0c;
+  border-color: #f3e9dd20;
+}
+#app-shell .site-nav-actions :is(a, button):focus-visible {
+  outline: 2px solid var(--world-accent);
+  outline-offset: 3px;
+}
+#app-shell .site-nav-actions [data-nav-menu-toggle][aria-expanded="true"] {
+  color: var(--world-accent);
+}
+#app-shell .site-nav-menu-label {
+  font: 500 13px/1 var(--world-display);
+  letter-spacing: 0;
+  text-transform: none;
+  color: inherit;
+}
+#app-shell .nav-calendar-action > div,
+#app-shell .nav-calendar-action[data-mobile-quick-cta] {
+  min-height: 44px;
+  padding-inline: 13px;
+  border-radius: 8px;
+  gap: 8px;
+}
+#app-shell .nav-calendar-action > div > span {
+  font: 500 13px/1 var(--world-display);
+  letter-spacing: 0;
+  text-transform: capitalize;
+}
+#app-shell .nav-calendar-action > div::before,
+#app-shell .nav-calendar-action > div::after,
+#app-shell .nav-calendar-action > div > svg:last-child {
+  display: none;
+}
+#app-shell .site-nav-actions [data-nav-primary-cta] {
+  margin-inline: 4px;
+}
+@media (min-width: 640px) {
+  #app-shell .site-nav-row {
+    min-height: 62px;
+    padding-block: 8px;
+  }
+}
+#app-shell .site-nav-links {
+  gap: clamp(4px, 0.65vw, 12px);
+}
+#app-shell .site-nav-item {
+  --nav-accent: #e99a73;
+  --nav-ink: var(--world-paper);
+  --nav-muted: var(--world-muted);
+  --nav-surface: #101113;
+  --nav-rule: #f3e9dd20;
+  gap: 0;
+}
+#app-shell .site-nav-item[data-section="sunsets"] {
+  --nav-accent: #f2a38d;
+}
+#app-shell .site-nav-item[data-section="untold"] {
+  --nav-accent: #c0a5e8;
+}
+#app-shell .site-nav-item[data-appearance="light"] {
+  --nav-ink: #252322;
+  --nav-muted: #615951;
+  --nav-surface: #f3e9dd;
+  --nav-rule: #25232224;
+  --nav-accent: #8c412e;
+}
+#app-shell .site-nav-link,
+#app-shell .site-nav-disclosure {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  color: var(--nav-ink);
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+#app-shell .site-nav-link {
+  position: relative;
+  padding: 0 5px;
+  font: 600 12px/1 var(--world-display);
+  letter-spacing: 0.055em;
+  text-decoration: none;
+}
+#app-shell .site-nav-link::after {
+  content: "";
+  position: absolute;
+  inset: auto 5px 5px;
+  height: 1px;
+  background: var(--nav-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+#app-shell .site-nav-disclosure {
+  width: 24px;
+  border-radius: 6px;
+  color: var(--nav-muted);
+}
+#app-shell
+  .site-nav-item:is(:hover, :focus-within, [data-active])
+  .site-nav-link,
+#app-shell .site-nav-disclosure[aria-expanded="true"] {
+  color: var(--nav-accent);
+}
+#app-shell
+  .site-nav-item:is(:hover, :focus-within, [data-active])
+  .site-nav-link::after {
+  transform: scaleX(1);
+}
+#app-shell .site-nav-disclosure:hover {
+  background: var(--nav-rule);
+}
+#app-shell .site-nav-panel {
+  white-space: normal;
+  width: min(620px, calc(100vw - 32px));
+  padding: 8px;
+  border: 1px solid var(--nav-rule);
+  border-radius: 14px;
+  background: var(--nav-surface);
+  box-shadow: 0 24px 60px #0005;
+}
+/* Bridge the visual gap so the hover panel stays reachable at any pointer speed. */
+#app-shell .site-nav-panel::before {
+  content: "";
+  position: absolute;
+  inset: -14px 0 auto;
+  height: 14px;
+}
+#app-shell .site-nav-panel > .absolute {
+  display: none;
+}
+#app-shell .site-nav-panel > .flex {
+  min-height: 0;
+  border-radius: 8px;
+}
+#app-shell .site-nav-directory {
+  width: 52%;
+  padding: 22px 18px;
+  gap: 16px;
+}
+#app-shell .site-nav-directory > span {
+  color: var(--nav-accent);
+  font: 600 11px/1.5 var(--world-display);
+  letter-spacing: 0.1em;
+}
+#app-shell .site-nav-directory ul {
+  gap: 0;
+}
+#app-shell .site-nav-menu-link {
+  min-height: 44px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--nav-rule);
+  color: var(--nav-ink);
+  font: 500 14px/1.35 var(--world-display);
+  letter-spacing: 0;
+}
+#app-shell .site-nav-menu-link:hover {
+  color: var(--nav-accent);
+  border-color: var(--nav-accent);
+  transform: none;
+}
+#app-shell .site-nav-menu-link svg {
+  color: var(--nav-accent);
+}
+#app-shell .site-nav-directory + div {
+  width: 48%;
+}
+#app-shell .site-nav-feature {
+  max-height: 300px;
+  border-radius: 8px;
+  border-color: #f3e9dd20;
+  box-shadow: none;
+}
+#app-shell .site-nav-feature h3 {
+  font-family: var(--world-display);
+  letter-spacing: -0.035em;
+}
+#app-shell .site-nav-feature > .pointer-events-none {
+  display: none;
+}
+#app-shell .site-nav-feature p {
+  color: var(--nav-accent);
+}
+#app-shell .site-nav-feature a {
+  min-height: 44px;
+  border-color: #f3e9dd50;
+  border-radius: 6px;
+  color: var(--world-paper);
+  background: #0b0c0e;
+  box-shadow: none;
+}
+#app-shell .site-nav-feature a span {
+  font: 600 12px/1.3 var(--world-display);
+  letter-spacing: 0.02em;
+}
+#app-shell .site-nav-item :is(a, button):focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: 3px;
+}
+#app-shell .monolith-home .home-carousel.lg-hero-shell {
+  --lg-amber: var(--world-accent);
+  --lg-amber-bright: var(--world-bright);
+  --lg-amber-deep: var(--world-deep);
+  --lg-ivory: var(--world-paper);
+}
+#app-shell .home-carousel[data-active-slide="sunsets-fm"] {
+  --world-accent: #93cec8;
+  --world-bright: #d0eee4;
+  --world-hue: 145deg;
+}
+#app-shell .home-carousel[data-active-slide="chasing-radio"] {
+  --world-accent: #f2a38d;
+  --world-bright: #ffd8b5;
+  --world-hue: -12deg;
+}
+#app-shell .home-carousel > .world-etching img {
+  transition: filter 1.2s ease;
+}
+#app-shell .lg-radio-backdrop {
+  background:
+    radial-gradient(ellipse 65% 60% at 78% 38%, #d56d6428, transparent 72%),
+    var(--world-ground);
+}
+#app-shell .lg-scene-readout {
+  font-family: var(--world-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--world-muted);
+}
+#app-shell .lg-opening-awareness {
+  gap: 12px 24px;
+  border-color: var(--world-line);
+}
+#app-shell .lg-opening-awareness a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--world-paper);
+  font: 500 13px/1.4 var(--world-display);
+  letter-spacing: 0.04em;
+}
+#app-shell .lg-opening-awareness a::after {
+  background: var(--world-accent);
+}
+#app-shell .lg-slide-selectors {
+  gap: 2px;
+  padding: 4px;
+  border-radius: 10px;
+  border-color: #f3e9dd24;
+  background: #0b0c0ee8;
+}
+#app-shell .lg-slide-selectors button {
+  --selector-accent: var(--world-accent);
+  min-height: 44px;
+  padding-inline: 13px;
+  border-radius: 6px;
+  font: 500 12px/1.3 var(--world-display);
+  letter-spacing: 0;
+  color: var(--world-muted);
+}
+#app-shell .lg-slide-selectors button:nth-child(3) {
+  --selector-accent: #93cec8;
+}
+#app-shell .lg-slide-selectors button:nth-child(4) {
+  --selector-accent: #f2a38d;
+}
+#app-shell .lg-slide-selectors button[aria-current="true"] {
+  background: #f3e9dd0e;
+  color: var(--world-paper);
+  box-shadow: inset 0 -1px var(--selector-accent);
+}
+#app-shell .lg-selector-num {
+  color: var(--selector-accent);
+}
+#app-shell .lg-selector-dot {
+  border-color: var(--selector-accent);
+}
+#app-shell .lg-slide-selectors button[aria-current="true"] .lg-selector-dot {
+  background: var(--selector-accent);
+  border-color: var(--selector-accent);
+  box-shadow: none;
+}
+#app-shell .home-entry-points {
+  background: linear-gradient(180deg, var(--world-ground), #101113);
+  border-color: #f3e9dd1a;
+}
+#app-shell .home-entry-link {
+  color: var(--world-paper);
+  border-color: #f3e9dd1a;
+}
+#app-shell .home-entry-link:is(:hover, :focus-visible),
+#app-shell .home-entry-access {
+  background: linear-gradient(150deg, var(--world-glow), transparent);
+  box-shadow: none;
+}
+#app-shell .home-entry-label {
+  color: var(--world-accent);
+  font-family: var(--world-display);
+}
+#app-shell .home-entry-action {
+  color: var(--world-paper);
+  border-color: #f3e9dd26;
+}
+#app-shell .home-entry-action svg {
+  color: var(--world-accent);
+}
+#app-shell .home-entry-link:focus-visible {
+  outline: 2px solid var(--world-accent);
+  outline-offset: -3px;
+}
+@media (max-width: 639px) {
+  #app-shell .lg-slide-selectors {
+    flex: 1 1 100%;
+  }
+  #app-shell .lg-slide-selectors button {
+    flex: 1;
+    padding-inline: 5px;
+    font-size: 11px;
+  }
+  #app-shell .lg-selector-label {
+    display: inline;
+  }
+  #app-shell .lg-hud-actions {
+    margin-left: auto;
+  }
+}
+@media (min-width: 1280px) and (max-width: 1399px) {
+  #app-shell .site-nav-brand {
+    margin-right: 16px;
+  }
+  #app-shell .site-nav-links {
+    gap: 4px;
+  }
+  #app-shell .site-nav-link {
+    font-size: 11.5px;
+    letter-spacing: 0.03em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell .site-nav-item *,
+  #app-shell .lg-slide-selectors *,
+  #app-shell .home-carousel > .world-etching img {
+    transition: none;
+  }
+}
+
+/* The supplied wall closes the page; the same relief quietly carries into navigation. */
+#app-shell .glyph-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: screen;
+}
+#app-shell .glyph-backdrop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 48%;
+  filter: sepia(1) saturate(0.75) hue-rotate(calc(var(--world-hue) - 12deg));
+}
+#app-shell .glyph-backdrop-nav {
+  left: 56%;
+  opacity: 0.12;
+  border-radius: inherit;
+  mask-image: linear-gradient(90deg, transparent, #000 75%);
+}
+#app-shell .glyph-backdrop-nav img {
+  object-position: 50% 38%;
+}
+#app-shell .site-footer-refined {
+  position: relative;
+  isolation: isolate;
+  background: var(--world-ground);
+  border-top-color: var(--world-line);
+}
+#app-shell .site-footer-refined > .container,
+#app-shell .footer-mega-wordmark {
+  position: relative;
+  z-index: 1;
+}
+#app-shell .glyph-backdrop-footer {
+  left: 22%;
+  opacity: 0.36;
+  mask-image: linear-gradient(90deg, transparent, #000 72%);
+}
+#app-shell .glyph-backdrop-footer img {
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    #000 24%,
+    #000 85%,
+    transparent
+  );
+}
+#app-shell .footer-mega-text {
+  font-family: var(--world-display);
+  font-weight: 600;
+  letter-spacing: -0.065em;
+}
+#app-shell .footer-mega-wordmark::before {
+  background: radial-gradient(
+    ellipse 48% 55% at 50% 64%,
+    var(--world-deep),
+    transparent 75%
+  );
+  opacity: 0.18;
+}
+#app-shell .footer-mega-glow {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  text-shadow:
+    0 0 24px var(--world-accent),
+    0 0 56px var(--world-deep);
+  opacity: 0.28;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  #app-shell .footer-mega-glow {
+    transition: opacity 0.4s ease;
+  }
+  #app-shell .footer-mega-wordmark:hover .footer-mega-glow {
+    opacity: 0.48;
+  }
+  #app-shell .footer-mega-wordmark:hover::before {
+    opacity: 0.25;
+  }
+}
+@media (max-width: 767px) {
+  #app-shell .footer-mega-glow {
+    opacity: 0.2;
+    text-shadow: 0 0 18px var(--world-accent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell .footer-mega-glow {
+    transition: none;
+  }
+}
+#app-shell .lg-menu-overlay {
+  --font-hero: var(--world-display);
+  --font-mono: var(--world-display);
+  --menu-amber: var(--world-accent);
+  --menu-ivory: var(--world-paper);
+  --menu-muted: var(--world-muted);
+  --menu-border: var(--world-line);
+  background:
+    radial-gradient(ellipse at 90% 20%, var(--world-glow), transparent 60%),
+    var(--world-ground);
+}
+#app-shell .glyph-backdrop-menu {
+  position: fixed;
+  left: 24%;
+  opacity: 0.24;
+  mask-image: linear-gradient(90deg, transparent, #000 65%);
+}
+#app-shell .glyph-backdrop-menu img {
+  mask-image: linear-gradient(
+    180deg,
+    transparent,
+    #000 20%,
+    #000 85%,
+    transparent
+  );
+}
+#app-shell .lg-menu-title {
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.055em;
+  text-transform: none;
+}
+@media (max-width: 767px) {
+  #app-shell .glyph-backdrop-nav {
+    left: 42%;
+    opacity: 0.1;
+  }
+  #app-shell .glyph-backdrop-footer {
+    left: 0;
+    opacity: 0.25;
+  }
+  #app-shell .glyph-backdrop-footer img {
+    object-position: 68% 48%;
+  }
+  #app-shell .glyph-backdrop-menu {
+    left: 0;
+    opacity: 0.14;
+  }
+  #app-shell .lg-menu-header-actions > button {
+    display: none;
+  }
+  #app-shell .lg-menu-mobile-quick > :is(a, button) {
+    min-height: 44px !important;
+  }
+}

@@ -11,7 +11,7 @@
  *   2. draft               → no ticketUrl (no accidental checkout paths).
  *   3. event window ended  → status must be "past" within 24h of endsAt.
  *      (This is the rule that catches a stale July 4 still "on-sale".)
- *      EventPostponed / EventCancelled records are exempt.
+ *      Postponed, cancelled, and unconfirmed proposals are exempt.
  *   4. past                → warn when no archiveSlug/recapUrl; the recap
  *      is the sponsor receipt.
  *
@@ -25,7 +25,10 @@ import type { ScheduledEvent } from "../shared/events/types";
 
 const MONEY_STATUSES = new Set(["on-sale", "sold-out"]);
 const PAST_GRACE_MS = 24 * 60 * 60 * 1000;
-const ARCHIVE_EXEMPT_EVENT_STATUSES = new Set(["EventPostponed", "EventCancelled"]);
+const ARCHIVE_EXEMPT_EVENT_STATUSES = new Set([
+  "EventPostponed",
+  "EventCancelled",
+]);
 
 const errors: string[] = [];
 const warnings: string[] = [];
@@ -46,6 +49,16 @@ for (const event of upcomingEvents) {
   const tag = `[${event.id} → ${event.status}]`;
   const gates = event.gates;
 
+  // A provisional announcement cannot be sold or represented as a performance.
+  if (event.confirmationStatus === "pending") {
+    if (MONEY_STATUSES.has(event.status) || event.status === "past")
+      errors.push(`${tag} unconfirmed proposal cannot be on sale or completed`);
+    if (event.ticketUrl || event.recapUrl || event.archiveSlug)
+      errors.push(
+        `${tag} unconfirmed proposal carries a checkout or recap receipt`
+      );
+  }
+
   // Rule 1: money states must be proven.
   if (MONEY_STATUSES.has(event.status)) {
     if (!gates) {
@@ -65,7 +78,9 @@ for (const event of upcomingEvents) {
 
   // Rule 2: drafts stay clean.
   if (event.status === "draft" && event.ticketUrl) {
-    errors.push(`${tag} draft event carries a ticketUrl — remove it or change status`);
+    errors.push(
+      `${tag} draft event carries a ticketUrl — remove it or change status`
+    );
   }
 
   // Rule 3: finished events must be archived. Postponed and cancelled events
@@ -77,6 +92,7 @@ for (const event of upcomingEvents) {
     now > end + PAST_GRACE_MS &&
     event.status !== "past" &&
     event.status !== "draft" &&
+    event.confirmationStatus !== "pending" &&
     !ARCHIVE_EXEMPT_EVENT_STATUSES.has(event.eventStatus ?? "")
   ) {
     errors.push(

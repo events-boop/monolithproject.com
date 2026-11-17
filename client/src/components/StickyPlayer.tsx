@@ -33,6 +33,11 @@ export default function StickyPlayer() {
     setPlaying,
     setPositionMs,
     unloadTrack,
+    registerSeek,
+    playbackError,
+    transportAttempt,
+    reportPlaybackError,
+    retryPlayback,
   } = useGlobalAudio();
   const passport = useSavedPassport();
   const dockWrapRef = useRef<HTMLDivElement | null>(null);
@@ -55,7 +60,9 @@ export default function StickyPlayer() {
   const durationLabel = activeTrack?.duration || matchedEpisode?.duration || "";
   const durationMs = durationLabel ? durationLabelToMs(durationLabel) : 0;
   const progressPct =
-    durationMs > 0 ? Math.min(100, Math.max(0, (positionMs / durationMs) * 100)) : 0;
+    durationMs > 0
+      ? Math.min(100, Math.max(0, (positionMs / durationMs) * 100))
+      : 0;
 
   // Publish exact dock height so CookieConsent & FloatingFactsChip never overlap
   useLayoutEffect(() => {
@@ -87,30 +94,55 @@ export default function StickyPlayer() {
   // Freeze initial embed query params per track so play/pause never reloads the iframe.
   const embedSrc = useMemo(() => {
     if (!activeTrack) return "";
-    return buildMiniEmbedUrl(activeTrack.src, resumeStateRef.current.isPlaying);
+    // READY applies the latest intent, including a pause while connecting.
+    return buildMiniEmbedUrl(activeTrack.src, false);
   }, [activeTrack?.src]);
 
   useEffect(() => {
     if (!activeTrack || !iframeRef.current) return;
 
+    let detachSeek: (() => void) | undefined;
     const detach = attachSoundCloudWidget({
       iframe: iframeRef.current,
-      resumePositionMs: resumeStateRef.current.positionMs,
-      shouldPlayOnReady: resumeStateRef.current.isPlaying,
+      resumePositionMs: () => resumeStateRef.current.positionMs,
+      shouldPlayOnReady: () => resumeStateRef.current.isPlaying,
       onWidgetReady: widget => {
         widgetRef.current = widget;
+        detachSeek = registerSeek(ms => widget.seekTo(ms));
       },
       onPlayingChange: setPlaying,
       onPositionChange: setPositionMs,
+      onError: reportPlaybackError,
     });
 
     return () => {
       widgetRef.current = null;
+      detachSeek?.();
       detach();
     };
-  }, [activeTrack?.src, setPlaying, setPositionMs]);
+  }, [
+    activeTrack?.src,
+    setPlaying,
+    setPositionMs,
+    registerSeek,
+    transportAttempt,
+    reportPlaybackError,
+  ]);
+
+  useEffect(() => {
+    try {
+      if (isPlaying) widgetRef.current?.play();
+      else widgetRef.current?.pause();
+    } catch {
+      /* A new iframe may still be connecting; READY uses the latest state. */
+    }
+  }, [isPlaying, activeTrack?.src]);
 
   const handleTogglePlayback = () => {
+    if (playbackError) {
+      retryPlayback();
+      return;
+    }
     const widget = widgetRef.current;
     if (isPlaying) {
       safeReadSoundCloudPosition(iframeRef.current, widget, setPositionMs);
@@ -159,7 +191,10 @@ export default function StickyPlayer() {
               {/* Left: Cover Art, Play/Pause & Episode Link */}
               <div className="flex items-center gap-3 min-w-0 flex-1 sm:flex-initial sm:max-w-[340px]">
                 {coverSrc && (
-                  <Link href={trackHref} className="hidden min-[380px]:block shrink-0">
+                  <Link
+                    href={trackHref}
+                    className="hidden min-[380px]:block shrink-0"
+                  >
                     <img
                       src={coverSrc}
                       alt=""
@@ -175,20 +210,40 @@ export default function StickyPlayer() {
                 <button
                   type="button"
                   onClick={handleTogglePlayback}
-                  aria-label={isPlaying ? "Pause episode" : "Play episode"}
+                  aria-label={
+                    playbackError
+                      ? "Retry episode"
+                      : isPlaying
+                        ? "Pause episode"
+                        : "Play episode"
+                  }
                   className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#ffe6c2]/65 bg-[#f3a659] text-[#181009] shadow-[0_4px_18px_rgba(243,152,70,0.34)] transition-transform hover:scale-105 cursor-pointer"
                 >
                   {isPlaying ? (
-                    <Pause className="w-4 h-4" fill="currentColor" aria-hidden="true" />
+                    <Pause
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    />
                   ) : (
-                    <Play className="w-4 h-4 ml-0.5" fill="currentColor" aria-hidden="true" />
+                    <Play
+                      className="w-4 h-4 ml-0.5"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    />
                   )}
                 </button>
 
                 <Link href={trackHref} className="min-w-0 block group">
                   <span className="flex items-center gap-1.5 text-[10.5px] font-mono uppercase tracking-[0.18em] text-[#f3b572]">
                     <Radio className="w-3 h-3 shrink-0" aria-hidden="true" />
-                    <span>{isPlaying ? "NOW SPINNING" : "PAUSED"}</span>
+                    <span>
+                      {playbackError
+                        ? "RETRY CONNECTION"
+                        : isPlaying
+                          ? "NOW SPINNING"
+                          : "PAUSED"}
+                    </span>
                     {durationMs > 0 && (
                       <span className="text-white/55 tabular-nums">
                         · {clockLabel(positionMs)}
@@ -257,7 +312,14 @@ export default function StickyPlayer() {
 
                 <button
                   type="button"
-                  onClick={unloadTrack}
+                  onClick={() => {
+                    try {
+                      widgetRef.current?.pause();
+                    } catch {
+                      /* Frame may be detached. */
+                    }
+                    unloadTrack();
+                  }}
                   aria-label="Close audio player"
                   className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/70 hover:text-white transition-colors shrink-0 cursor-pointer"
                 >

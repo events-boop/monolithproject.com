@@ -299,9 +299,9 @@ export default function Schedule() {
                   ticket-holder updates. All times are Chicago time.
                 </p>
               </div>
-              <Link href="/newsletter" className="home-text-link">
-                Get show announcements{" "}
-                <ArrowUpRight size={18} aria-hidden="true" />
+              <Link href="/newsletter" className="lg-pill-amber shrink-0">
+                <span>Get show announcements</span>
+                <ArrowUpRight size={16} aria-hidden="true" />
               </Link>
             </header>
           </div>

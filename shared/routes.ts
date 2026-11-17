@@ -55,6 +55,7 @@ export const ROUTES = {
   cookies: "/cookies",
   monolith: "/monolith",
   houseOfFriends: "/house-of-friends",
+  houseOfFriendsBio: "/house-of-friends/links",
   houseOfFriendsApply: "/house-of-friends/apply",
   apeDrums: "/apedrums",
   notFound: "/404",
@@ -182,6 +183,7 @@ export const STANDALONE_LANDING_PATHS = new Set([
   ROUTES.lake,
   ROUTES.untoldVip,
   ROUTES.sunsetsBio,
+  ROUTES.houseOfFriendsBio,
 ]);
 
 /* ------------------------------------------------------------------ */

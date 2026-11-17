@@ -36,7 +36,9 @@ export default function RadioEpisode() {
   const [, setLocation] = useLocation();
   const passport = useSavedPassport();
   const episode = slug ? getRadioEpisode(slug) : undefined;
-  const isEpisodeSaved = Boolean(episode && passport.episodes.includes(episode.slug));
+  const isEpisodeSaved = Boolean(
+    episode && passport.episodes.includes(episode.slug)
+  );
   const legacyRedirect = slug ? getLegacyRadioRedirect(slug) : undefined;
   const episodeIndex = episode
     ? radioEpisodes.findIndex(entry => entry.slug === episode.slug)
@@ -134,7 +136,7 @@ export default function RadioEpisode() {
     <div className="radio-episode-page min-h-screen bg-background text-foreground lg-dusk-atmosphere">
       <SEO
         title={`Chasing Sunsets Radio | ${episode.shortCode} ${episode.guest}`}
-        description={`Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Tracklist, story, and direct listening links.`}
+        description={`Listen to ${episode.guest}'s Chasing Sunsets Radio mix from The Monolith Project, powered by sunsets.fm. Guest story and direct listening links.`}
         absoluteTitle
         canonicalPath={`/radio/${episode.slug}`}
         canonicalUrl={
@@ -366,13 +368,13 @@ export default function RadioEpisode() {
               {
                 entry: previousEpisode,
                 label: "Previous Episode",
-                empty: "This is the first available episode in the archive.",
+                empty: "You are at the beginning of this collection.",
                 back: true,
               },
               {
                 entry: nextEpisode,
                 label: "Next Episode",
-                empty: "You are on the latest published episode.",
+                empty: "You have reached the end of this collection.",
                 back: false,
               },
             ].map(({ entry, label, empty, back }) =>

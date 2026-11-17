@@ -1,3 +1,4 @@
+import { withPublicEventIntegrity } from "../../shared/events/publicIntegrity";
 import {
   getEventWindowStatus,
   isUpcomingEvent,
@@ -333,12 +334,13 @@ const EVENT_CATALOG: ScheduledEvent[] = [
     venue: "Chicago",
     location: "Chicago, IL",
     lineup: "Secret Guest B2B",
-    status: "past",
-    archiveSlug: "chasing-sunsets-sunsets-i-2026",
-    recapUrl: "/chasing-sunsets/sunsets-i-2026",
+    status: "coming-soon",
+    confirmationStatus: "pending",
+    eventNotice:
+      "This proposed after-party was not confirmed. No venue, ticket sale, or completed performance is recorded here.",
     format: "Dark Room · Intimate",
     description:
-      "The official July 4 after-party. After the open-air session ends, Untold Story carries the night into a darker, tighter room.",
+      "An unconfirmed proposal for a July 4 after-party. This permanent page preserves the announcement without claiming a completed event.",
     activeFunnels: ["waitlist-untold"],
   },
   {
@@ -833,7 +835,7 @@ export function buildPublicSiteData(
             vipPackages: undefined,
           }
         : event;
-      const approved = withApprovedSunsets(reviewed);
+      const approved = withPublicEventIntegrity(withApprovedSunsets(reviewed));
       return !["draft", "hidden"].includes(approved.status) &&
         getEventWindowStatus(approved) === "past"
         ? { ...approved, status: "past" as const, ticketUrl: undefined }

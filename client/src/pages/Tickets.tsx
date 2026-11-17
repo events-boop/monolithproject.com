@@ -275,33 +275,32 @@ export default function Tickets() {
   // Pass). The current chapters sell direct via the Aug 22 rail.
   if (comingSoonKey) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <div className="min-h-screen bg-background text-foreground flex flex-col lg-dusk-atmosphere">
         <SEO
           title="SUN(SETS) Tickets | Chasing Sun(Sets)"
           description="Find current event availability and official ticket destinations."
         />
         <Navigation />
-        <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#dfc27a]">
-            SUN(SETS) 2026 — CASTAWAYS
-          </p>
-          <h1 className="text-3xl font-black tracking-tight text-white">
-            CHECK EVENT AVAILABILITY
-          </h1>
-          <p className="text-sm leading-relaxed text-stone-400">
-            This ticket release is not available yet. Explore the current
-            schedule for confirmed shows and available tickets.
-          </p>
-          <a
-            href="/schedule"
-            className="inline-flex items-center justify-center gap-2 h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] transition-colors"
-          >
-            <Ticket className="size-4" />
-            View current events
-          </a>
-          <p className="text-[11px] text-stone-500 uppercase tracking-[0.14em]">
-            Availability is listed for each event.
-          </p>
+        <div className="flex flex-1 items-center justify-center px-6 py-24">
+          <div className="lg-glass-card mx-auto w-full max-w-lg space-y-6 rounded-3xl px-8 py-10 text-center md:px-10">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-[#f3b572]">
+              SUN(SETS) 2026 — CASTAWAYS
+            </p>
+            <h1 className="font-display text-3xl uppercase leading-[0.95] tracking-[-0.03em] text-[#fbf6ee] md:text-4xl">
+              Check event availability
+            </h1>
+            <p className="text-sm leading-relaxed text-white/70 md:text-base">
+              This ticket release is not available yet. Explore the current
+              schedule for confirmed shows and available tickets.
+            </p>
+            <a href="/schedule" className="lg-pill-amber w-full">
+              <Ticket className="size-4" aria-hidden="true" />
+              <span>View current events</span>
+            </a>
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/48">
+              Availability is listed for each event.
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -329,22 +328,22 @@ export default function Tickets() {
               animate={{ y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="font-serif italic text-lg text-primary block mb-6">
+              <span className="section-kicker mb-5 block text-[#f3b572]">
                 {featuredEyebrow}
               </span>
-              <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
+              <h1 className="section-display-title max-w-[10ch] text-[#fbf6ee] mb-6">
                 {accessHeading}
               </h1>
-              <p className="text-white/80 text-lg max-w-lg mb-4">
+              <p className="mb-4 max-w-xl text-base leading-relaxed text-[#f4e9d8]/78 md:text-xl">
                 {accessCopy}
               </p>
               <div className="flex items-center gap-3">
-                <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
-                <span className="font-mono text-xs text-primary tracking-widest uppercase">
+                <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-[#f3a659]" />
+                <span className="font-mono text-xs uppercase tracking-[0.22em] text-[#f3b572]">
                   {accessStatus}
                 </span>
               </div>
-              <div className="mt-8 flex flex-col gap-6 sm:flex-row items-center">
+              <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
                 <MagneticButton strength={0.3}>
                   <a
                     href={cta.href}
@@ -357,19 +356,16 @@ export default function Tickets() {
                         cta.href
                       )
                     }
-                    className={`
-                      px-12 py-5 text-[12px] font-black uppercase tracking-[0.3em] transition-all duration-500 flex items-center justify-center min-w-[220px] rounded-none
-                      ${cta.tool === "posh" ? "cta-posh" : "cta-laylo"}
-                      ${ctaToneClass}
-                    `}
+                    className={`lg-pill-amber min-w-[220px] ${ctaToneClass}`}
                   >
-                    {cta.label}
-                    <ArrowUpRight className="w-4 h-4 ml-2" />
+                    <span>{cta.label}</span>
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
                 </MagneticButton>
                 <MagneticButton strength={0.22}>
-                  <Link href="/schedule" asChild>
-                    <a className="cta-ghost">View All Season Dates</a>
+                  <Link href="/schedule" className="lg-pill-glass">
+                    <span>View All Season Dates</span>
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </MagneticButton>
               </div>
@@ -390,12 +386,12 @@ export default function Tickets() {
             <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-24 items-start">
               {/* Left — Visual Focus */}
               <div className="lg:col-span-7 w-full">
-                <div className="relative group overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02]">
+                <div className="group relative overflow-hidden rounded-3xl border border-[rgba(255,228,194,0.16)] bg-[#0d0c0b] shadow-[0_28px_64px_rgba(0,0,0,0.45)]">
                   <SmartImage
                     src={featuredPoster}
                     alt={featuredHeadline}
                     priority
-                    className="w-full h-auto aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105"
+                    className="aspect-[4/5] h-auto w-full object-cover object-top origin-top transition-transform duration-1000 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                 </div>
@@ -474,14 +470,14 @@ export default function Tickets() {
                           cta.href
                         )
                       }
-                      className={`
-                             px-12 py-6 text-xs font-black tracking-[0.4em] transition-all duration-500 min-w-[280px] flex items-center justify-center rounded-none
-                             ${cta.tool === "posh" ? "cta-posh" : "cta-laylo"}
-                             ${ctaToneClass}
-                           `}
+                      className={`lg-pill-amber min-w-[280px] !min-h-[56px] !px-10 ${ctaToneClass}`}
                     >
-                      {cta.label === CTA_LABELS.tickets ? "TICKETS" : cta.label}
-                      <ArrowUpRight className="w-4 h-4 ml-3" />
+                      <span>
+                        {cta.label === CTA_LABELS.tickets
+                          ? "TICKETS"
+                          : cta.label}
+                      </span>
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                     </a>
                   </MagneticButton>
                 </div>

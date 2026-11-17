@@ -1,3 +1,4 @@
+import hostedForms from "@shared/signup-forms.json";
 import { ArrowUpRight, Sun, Headphones } from "lucide-react";
 import { Link } from "wouter";
 import SEO from "@/components/SEO";
@@ -24,7 +25,7 @@ export default function Alerts() {
       <main className="relative z-10 w-full max-w-lg px-6 py-20 flex flex-col items-center">
         {/* Header */}
         <div className="mb-12 text-center">
-          <Link href="/">
+          <Link href="/" asChild>
             <a className="font-display text-2xl tracking-widest text-white/90 hover:text-white transition-colors cursor-pointer inline-block mb-4">
               MONOLITH
             </a>
@@ -51,16 +52,21 @@ export default function Alerts() {
                   <h3 className="font-display text-2xl tracking-wide text-white group-hover:text-[#E8B86D] transition-colors">
                     CHASING SUN(SETS)
                   </h3>
-                  <p className="font-mono text-[10px] tracking-widest text-[#E8B86D]/70 uppercase">
+                  <p className="font-mono text-[10px] tracking-widest text-[#E8B86D] uppercase">
                     Rooftop Series
                   </p>
                 </div>
               </div>
               <MagneticButton strength={0.2}>
-                <button className="btn-pill-sunsets btn-pill-wide btn-pill-compact justify-between">
-                  <span>Enable Alerts</span>
+                <a
+                  href={hostedForms.newsletter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill-sunsets btn-pill-wide btn-pill-compact justify-between"
+                >
+                  <span>Join email updates</span>
                   <ArrowUpRight size={16} className="opacity-70" />
-                </button>
+                </a>
               </MagneticButton>
             </div>
           </div>
@@ -77,16 +83,21 @@ export default function Alerts() {
                   <h3 className="font-display text-2xl tracking-wide text-white group-hover:text-[#8B5CF6] transition-colors">
                     UNTOLD STORY
                   </h3>
-                  <p className="font-mono text-[10px] tracking-widest text-[#8B5CF6]/70 uppercase">
+                  <p className="font-mono text-[10px] tracking-widest text-[#c9b5ff] uppercase">
                     Late Night 360°
                   </p>
                 </div>
               </div>
               <MagneticButton strength={0.2}>
-                <button className="btn-pill-untold btn-pill-wide btn-pill-compact justify-between">
-                  <span>Enable Alerts</span>
+                <a
+                  href={hostedForms.newsletter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill-untold btn-pill-wide btn-pill-compact justify-between"
+                >
+                  <span>Join email updates</span>
                   <ArrowUpRight size={16} className="opacity-70" />
-                </button>
+                </a>
               </MagneticButton>
             </div>
           </div>
@@ -109,19 +120,22 @@ export default function Alerts() {
                 </div>
               </div>
               <MagneticButton strength={0.2}>
-                <button className="btn-pill-radio btn-pill-wide btn-pill-compact justify-between">
-                  <span>Enable Alerts</span>
+                <a
+                  href={hostedForms.radio}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill-radio btn-pill-wide btn-pill-compact justify-between"
+                >
+                  <span>Join email updates</span>
                   <ArrowUpRight size={16} className="opacity-70" />
-                </button>
+                </a>
               </MagneticButton>
             </div>
           </div>
         </div>
 
         <div className="mt-12 text-center text-white/70 font-mono text-[10px] tracking-widest uppercase">
-          Powered by Laylo
-          <br />
-          (Mockup Version)
+          Email updates · Choose your list on the signup form
         </div>
       </main>
     </div>
