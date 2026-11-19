@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="color-scheme" content="light" />
+    <title>Monolith — A little closer.</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/preview.css" />
+    <script type="module" src="/preview.mjs"></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <a
+        class="wordmark"
+        href="/"
+        aria-label="Monolith communications collection"
+        ><span class="monogram" aria-hidden="true">M<span>↗</span></span
+        ><span
+          >THE MONOLITH PROJECT<small
+            >COMMUNICATIONS / COLLECTION 01</small
+          ></span
+        ></a
+      >
+      <span class="local-indicator"><span></span> LOCAL DESIGN PREVIEW</span>
+    </header>
+    <div class="workspace">
+      <aside class="sidebar" aria-label="Message collection">
+        <p class="eyebrow">A LITTLE CLOSER.</p>
+        <h1>Good mail.<br /><em>Great nights.</em></h1>
+        <p class="sidebar-intro">
+          The feeling of Monolith.<br />Before the first track.
+        </p>
+        <nav id="messages" aria-label="Choose a message">
+          <p class="loading">Loading the collection…</p>
+        </nav>
+        <div class="sidebar-foot">
+          <span>BUILT AROUND MUSIC.</span
+          ><span>BROUGHT TO LIFE BY PEOPLE.</span>
+        </div>
+      </aside>
+      <main>
+        <div class="canvas-head">
+          <div>
+            <p id="project" class="eyebrow">THE MONOLITH PROJECT</p>
+            <h2 id="message-name">The Monolith welcome</h2>
+          </div>
+          <div class="surface-switch" role="group" aria-label="Preview surface">
+            <button data-surface="email" aria-pressed="true">Email</button
+            ><button data-surface="notification" aria-pressed="false">
+              In-product
+            </button>
+          </div>
+        </div>
+        <div class="canvas-toolbar">
+          <span id="message-category" class="category">WELCOME / 01</span>
+          <div class="size-switch" role="group" aria-label="Preview width">
+            <button data-size="desktop" aria-pressed="true">Desktop</button
+            ><button data-size="mobile" aria-pressed="false">Mobile</button>
+          </div>
+          <a
+            id="plain-link"
+            href="/text/monolith-welcome"
+            target="_blank"
+            rel="noopener"
+            >Plain text ↗</a
+          >
+        </div>
+        <section
+          class="email-stage"
+          id="email-stage"
+          aria-label="Email design preview"
+        >
+          <div class="mail-window" id="mail-window">
+            <div class="mail-chrome">
+              <div class="mail-avatar">M</div>
+              <div class="mail-sender">
+                <strong>The Monolith Project</strong
+                ><span>To: Alex · alex@example.com</span>
+              </div>
+              <span class="mail-sample">SAMPLE</span>
+            </div>
+            <div class="mail-subject">
+              <p id="subject"></p>
+              <span id="preheader"></span>
+            </div>
+            <iframe
+              id="email-frame"
+              title="The Monolith welcome email design"
+              sandbox="allow-same-origin"
+              src="/email/monolith-welcome"
+            ></iframe>
+          </div>
+        </section>
+        <section
+          class="notification-stage"
+          id="notification-stage"
+          aria-label="In-product notification design"
+          hidden
+        >
+          <div class="product-preview" id="product-preview">
+            <div class="product-nav">
+              <strong>MONOLITH</strong><span>CHICAGO ↗</span>
+            </div>
+            <div class="product-editorial">
+              <span class="eyebrow">THE NEXT CHAPTER</span>
+              <p>More nights.<br /><em>More stories.</em></p>
+              <span class="product-caption"
+                >THE MONOLITH PROJECT / CHICAGO</span
+              >
+            </div>
+            <div class="notification-area">
+              <div class="toast" role="status" aria-live="polite" id="toast">
+                <span class="toast-mark" aria-hidden="true">↗</span>
+                <div>
+                  <p id="toast-label" class="eyebrow"></p>
+                  <h3 id="toast-title"></h3>
+                  <p id="toast-body"></p>
+                  <a
+                    id="toast-link"
+                    href="https://monolithproject.com/schedule"
+                    target="_blank"
+                    rel="noopener"
+                    >Explore Monolith ↗</a
+                  >
+                </div>
+                <button class="toast-close" aria-label="Dismiss notification">
+                  ×
+                </button>
+              </div>
+            </div>
+          </div>
+          <button id="replay" class="replay">↻ Replay notification</button>
+          <p class="stage-caption">
+            Persistent until dismissed. Clear status, one action, no sound.
+          </p>
+        </section>
+        <div class="design-notes">
+          <div>
+            <span class="eyebrow">WHEN IT BELONGS</span>
+            <p id="trigger"></p>
+          </div>
+          <div>
+            <span class="eyebrow">KEEP IT TRUE</span>
+            <p id="note"></p>
+          </div>
+        </div>
+        <footer class="canvas-foot">
+          <span id="counter">01 / 09</span
+          ><span>SYNTHETIC DETAILS · NO MESSAGES SENT</span
+          ><a
+            id="html-link"
+            href="/email/monolith-welcome"
+            target="_blank"
+            rel="noopener"
+            >Open email ↗</a
+          >
+        </footer>
+        <p id="error" role="alert" hidden>
+          The preview couldn’t load. Refresh to try again.
+        </p>
+      </main>
+    </div>
+  </body>
+</html>

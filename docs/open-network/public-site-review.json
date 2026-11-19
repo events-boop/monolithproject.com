@@ -1,0 +1,1541 @@
+{
+  "checkedAt": "2026-11-02T23:54:52.889Z",
+  "scope": "Local public routes; read-only browser review, no form submissions",
+  "base": "http://127.0.0.1:3001",
+  "routes": [
+    {
+      "route": "/",
+      "status": 200,
+      "title": "The Monolith Project | Chicago House Music Events",
+      "headings": [
+        "MONOLITH"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/tickets",
+      "status": 200,
+      "title": "Sun(Sets) III postponed \u2014 ticket-holder update | The Monolith Project",
+      "headings": [
+        "Postponed due to weather."
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/tickets"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/schedule",
+      "status": 200,
+      "title": "Upcoming Shows | The Monolith Project",
+      "headings": [
+        "Find yournext night."
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/schedule"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/chasing-sunsets",
+      "status": 200,
+      "title": "Chasing Sun(Sets) \u2014 Chicago lakefront house music",
+      "headings": [
+        "Chasing Sun(Sets)"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/chasing-sunsets"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/sunsets",
+      "status": 200,
+      "title": "JOEZI \u00d7 MASSUMA \u00b7 September 19 | Chasing Sun(Sets)",
+      "headings": [
+        "JOEZI \u00d7 MASSUMA"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/sunsets"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/sunsets-fm",
+      "status": 200,
+      "title": "SUNSETS.FM | The Monolith Project",
+      "headings": [
+        "SUNSETS.FM"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/sunsets-fm"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/story",
+      "status": 200,
+      "title": "Untold Story \u2014 Chicago after-dark house music",
+      "headings": [
+        "UntoldStory."
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/story"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/radio",
+      "status": 200,
+      "title": "Monolith \u00d7 SUNSETS.FM \u2014 The Open Network",
+      "headings": [
+        "Find your frequency.Through togetherness."
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/radio"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/chasing-sunsets-facts",
+      "status": 200,
+      "title": "Chasing Sun(Sets) Facts | The Monolith Project",
+      "headings": [
+        "Chasing Sun(Sets) \u2014 Official Facts & Identity"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/chasing-sunsets-facts"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/radio/ep-01-benchek",
+      "status": 200,
+      "title": "Chasing Sun(Sets) Radio | EP-01 BENCHEK",
+      "headings": [
+        "Chapter III: Special NYE"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://sunsets.fm/sets/real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/radio/ep-02-ewerseen",
+      "status": 200,
+      "title": "Chasing Sun(Sets) Radio | EP-02 EWERSEEN",
+      "headings": [
+        "Mix Vol. 3"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://sunsets.fm/sets/real-chasing-ewerseen-chasing-sunsets-mix-vol3"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/radio/ep-03-terranova",
+      "status": 200,
+      "title": "Chasing Sun(Sets) Radio | EP-03 TERRANOVA",
+      "headings": [
+        "Terranova x Chasing Sun(Sets)"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://sunsets.fm/sets/real-chasing-terranova"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/radio/ep-04-radian",
+      "status": 200,
+      "title": "Chasing Sun(Sets) Radio | EP-04 RADIAN",
+      "headings": [
+        "Radian x Untold Story Crossover"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://sunsets.fm/sets/real-chasing-radianofc-set"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/radio/ep-004-benchek-part-2",
+      "status": 200,
+      "title": "Chasing Sun(Sets) Radio | EP004 BENCHEK",
+      "headings": [
+        "Live Set from Marbella Part II"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://sunsets.fm/sets/real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/radio/ch-02-radian-no-sleep",
+      "status": 200,
+      "title": "Chasing Sun(Sets) Radio | CH-02 RADIAN",
+      "headings": [
+        "Chapter II \u2014 No Sleep (Berlin)"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://sunsets.fm/sets/real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/lineup",
+      "status": 200,
+      "title": "Artists | The Monolith Project",
+      "headings": [
+        "ARTISTS"
+      ],
+      "main": 0,
+      "canonical": [
+        "https://monolithproject.com/lineup"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/about",
+      "status": 200,
+      "title": "About | The Monolith Project",
+      "headings": [
+        "MONOLITH"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/about"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/monolith",
+      "status": 200,
+      "title": "The Monolith | Manifesto & Concept",
+      "headings": [
+        "THE MONOLITH"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/monolith"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/contact",
+      "status": 200,
+      "title": "Contact | The Monolith Project",
+      "headings": [
+        "CONTACT"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/contact"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/faq",
+      "status": 200,
+      "title": "FAQ | The Monolith Project",
+      "headings": [
+        "FAQ"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/faq"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/partners",
+      "status": 200,
+      "title": "Partners & Crew | The Monolith Project",
+      "headings": [
+        "PARTNERS& CREW"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/partners"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/booking",
+      "status": 200,
+      "title": "Booking | The Monolith Project",
+      "headings": [
+        "BOOKING"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/booking"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/newsletter",
+      "status": 200,
+      "title": "Newsletter | The Monolith Project",
+      "headings": [
+        "GET MONOLITH UPDATES"
+      ],
+      "main": 0,
+      "canonical": [
+        "https://monolithproject.com/newsletter"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/terms",
+      "status": 200,
+      "title": "Terms of Service | The Monolith Project",
+      "headings": [
+        "Terms of Service"
+      ],
+      "main": 0,
+      "canonical": [
+        "https://monolithproject.com/terms"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/privacy",
+      "status": 200,
+      "title": "Privacy Policy | The Monolith Project",
+      "headings": [
+        "Privacy Policy"
+      ],
+      "main": 0,
+      "canonical": [
+        "https://monolithproject.com/privacy"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/cookies",
+      "status": 200,
+      "title": "Cookie Policy | The Monolith Project",
+      "headings": [
+        "Cookie Policy"
+      ],
+      "main": 0,
+      "canonical": [
+        "https://monolithproject.com/cookies"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/kiko-franco",
+      "status": 200,
+      "title": "KIKO FRANCO | The Monolith Project",
+      "headings": [
+        "KIKO FRANCO"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/kiko-franco"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/ape-drums",
+      "status": 200,
+      "title": "APE DRUMS | The Monolith Project",
+      "headings": [
+        "APE DRUMS"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/ape-drums"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/lazare",
+      "status": 200,
+      "title": "LAZARE SABRY | The Monolith Project",
+      "headings": [
+        "LAZARE SABRY"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/lazare"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/deron",
+      "status": 200,
+      "title": "DERON | The Monolith Project",
+      "headings": [
+        "DERON"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/deron"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/juany-bravo",
+      "status": 200,
+      "title": "JUANY BRAVO | The Monolith Project",
+      "headings": [
+        "JUANY BRAVO"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/juany-bravo"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/autograf",
+      "status": 200,
+      "title": "AUTOGRAF | The Monolith Project",
+      "headings": [
+        "AUTOGRAF"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/autograf"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/sommers-uk",
+      "status": 200,
+      "title": "SOMMERS (UK) | The Monolith Project",
+      "headings": [
+        "SOMMERS (UK)"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/sommers-uk"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/chris-idh",
+      "status": 200,
+      "title": "CHRIS IDH | The Monolith Project",
+      "headings": [
+        "CHRIS IDH"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/chris-idh"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/summermel",
+      "status": 200,
+      "title": "SUMMER MEL | The Monolith Project",
+      "headings": [
+        "SUMMER MEL"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/summermel"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/joezi",
+      "status": 200,
+      "title": "JOEZI | The Monolith Project",
+      "headings": [
+        "JOEZI"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/joezi"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/benchek",
+      "status": 200,
+      "title": "BENCHEK | The Monolith Project",
+      "headings": [
+        "BENCHEK"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/benchek"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/terranova",
+      "status": 200,
+      "title": "TERRANOVA | The Monolith Project",
+      "headings": [
+        "TERRANOVA"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/terranova"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/ewerseen",
+      "status": 200,
+      "title": "EWERSEEN | The Monolith Project",
+      "headings": [
+        "EWERSEEN"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/ewerseen"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/radian",
+      "status": 200,
+      "title": "RADIAN | The Monolith Project",
+      "headings": [
+        "RADIAN"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/radian"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/avo",
+      "status": 200,
+      "title": "AVO | The Monolith Project",
+      "headings": [
+        "AVO"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/avo"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/eran-hersh",
+      "status": 200,
+      "title": "ERAN HERSH | The Monolith Project",
+      "headings": [
+        "ERAN HERSH"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/eran-hersh"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/massuma",
+      "status": 200,
+      "title": "MASSUMA (UK) | The Monolith Project",
+      "headings": [
+        "MASSUMA (UK)"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/massuma"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/amari",
+      "status": 200,
+      "title": "AMARI | The Monolith Project",
+      "headings": [
+        "AMARI"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/amari"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/sarat",
+      "status": 200,
+      "title": "SARAT | The Monolith Project",
+      "headings": [
+        "SARAT"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/sarat"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/jerome",
+      "status": 200,
+      "title": "JEROME | The Monolith Project",
+      "headings": [
+        "JEROME"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/jerome"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/rose",
+      "status": 200,
+      "title": "ROSE | The Monolith Project",
+      "headings": [
+        "ROSE"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/rose"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/hashtom",
+      "status": 200,
+      "title": "HASHTOM | The Monolith Project",
+      "headings": [
+        "HASHTOM"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/hashtom"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/kenbo-slice",
+      "status": 200,
+      "title": "KENBO SLICE | The Monolith Project",
+      "headings": [
+        "KENBO SLICE"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/kenbo-slice"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/jealah",
+      "status": 200,
+      "title": "JEALAH | The Monolith Project",
+      "headings": [
+        "JEALAH"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/jealah"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/maximo",
+      "status": 200,
+      "title": "MAXIMO | The Monolith Project",
+      "headings": [
+        "MAXIMO"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/maximo"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/eliana",
+      "status": 200,
+      "title": "ELIANA | The Monolith Project",
+      "headings": [
+        "ELIANA"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/eliana"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/gianniblu",
+      "status": 200,
+      "title": "GIANNI BLU | The Monolith Project",
+      "headings": [
+        "GIANNI BLU"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/gianniblu"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/frankbono",
+      "status": 200,
+      "title": "FRANK BONO | The Monolith Project",
+      "headings": [
+        "FRANK BONO"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/frankbono"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/erikthedj",
+      "status": 200,
+      "title": "ERIK THE DJ | The Monolith Project",
+      "headings": [
+        "ERIK THE DJ"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/erikthedj"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/colin",
+      "status": 200,
+      "title": "COLIN | The Monolith Project",
+      "headings": [
+        "COLIN"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/colin"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/nomar",
+      "status": 200,
+      "title": "NOMAR | The Monolith Project",
+      "headings": [
+        "NOMAR"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/nomar"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists/gene-farris",
+      "status": 200,
+      "title": "GENE FARRIS | The Monolith Project",
+      "headings": [
+        "GENE FARRIS"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/artists/gene-farris"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/archive",
+      "status": 200,
+      "title": "Archive | The Monolith Project",
+      "headings": [
+        "ARCHIVE"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/archive"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/archive/autograf-march-21-2026",
+      "status": 200,
+      "title": "Autograf \u2014 The Monolith Project \u00b7 Special Event | The Monolith Project",
+      "headings": [],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/archive/autograf-march-21-2026"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/press",
+      "status": 200,
+      "title": "Press & Media Kit | The Monolith Project",
+      "headings": [
+        "PRESS &MEDIA KIT"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/press"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/insights",
+      "status": 200,
+      "title": "Journal | The Monolith Project",
+      "headings": [
+        "NEWS,\u00a0NOTES& CONTEXT"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/insights"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/submit",
+      "status": 200,
+      "title": "Artist Submission | The Monolith Project",
+      "headings": [
+        "ARTISTSUBMISSION"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/submit"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/events/css-sep19",
+      "status": 200,
+      "title": "Chasing Sun(Sets) III \u2014 JOEZI \u00d7 MASSUMA \u2014 Postponed",
+      "headings": [
+        "Chasing Sun(Sets) III \u2014 JOEZI \u00d7 MASSUMA"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/events/css-sep19"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/artists",
+      "status": 200,
+      "title": "Artists | The Monolith Project",
+      "headings": [
+        "ARTISTS"
+      ],
+      "main": 0,
+      "canonical": [
+        "https://monolithproject.com/lineup"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/vip",
+      "status": 200,
+      "title": "VIP Experience | The Monolith Project",
+      "headings": [
+        "The VIPExperience"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/vip"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/travel",
+      "status": 200,
+      "title": "Travel Guide | The Monolith Project",
+      "headings": [
+        "PLAN YOURTRIP"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/travel"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/guide",
+      "status": 200,
+      "title": "Arrival Guide | The Monolith Project",
+      "headings": [
+        "The Night Of"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/guide"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/shop",
+      "status": 200,
+      "title": "Shop | The Monolith Project",
+      "headings": [
+        "COLLECTION 01"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/shop"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/ambassadors",
+      "status": 200,
+      "title": "Ambassador Program | The Monolith Project",
+      "headings": [
+        "BRING THE COLLECTIVE.THE NIGHT ON US."
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/ambassadors"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/alerts",
+      "status": 200,
+      "title": "Alerts | The Monolith Project | The Monolith Project",
+      "headings": [
+        "Select Your Drop"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/alerts"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/lake",
+      "status": 200,
+      "title": "Sun(Sets) Lake List & First Access | The Monolith Project",
+      "headings": [
+        "SUN(SETS)"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://monolithproject.com/lake"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": [
+        {
+          "url": "/api/track/page-view",
+          "status": 403
+        }
+      ]
+    },
+    {
+      "route": "/untold",
+      "status": 200,
+      "title": "Untold Story | Previous Shows",
+      "headings": [
+        "UntoldStory"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://untold.vip/"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/house-of-friends",
+      "status": 200,
+      "title": "House of Friends | Artist Development by The Monolith Project",
+      "headings": [
+        "Houseof Friends"
+      ],
+      "main": 1,
+      "canonical": [
+        "https://houseoffriends.vip/"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    },
+    {
+      "route": "/house-of-friends/apply",
+      "status": 200,
+      "title": "Apply | House of Friends Founding Class 2026",
+      "headings": [
+        "Bring us the artist.Not just the mix."
+      ],
+      "main": 1,
+      "canonical": [
+        "https://houseoffriends.vip/apply"
+      ],
+      "description": 1,
+      "overflow": false,
+      "openNotices": 0,
+      "images": [],
+      "errors": [],
+      "responseErrors": []
+    }
+  ],
+  "mobile": [
+    {
+      "route": "/",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "MONOLITH"
+    },
+    {
+      "route": "/radio",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "Find your frequency.Through togetherness."
+    },
+    {
+      "route": "/sunsets-fm",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "SUNSETS.FM"
+    },
+    {
+      "route": "/about",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "MONOLITH"
+    },
+    {
+      "route": "/schedule",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "Find yournext night."
+    },
+    {
+      "route": "/newsletter",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "GET MONOLITH UPDATES"
+    },
+    {
+      "route": "/contact",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "CONTACT"
+    },
+    {
+      "route": "/story",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "UntoldStory."
+    },
+    {
+      "route": "/chasing-sunsets",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "Chasing Sun(Sets)"
+    },
+    {
+      "route": "/sunsets",
+      "overflow": false,
+      "openNotices": 0,
+      "heading": "JOEZI \u00d7 MASSUMA"
+    }
+  ],
+  "internalLinks": [
+    "/",
+    "/about",
+    "/apedrums",
+    "/archive",
+    "/archive/ape-drums-july31-2026",
+    "/archive/autograf-march-21-2026",
+    "/archive/chasing-sunsets-sunsets-ii-2026",
+    "/artists",
+    "/artists/amari",
+    "/artists/ape-drums",
+    "/artists/autograf",
+    "/artists/avo",
+    "/artists/benchek",
+    "/artists/chris-idh",
+    "/artists/colin",
+    "/artists/deron",
+    "/artists/eliana",
+    "/artists/eran-hersh",
+    "/artists/erikthedj",
+    "/artists/ewerseen",
+    "/artists/frankbono",
+    "/artists/gene-farris",
+    "/artists/gianniblu",
+    "/artists/hashtom",
+    "/artists/jealah",
+    "/artists/jerome",
+    "/artists/joezi",
+    "/artists/juany-bravo",
+    "/artists/kenbo-slice",
+    "/artists/kiko-franco",
+    "/artists/lazare",
+    "/artists/massuma",
+    "/artists/maximo",
+    "/artists/nomar",
+    "/artists/radian",
+    "/artists/rose",
+    "/artists/sarat",
+    "/artists/sommers-uk",
+    "/artists/summermel",
+    "/artists/terranova",
+    "/booking",
+    "/chasing-sunsets",
+    "/chasing-sunsets-facts",
+    "/chasing-sunsets/season-i",
+    "/chasing-sunsets/season-ii",
+    "/chasing-sunsets/season-iii",
+    "/chasing-sunsets/sunsets-i-2026",
+    "/chasing-sunsets/sunsets-ii-2026",
+    "/contact",
+    "/cookies",
+    "/events/chasing-sunsets-july-4-2026",
+    "/events/css-aug22",
+    "/events/eran-hersh-untold-story-iv",
+    "/events/house-of-friends-kashmir-july-31-2026",
+    "/events/monolith-launch",
+    "/faq",
+    "/go/gallery/autograf-mar21",
+    "/go/media/sunsets-recap",
+    "/go/media/sunsets-soundcloud",
+    "/go/social/instagram-sunsets",
+    "/go/tickets/css-aug22",
+    "/go/tickets/css-sep19",
+    "/go/waitlist/chasing-sunsets",
+    "/guide",
+    "/house-of-friends",
+    "/house-of-friends/apply",
+    "/insights",
+    "/insights/artist-feature-ewerseen",
+    "/insights/fan-feature-people-in-the-room",
+    "/insights/recap-sunsets-i-july-4-castaways",
+    "/insights/set-drop-benchek-ep-01",
+    "/insights/show-note-autograf-chicago",
+    "/lineup",
+    "/monolith",
+    "/newsletter",
+    "/partners",
+    "/press",
+    "/privacy",
+    "/radio",
+    "/radio/ch-02-radian-no-sleep",
+    "/radio/ep-004-benchek-part-2",
+    "/radio/ep-01-benchek",
+    "/radio/ep-02-ewerseen",
+    "/radio/ep-03-terranova",
+    "/radio/ep-04-radian",
+    "/schedule",
+    "/sponsors",
+    "/story",
+    "/submit",
+    "/sunsets",
+    "/sunsets-fm",
+    "/terms",
+    "/tickets",
+    "/untold-story",
+    "/untold-story/season-i",
+    "/untold-story/season-ii",
+    "/untold-story/season-iii",
+    "/vip"
+  ],
+  "signup": {
+    "status": 200,
+    "title": "SUNSETS.FM Releases",
+    "emailFields": 0,
+    "text": "SUNSETS.FM Releases\n\nGet new SUNSETS.FM mixes and music releases by email. Confirm your email to join this list. Unsubscribe anytime. This does not subscribe you to show updates or SMS.\n\nEnter your email address to subscribe\nProvide your email address to subscribe. For e.g abc@xyz.com\nSUBSCRIBE",
+    "submitted": false
+  },
+  "followup": {
+    "archiveHeading": "Fixed the seeded archive gallery heading; browser verified Autograf h1.",
+    "sunsetsDoorway": "Coming-soon copy, native Open Network CTA, and Brevo radio signup verified.",
+    "tests": {
+      "typescript": "pass",
+      "viteBuild": "pass",
+      "unitTests": 50,
+      "browserChecks": 15
+    },
+    "diploVideo": "YouTube embed returned error 150; cover opens the original video on YouTube. No working inline playback claim.",
+    "publication": "Local source changes only; no push or deployment performed."
+  }
+}

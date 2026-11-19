@@ -46,7 +46,7 @@ const architectureExpressions = [
     label: "Late Night",
     description:
       "The closer, more intimate expression. A tighter room, deeper pacing, and a stronger sense of where the night is going.",
-    href: "/story",
+    href: "/untold-story",
     cta: CTA_LABELS.untoldStory,
   },
 ];

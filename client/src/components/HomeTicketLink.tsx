@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import {
   currentSunsets,
+  sunsetsNeedsUpdate,
   sunsetsTicketsEnabled,
 } from "@shared/events/sunsets-current";
 import { appendAttributionQueryParams } from "@/lib/attribution";
@@ -15,7 +16,9 @@ export default function HomeTicketLink({ placement }: { placement: string }) {
       href={
         enabled
           ? appendAttributionQueryParams(currentSunsets.ticketUrl)
-          : "/sunsets#event-status"
+          : sunsetsNeedsUpdate
+            ? "/sunsets#event-status"
+            : "/newsletter"
       }
       onClick={event => {
         if (!enabled) return;
@@ -24,7 +27,7 @@ export default function HomeTicketLink({ placement }: { placement: string }) {
         );
         if (hasAnalyticsConsent())
           trackAccessEvent("ticket_click", {
-            buttonName: "Get tickets",
+            buttonName: "Get Tickets",
             destinationUrl: currentSunsets.ticketUrl,
             eventSlug: "css-sep19",
             eventDate: currentSunsets.start,
@@ -33,7 +36,11 @@ export default function HomeTicketLink({ placement }: { placement: string }) {
           });
       }}
     >
-      {enabled ? "Get tickets" : "Event information"}
+      {enabled
+        ? "Get Tickets"
+        : sunsetsNeedsUpdate
+          ? "TICKET-HOLDER UPDATE"
+          : "Get First Access"}
       <ArrowUpRight size={18} aria-hidden="true" />
     </a>
   );

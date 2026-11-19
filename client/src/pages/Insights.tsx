@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -39,7 +40,10 @@ function getAccentColor(accent: string) {
 }
 
 export default function Insights() {
-  const [featured, ...articles] = sortedEntries;
+  const [activeTag, setActiveTag] = useState("All");
+  const [featured, ...articles] = sortedEntries.filter(
+    entry => activeTag === "All" || entry.tags.includes(activeTag)
+  );
 
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-primary selection:text-white bg-scanlines">
@@ -50,59 +54,61 @@ export default function Insights() {
       />
       <Navigation />
 
-      <main
-        id="main-content"
-        tabIndex={-1}
-        className="page-shell-start-loose pb-24 px-6"
-      >
-        <div className="container layout-default">
-          {/* Breadcrumbs for SEO Drive */}
-          <nav
-            className="flex items-center gap-2 mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70"
-            aria-label="Breadcrumb"
-          >
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <ChevronRight size={10} />
-            <span className="text-white/60">Journal</span>
-          </nav>
+      <main id="main-content" tabIndex={-1} className="pb-32">
+        <section className="lg-cinematic-masthead px-6 mb-20 md:mb-24">
+          <div className="container layout-default">
+            {/* Breadcrumbs for SEO Drive */}
+            <nav
+              className="flex items-center gap-2 mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70"
+              aria-label="Breadcrumb"
+            >
+              <Link href="/" className="hover:text-white transition-colors">
+                Home
+              </Link>
+              <ChevronRight size={10} />
+              <span className="text-white/60">Journal</span>
+            </nav>
 
-          <motion.section
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-16 md:mb-24"
-          >
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary mb-4 block">
-              Journal
-            </span>
-            <h1 className="font-display text-[clamp(3.4rem,9vw,8rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-8">
-              <SplitText text="NEWS, NOTES" initialDelay={0.2} />
-              <br />
-              <span className="opacity-40">& CONTEXT</span>
-            </h1>
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-[#f3b572] mb-5 block">
+                Journal
+              </span>
+              <h1 className="font-display text-[clamp(3.6rem,9.5vw,8.4rem)] leading-[0.82] uppercase tracking-tight-display text-white mb-8">
+                News, notes
+                <br />
+                <span className="opacity-45">&amp; context.</span>
+              </h1>
 
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-              <p className="max-w-2xl text-lg md:text-xl leading-relaxed text-white/60 italic">
-                Clear writing about lineups, show updates, artist context, and
-                what is happening around the next Monolith dates.
-              </p>
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
+                <p className="max-w-2xl text-lg md:text-xl leading-relaxed text-white/72 italic">
+                  Clear writing about lineups, show updates, artist context, and
+                  what is happening around the next Monolith dates.
+                </p>
 
-              {/* Tag Discovery */}
-              <div className="flex flex-wrap gap-2 max-w-md lg:justify-end">
-                {ALL_TAGS.slice(0, 6).map(tag => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1.5 rounded-sm border border-white/10 bg-white/5 font-mono text-[9px] uppercase tracking-widest text-white/70 hover:text-white transition-colors cursor-pointer"
+                {/* Tag Discovery */}
+                <label className="journal-topic-filter">
+                  Explore a topic
+                  <select
+                    aria-label="Filter journal by topic"
+                    value={activeTag}
+                    onChange={event => setActiveTag(event.target.value)}
                   >
-                    #{tag.replace(/\s+/g, "_").toLowerCase()}
-                  </span>
-                ))}
+                    <option value="All">All stories</option>
+                    {ALL_TAGS.map(tag => (
+                      <option key={tag}>{tag}</option>
+                    ))}
+                  </select>
+                </label>
               </div>
-            </div>
-          </motion.section>
+            </motion.div>
+          </div>
+        </section>
 
+        <div className="container layout-default px-6">
           {/* Featured Entry — immersive Wide Card */}
           {featured ? (
             <motion.section

@@ -1,0 +1,2025 @@
+/* ==========================================================================
+   MONOLITH CINEMATIC LIQUID-GLASS HERO & CAROUSEL
+   Persistent smoked-glass interface around horizontally sliding scenes.
+   ========================================================================== */
+
+#app-shell .monolith-home .home-carousel.lg-hero-shell {
+  --lg-amber: #f3a659;
+  --lg-amber-bright: #ffe6c2;
+  --lg-amber-deep: #d9772c;
+  --lg-ivory: #fbf6ee;
+  --lg-muted: rgba(244, 233, 216, 0.78);
+  --lg-ink: #181009;
+  --lg-ease-cinema: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  min-height: 100svh;
+  height: auto;
+  overflow-x: clip;
+  overflow-y: visible;
+  background:
+    radial-gradient(
+      ellipse 58% 42% at 78% 28%,
+      rgba(243, 158, 78, 0.12) 0%,
+      transparent 70%
+    ),
+    #070608;
+  color: var(--lg-ivory);
+}
+
+@media (min-width: 960px) {
+  #app-shell .monolith-home .home-carousel.lg-hero-shell {
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+}
+
+@media (max-width: 639px) {
+  #app-shell .monolith-home .home-carousel.lg-hero-shell {
+    min-height: 94svh;
+  }
+}
+
+/* Harmonize the persistent top navigation frame over the liquid-glass hero */
+#app-shell:has(.lg-hero-shell) nav .shell-frame {
+  background: rgba(14, 11, 10, 0.56);
+  border-color: rgba(255, 232, 200, 0.14);
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 243, 224, 0.16),
+    inset 0 -1px 0 rgba(243, 166, 89, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   LAYER 1 & 2: Horizontal Background Scene Track + Portal/Orbit Stage
+   -------------------------------------------------------------------------- */
+.lg-backdrop-viewport {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #070608;
+}
+
+.lg-scene-plate {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.lg-scene-plate.is-scene-steady {
+  z-index: 2;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Requested left-to-right choreography: incoming -100% -> 0, outgoing 0 -> 100% */
+.lg-scene-plate.is-scene-entering-ltr {
+  z-index: 2;
+  animation: lg-scene-enter-ltr 1.2s var(--lg-ease-cinema) both;
+}
+
+.lg-scene-plate.is-scene-exiting-ltr {
+  z-index: 1;
+  animation: lg-scene-exit-ltr 1.2s var(--lg-ease-cinema) both;
+}
+
+.lg-scene-plate.is-scene-entering-rtl {
+  z-index: 2;
+  animation: lg-scene-enter-rtl 1.2s var(--lg-ease-cinema) both;
+}
+
+.lg-scene-plate.is-scene-exiting-rtl {
+  z-index: 1;
+  animation: lg-scene-exit-rtl 1.2s var(--lg-ease-cinema) both;
+}
+
+@keyframes lg-scene-enter-ltr {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes lg-scene-exit-ltr {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes lg-scene-enter-rtl {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes lg-scene-exit-rtl {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* Opening scene media framing: performance & horizon anchored right */
+#app-shell .monolith-home .lg-scene-plate-monolith-opening .monolith-hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+#app-shell .monolith-home .lg-scene-plate-monolith-opening .monolith-hero-photo img,
+#app-shell .monolith-home .lg-scene-plate-monolith-opening .monolith-hero-photo video {
+  object-fit: cover;
+  object-position: 70% 46%;
+  filter: saturate(1.12) contrast(1.06) brightness(0.88);
+}
+
+/* Remove heavy full-frame wash on opening scene; apply localized left copy scrim instead */
+#app-shell .monolith-home .lg-scene-plate-monolith-opening .monolith-hero-photo::after {
+  background: linear-gradient(
+    180deg,
+    rgba(9, 8, 14, 0.42) 0%,
+    rgba(28, 15, 10, 0.14) 48%,
+    rgba(9, 7, 9, 0.72) 100%
+  );
+}
+
+.lg-portal-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.lg-portal-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.lg-monolith-rim-bloom {
+  animation: lg-portal-bloom-breathe 7.2s ease-in-out infinite;
+}
+
+.lg-monolith-rim-core {
+  animation: lg-portal-core-breathe 7.2s ease-in-out infinite;
+}
+
+.lg-water-shimmer {
+  animation: lg-water-shimmer-breathe 6.4s ease-in-out infinite;
+}
+
+.lg-orbital-arc {
+  animation: lg-orbit-draw 9s ease-in-out infinite;
+}
+
+@keyframes lg-portal-bloom-breathe {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes lg-portal-core-breathe {
+  0%,
+  100% {
+    opacity: 0.86;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes lg-water-shimmer-breathe {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes lg-orbit-draw {
+  0%,
+  100% {
+    opacity: 0.48;
+  }
+  50% {
+    opacity: 0.92;
+  }
+}
+
+/* Localized darkness behind left copy column; right-side horizon & portal stay vivid */
+.lg-opening-local-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    radial-gradient(
+      ellipse 58% 72% at 16% 48%,
+      rgba(7, 6, 9, 0.86) 0%,
+      rgba(7, 6, 9, 0.42) 58%,
+      transparent 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(6, 6, 8, 0.5) 0%,
+      transparent 24%,
+      transparent 62%,
+      rgba(7, 6, 8, 0.9) 100%
+    );
+}
+
+/* Slide 2 (Preserved Live Rooms hero) backdrop */
+#app-shell .monolith-home .lg-scene-plate-monolith-rooms .monolith-hero-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.lg-rooms-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(
+      ellipse 58% 66% at 22% 56%,
+      rgba(8, 7, 8, 0.68) 0%,
+      transparent 76%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(6, 6, 7, 0.46) 0%,
+      transparent 30%,
+      rgba(7, 6, 8, 0.86) 100%
+    );
+}
+
+/* Slide 3 (SUNSETS.FM) backdrop */
+.lg-network-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 65% at 76% 42%, rgba(216, 152, 82, 0.14), transparent 70%),
+    linear-gradient(125deg, #071316 0%, #091b1f 52%, #0c1415 100%);
+}
+
+.lg-network-backdrop .home-network-globe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.34;
+}
+
+.lg-network-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 17, 19, 0.88) 0%,
+    rgba(6, 17, 19, 0.44) 60%,
+    rgba(7, 12, 14, 0.72) 100%
+  );
+}
+
+/* Slide 4 (Radio) backdrop */
+.lg-radio-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 65% 60% at 78% 38%, rgba(44, 88, 66, 0.82), transparent 68%),
+    radial-gradient(ellipse 45% 50% at 72% 54%, rgba(226, 166, 94, 0.12), transparent 72%),
+    linear-gradient(160deg, #091915 0%, #07120f 62%, #060908 100%);
+}
+
+/* --------------------------------------------------------------------------
+   LAYER 3A: Scene Foreground Stage & Opening Typography
+   -------------------------------------------------------------------------- */
+.lg-scene-stage {
+  position: relative;
+  z-index: 2;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 0;
+  padding-top: calc(var(--shell-nav-height, 78px) + clamp(28px, 6vh, 72px));
+  padding-bottom: clamp(18px, 3.2vh, 36px);
+}
+
+.lg-scene-content {
+  width: 100%;
+}
+
+.lg-scene-content.is-copy-entering-ltr {
+  animation: lg-copy-enter-ltr 0.78s var(--lg-ease-cinema) both;
+}
+
+.lg-scene-content.is-copy-entering-rtl {
+  animation: lg-copy-enter-rtl 0.78s var(--lg-ease-cinema) both;
+}
+
+@keyframes lg-copy-enter-ltr {
+  from {
+    opacity: 0;
+    transform: translate3d(-24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes lg-copy-enter-rtl {
+  from {
+    opacity: 0;
+    transform: translate3d(24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Opening Slide 1 Layout & Hierarchy */
+.lg-opening-stage {
+  width: 100%;
+}
+
+.lg-opening-inner {
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4.5vw, 76px);
+}
+
+.lg-opening-copy {
+  max-width: min(860px, 68vw);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: lg-opening-rise 1.05s var(--lg-ease-cinema) both;
+}
+
+@keyframes lg-opening-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.lg-opening-eyebrow-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: clamp(14px, 2vh, 24px);
+}
+
+.lg-opening-eyebrow {
+  margin: 0;
+  font: 500 12px/1.4 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #f0e0ca;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.lg-frequency-svg {
+  display: block;
+  width: clamp(104px, 10vw, 148px);
+  height: auto;
+  flex-shrink: 0;
+  animation: lg-freq-pulse 6s ease-in-out infinite;
+}
+
+@keyframes lg-freq-pulse {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+#app-shell .monolith-home .lg-opening-title {
+  margin: 0;
+  font-family: var(--font-monolith, "General Sans", sans-serif);
+  font-weight: 500;
+  font-size: clamp(3.05rem, 9.4vw, 8.85rem);
+  line-height: 0.92;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fffaf2;
+  text-shadow:
+    0 1px 0 rgba(255, 236, 210, 0.22),
+    0 4px 48px rgba(255, 174, 92, 0.22),
+    0 18px 48px rgba(0, 0, 0, 0.52);
+}
+
+#app-shell .monolith-home .lg-opening-subtitle {
+  margin: clamp(16px, 2.4vh, 28px) 0 clamp(26px, 3.6vh, 40px);
+  max-width: 28ch;
+  font-family: "Cormorant Garamond", "Instrument Serif", Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.55vw, 2.45rem);
+  line-height: 1.22;
+  letter-spacing: 0.005em;
+  color: #f6ecde;
+  text-shadow: 0 6px 28px rgba(0, 0, 0, 0.55);
+}
+
+.lg-opening-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.lg-opening-awareness {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: clamp(18px, 2.6vh, 28px);
+  padding-top: clamp(14px, 2vh, 20px);
+  border-top: 1px solid rgba(255, 228, 194, 0.18);
+}
+
+.lg-opening-awareness a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  color: rgba(247, 234, 214, 0.78);
+  font: 500 11px/1.2 var(--font-mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.lg-opening-awareness a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 196, 128, 0.75),
+    rgba(255, 232, 200, 0.15)
+  );
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s var(--lg-ease-cinema);
+}
+
+.lg-opening-awareness a:hover,
+.lg-opening-awareness a:focus-visible {
+  color: #fff8ee;
+}
+
+.lg-opening-awareness a:hover::after,
+.lg-opening-awareness a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Luminous Liquid-Amber Primary Pill */
+.lg-btn-amber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 236, 206, 0.78);
+  background: linear-gradient(
+    180deg,
+    #fff0d6 0%,
+    #f5b574 52%,
+    #e0893f 100%
+  );
+  color: var(--lg-ink);
+  font: 600 12.75px/1.2 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow:
+    0 10px 34px rgba(243, 152, 70, 0.4),
+    0 0 0 1px rgba(255, 214, 166, 0.12),
+    inset 0 1px 0 rgba(255, 253, 248, 0.86);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+
+.lg-btn-amber:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 16px 42px rgba(245, 162, 82, 0.52),
+    0 0 0 1px rgba(255, 224, 186, 0.22),
+    inset 0 1px 0 rgba(255, 253, 248, 0.95);
+}
+
+/* Smoked Liquid-Glass Outlined Pill */
+.lg-btn-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-height: 54px;
+  padding: 14px 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 234, 206, 0.4);
+  background: rgba(16, 12, 11, 0.72);
+  color: #f8f0e3;
+  font: 500 12.75px/1.2 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 242, 224, 0.22);
+  transition:
+    background 0.22s ease,
+    border-color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-btn-glass {
+    background: rgba(18, 13, 12, 0.4);
+    backdrop-filter: blur(16px) saturate(145%);
+    -webkit-backdrop-filter: blur(16px) saturate(145%);
+  }
+}
+
+.lg-btn-glass:hover {
+  border-color: rgba(255, 214, 164, 0.7);
+  background: rgba(34, 23, 17, 0.58);
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 242, 224, 0.28);
+}
+
+.lg-btn-play-ring {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 232, 202, 0.55);
+  padding-left: 1px;
+  box-shadow: 0 0 12px rgba(255, 186, 112, 0.18);
+}
+
+/* Slide 2 (Preserved HeroSection inside liquid-glass stage) */
+#app-shell .monolith-home .lg-hero-shell .monolith-hero {
+  background: transparent;
+  width: 100%;
+}
+
+#app-shell .monolith-home .lg-hero-shell .lg-rooms-stage {
+  width: 100%;
+}
+
+#app-shell .monolith-home .lg-hero-shell .monolith-hero-inner {
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding: clamp(16px, 3vh, 40px) clamp(20px, 4.5vw, 76px);
+}
+
+#app-shell .monolith-home .lg-hero-shell .monolith-hero-copy {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+#app-shell .monolith-home .lg-hero-shell .monolith-hero-display {
+  font-family: "Kanit", var(--font-hero);
+  font-weight: 500;
+  font-size: clamp(3.2rem, 8.2vw, 7.6rem);
+  letter-spacing: 0.035em;
+  line-height: 0.98;
+  color: #fcf8f0;
+  margin: 12px 0 16px;
+}
+
+/* Slides 3 & 4 (SUNSETS.FM and Radio) inside unified stage */
+.lg-slide-layout.home-network-slide,
+.lg-slide-layout.home-radio-slide {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(28px, 4.5vw, 76px);
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding: clamp(8px, 1.5vh, 20px) clamp(20px, 4.5vw, 76px);
+  background: transparent;
+}
+
+.home-network-copy {
+  min-width: 0;
+}
+
+.monolith-home .home-network-copy .home-eyebrow,
+.monolith-home .home-launch-signup .home-eyebrow {
+  color: #e4c99b;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.home-network-copy .home-eyebrow span,
+.home-launch-signup .home-eyebrow span {
+  padding: 0 6px;
+  opacity: 0.6;
+}
+
+.home-network-wordmark {
+  margin: 18px 0 12px;
+  font-size: 12.5px;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+  color: #f6efe2;
+}
+
+.home-network-copy h1 {
+  font-family: "Cormorant Garamond", "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 4.8vw, 4.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: #fbf5e8;
+}
+
+.home-network-copy h1 em {
+  color: #efc488;
+  font-weight: 400;
+}
+
+.home-network-intro {
+  max-width: 40ch;
+  font-size: 15px;
+  line-height: 1.68;
+  color: #dadbd3;
+  margin: 16px 0 22px;
+}
+
+.home-network-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+}
+
+.home-network-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 50px;
+  padding: 14px 22px;
+  background: #e7d9b9;
+  color: #102422;
+  border: 1px solid #e7d9b9;
+  border-radius: 999px;
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-network-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: #f4ead8;
+  font-size: 13px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.home-diplo-feature {
+  min-width: 0;
+  margin: 0;
+  padding: 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 232, 198, 0.2);
+  background: rgba(14, 18, 20, 0.56);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 244, 226, 0.16);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .home-diplo-feature {
+    backdrop-filter: blur(16px) saturate(135%);
+    -webkit-backdrop-filter: blur(16px) saturate(135%);
+  }
+}
+
+.home-diplo-cover {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(255, 235, 205, 0.2);
+  border-radius: 10px;
+  background: #121c22;
+}
+
+button.home-diplo-cover {
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.home-diplo-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 0;
+}
+
+.home-diplo-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.home-diplo-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.home-cover-play {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  gap: 9px;
+  align-items: center;
+  padding: 10px 16px;
+  min-height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 234, 204, 0.34);
+  background: rgba(12, 16, 20, 0.78);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.42);
+}
+
+.home-diplo-feature figcaption {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 12px;
+  padding-inline: 4px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #ccd3d2;
+}
+
+.home-diplo-feature figcaption strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 500;
+  color: #fbf3e4;
+}
+
+.home-diplo-feature figcaption div span {
+  font-size: 12px;
+}
+
+.home-diplo-feature figcaption > span {
+  text-align: right;
+}
+
+.home-radio-powered-by {
+  margin: -6px 0 16px;
+  color: #decba8;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.home-radio-powered-by a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.home-radio-covers {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.26fr 1fr;
+  align-items: center;
+  max-width: 560px;
+  justify-self: center;
+  padding: 18px 6px 42px;
+}
+
+.home-radio-covers img {
+  width: calc(100% + 36px);
+  max-width: none;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(236, 194, 132, 0.34);
+}
+
+.home-radio-covers img:first-child {
+  transform: rotate(-8deg);
+}
+
+.home-radio-covers img:nth-child(2) {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-18px);
+}
+
+.home-radio-covers img:nth-child(3) {
+  transform: translateX(-36px) rotate(8deg);
+}
+
+.home-radio-covers > span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #e2cfa9;
+}
+
+/* --------------------------------------------------------------------------
+   LAYER 3B: Persistent Stationary HUD Bar (Media Scrubber + Carousel Controls)
+   -------------------------------------------------------------------------- */
+.lg-persistent-deck {
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: clamp(16px, 3.6vw, 60px);
+  padding-bottom: clamp(14px, 2.2vh, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lg-hud-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-height: 46px;
+  padding: 4px 8px;
+  background: transparent;
+  border: 0;
+}
+
+.lg-hud-media {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.lg-media-transport {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.lg-media-play-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 232, 200, 0.36);
+  background: rgba(14, 11, 10, 0.64);
+  color: #fbf4e8;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 245, 230, 0.16);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.lg-media-play-btn:hover {
+  border-color: rgba(255, 198, 134, 0.72);
+  background: rgba(30, 20, 14, 0.74);
+}
+
+.lg-media-time {
+  flex-shrink: 0;
+  font: 500 11.5px/1 var(--font-mono, monospace);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: rgba(248, 237, 220, 0.86);
+}
+
+.lg-media-scrubber-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 84px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.lg-media-scrubber-track {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 236, 212, 0.2);
+}
+
+.lg-media-scrubber-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--scrubber-pct, 0%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ffb668, #ffe7c2);
+  box-shadow: 0 0 12px rgba(255, 174, 88, 0.55);
+}
+
+.lg-media-scrubber-pulse {
+  position: absolute;
+  top: 50%;
+  left: var(--scrubber-pct, 0%);
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 6px rgba(255, 174, 88, 0.7));
+  pointer-events: none;
+}
+
+.lg-media-scrubber-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.lg-scene-readout {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 11px/1.3 var(--font-mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(244, 232, 214, 0.74);
+}
+
+.lg-scene-readout-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lg-amber);
+  box-shadow: 0 0 10px rgba(243, 166, 89, 0.75);
+}
+
+/* Center slide selectors */
+.lg-slide-selectors {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 232, 200, 0.14);
+  background: rgba(12, 10, 10, 0.52);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-slide-selectors {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+.lg-slide-selectors button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: rgba(240, 229, 212, 0.68);
+  font: 500 11.5px/1 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.lg-slide-selectors button:hover {
+  color: #fdf7ed;
+}
+
+.lg-slide-selectors button[aria-current="true"] {
+  color: #fff8ee;
+  background: rgba(255, 216, 168, 0.14);
+}
+
+.lg-slide-selectors button[aria-current="true"]::after {
+  display: none;
+}
+
+.lg-selector-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 232, 202, 0.55);
+  background: transparent;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lg-slide-selectors button[aria-current="true"] .lg-selector-dot {
+  background: #fff4e2;
+  border-color: #fff4e2;
+  box-shadow: 0 0 10px rgba(255, 196, 128, 0.8);
+}
+
+.lg-selector-num {
+  font-family: var(--font-mono, monospace);
+  font-size: 10.5px;
+  color: rgba(243, 198, 142, 0.82);
+}
+
+/* Right transport buttons */
+.lg-hud-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lg-hud-actions button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 232, 202, 0.24);
+  background: rgba(14, 11, 10, 0.58);
+  color: #f8efe2;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-hud-actions button {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+.lg-hud-actions button:hover {
+  border-color: rgba(255, 200, 138, 0.62);
+  background: rgba(30, 21, 15, 0.72);
+}
+
+/* --------------------------------------------------------------------------
+   BOTTOM FLOATING SMOKED LIQUID-GLASS EVENT / TICKET CONSOLE
+   -------------------------------------------------------------------------- */
+.lg-console-shell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 224, 186, 0.26);
+  background: rgba(15, 12, 10, 0.92);
+  box-shadow:
+    0 26px 64px rgba(0, 0, 0, 0.56),
+    inset 0 1px 0 rgba(255, 246, 232, 0.26),
+    inset 0 -1px 0 rgba(244, 154, 72, 0.34),
+    0 10px 34px -12px rgba(244, 146, 62, 0.28);
+  overflow: hidden;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-console-shell {
+    background: linear-gradient(
+      135deg,
+      rgba(26, 18, 13, 0.62) 0%,
+      rgba(12, 10, 11, 0.7) 52%,
+      rgba(30, 18, 12, 0.58) 100%
+    );
+    backdrop-filter: blur(22px) saturate(145%);
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+  }
+}
+
+/* Restrained warm reflection along the lower edge */
+.lg-console-shell::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 186, 112, 0.68),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.lg-console-viewport {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.lg-console-record {
+  display: grid;
+  grid-template-columns: minmax(148px, 0.66fr) minmax(0, 2.75fr) auto;
+  align-items: center;
+  gap: clamp(14px, 1.6vw, 24px);
+  width: 100%;
+  min-height: 100px;
+  padding: 16px clamp(16px, 2vw, 26px);
+}
+
+.lg-console-record.is-console-steady {
+  position: relative;
+  transform: translate3d(0, 0, 0);
+}
+
+.lg-console-record.is-console-entering-ltr {
+  position: relative;
+  z-index: 2;
+  animation: lg-console-enter-ltr 1.4s var(--lg-ease-cinema) both;
+}
+
+.lg-console-record.is-console-exiting-ltr {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  animation: lg-console-exit-ltr 1.4s var(--lg-ease-cinema) both;
+}
+
+.lg-console-record.is-console-entering-rtl {
+  position: relative;
+  z-index: 2;
+  animation: lg-console-enter-rtl 1.4s var(--lg-ease-cinema) both;
+}
+
+.lg-console-record.is-console-exiting-rtl {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  animation: lg-console-exit-rtl 1.4s var(--lg-ease-cinema) both;
+}
+
+@keyframes lg-console-enter-ltr {
+  from {
+    opacity: 0.25;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes lg-console-exit-ltr {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0.25;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes lg-console-enter-rtl {
+  from {
+    opacity: 0.25;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes lg-console-exit-rtl {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0.25;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+/* [ 1. Series / event identity ] */
+.lg-console-identity {
+  padding-right: clamp(14px, 1.8vw, 24px);
+  border-right: 1px solid rgba(255, 232, 202, 0.16);
+}
+
+.lg-console-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.lg-console-sunsets-logo {
+  width: 124px;
+  height: auto;
+}
+
+.lg-console-untold-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 20px;
+  color: #fff;
+}
+
+.lg-console-monolith-mark {
+  font: 500 16px/1.1 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.22em;
+  color: #fdf7ed;
+}
+
+.lg-console-brand-sub {
+  font: 500 10.5px/1.35 var(--font-mono, monospace);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(242, 214, 176, 0.76);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* [ 2. Coherent event information ] */
+.lg-console-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+}
+
+.lg-console-fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+  padding-inline: clamp(10px, 1.15vw, 18px);
+}
+
+.lg-console-fact:first-child {
+  padding-left: 0;
+}
+
+.lg-console-fact + .lg-console-fact {
+  border-left: 1px solid rgba(255, 232, 202, 0.14);
+}
+
+.lg-console-fact svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #f3b572;
+}
+
+.lg-console-fact > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lg-console-fact-primary {
+  font: 600 13px/1.3 var(--font-monolith, "General Sans", sans-serif);
+  color: #fcf7ef;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lg-console-fact-secondary {
+  font: 400 12px/1.35 var(--font-sans, sans-serif);
+  color: rgba(238, 226, 208, 0.74);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* [ 3. Status + action ] */
+.lg-console-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.lg-console-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 174, 96, 0.48);
+  background: rgba(245, 162, 78, 0.12);
+  color: #ffd8a6;
+  font: 600 11px/1.2 var(--font-mono, monospace);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lg-console-badge[data-tone="live"] {
+  border-color: rgba(182, 232, 188, 0.56);
+  background: rgba(126, 198, 138, 0.14);
+  color: #d7f5dc;
+}
+
+.lg-console-badge[data-tone="muted"] {
+  border-color: rgba(255, 235, 210, 0.24);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(244, 235, 222, 0.82);
+}
+
+.lg-console-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 238, 210, 0.78);
+  background: linear-gradient(
+    180deg,
+    #fff0d6 0%,
+    #f5b574 52%,
+    #e0893f 100%
+  );
+  color: var(--lg-ink);
+  font: 700 12px/1.2 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow:
+    0 8px 28px rgba(243, 152, 70, 0.38),
+    0 0 0 1px rgba(255, 214, 166, 0.12),
+    inset 0 1px 0 rgba(255, 253, 248, 0.86);
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lg-console-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 14px 36px rgba(245, 162, 82, 0.48),
+    inset 0 1px 0 rgba(255, 253, 248, 0.95);
+}
+
+.lg-console-stepper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 12px 8px 8px;
+  border-left: 1px solid rgba(255, 232, 202, 0.12);
+  flex-shrink: 0;
+}
+
+.lg-console-step-btn {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 232, 202, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(250, 239, 224, 0.85);
+  cursor: pointer;
+}
+
+.lg-console-step-btn:hover {
+  border-color: rgba(255, 204, 144, 0.55);
+  background: rgba(255, 204, 144, 0.12);
+}
+
+.lg-console-step-count {
+  font: 500 10.5px/1 var(--font-mono, monospace);
+  font-variant-numeric: tabular-nums;
+  color: rgba(240, 224, 202, 0.68);
+}
+
+/* --------------------------------------------------------------------------
+   IN-PAGE LIQUID-GLASS FILM DIALOG ("Watch the Film")
+   -------------------------------------------------------------------------- */
+.lg-film-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(6, 5, 7, 0.82);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-film-modal-backdrop {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+}
+
+.lg-film-modal-card {
+  width: min(980px, 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 226, 188, 0.24);
+  background: rgba(15, 12, 11, 0.94);
+  padding: clamp(16px, 2.5vw, 28px);
+  box-shadow:
+    0 32px 90px rgba(0, 0, 0, 0.72),
+    inset 0 1px 0 rgba(255, 244, 228, 0.2);
+}
+
+.lg-film-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.lg-film-modal-kicker {
+  margin: 0 0 6px;
+  font: 500 11px/1.4 var(--font-mono, monospace);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #e9bf88;
+}
+
+.lg-film-modal-header h2 {
+  margin: 0;
+  font: 500 clamp(18px, 2.2vw, 26px)/1.2 var(--font-monolith, "General Sans", sans-serif);
+  color: #fdf7ee;
+}
+
+.lg-film-modal-close {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 232, 202, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+}
+
+.lg-film-modal-frame {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 232, 202, 0.16);
+  background: #000;
+}
+
+.lg-film-modal-iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border: 0;
+}
+
+.lg-film-modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-top: 14px;
+}
+
+/* Focus rings inside the hero */
+.home-carousel button:focus-visible,
+.home-carousel a:focus-visible,
+.home-carousel input:focus-visible,
+.home-launch-signup a:focus-visible {
+  outline: 2px solid #ffd59e;
+  outline-offset: 4px;
+}
+
+/* Preserved SUNSETS.FM signup contrast band below on homepage */
+.home-launch-signup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  padding: 85px 8%;
+  background: #e9e3d5;
+  color: #182b24;
+  scroll-margin-top: 130px;
+}
+
+.monolith-home .home-launch-signup .home-eyebrow {
+  color: #4f6051;
+}
+
+.home-launch-signup h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(36px, 4.5vw, 64px);
+  line-height: 1.07;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin-top: 20px;
+}
+
+.home-launch-signup h2 em {
+  font-weight: 400;
+}
+
+.home-launch-detail {
+  max-width: 480px;
+}
+
+.home-launch-detail > p {
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.home-launch-detail .home-network-primary {
+  background: #17382c;
+  color: #f4ecd9;
+  border-color: #17382c;
+  border-radius: 5px;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE REFLOW (Tablet, Mobile 430 / 390 / 320, and Short Landscape)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1180px) {
+  .lg-opening-copy {
+    max-width: min(640px, 66vw);
+  }
+
+  .lg-console-record {
+    grid-template-columns: minmax(150px, 0.9fr) minmax(0, 1.9fr) auto;
+    gap: 16px;
+    padding: 14px 18px;
+  }
+
+  .lg-console-fact-time {
+    display: none;
+  }
+
+  .lg-console-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .lg-hud-bar {
+    grid-template-columns: 1fr auto;
+    row-gap: 10px;
+  }
+
+  .lg-hud-media {
+    grid-column: 1 / -1;
+    order: 2;
+  }
+
+  .lg-media-transport {
+    max-width: none;
+  }
+
+  .lg-slide-selectors {
+    justify-self: start;
+  }
+
+  .lg-console-record {
+    grid-template-columns: 1fr auto;
+    row-gap: 14px;
+  }
+
+  .lg-console-identity {
+    border-right: 0;
+    padding-right: 0;
+  }
+
+  .lg-console-facts {
+    grid-column: 1 / -1;
+    order: 3;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 232, 202, 0.14);
+  }
+}
+
+@media (max-width: 767px) {
+  /* Recompose the scene on phones: shift the SVG camera so the illuminated Monolith
+     portal (drawn at x=966..1130 in 1600w viewBox) sits prominently in the upper-right sky */
+  .lg-portal-layer {
+    overflow: hidden;
+  }
+
+  .lg-portal-svg {
+    width: 156%;
+    max-width: none;
+    height: 100%;
+    margin-left: -46%;
+    transform: translateY(-7%);
+  }
+
+  .lg-opening-local-scrim {
+    background:
+      radial-gradient(
+        ellipse 72% 48% at 22% 34%,
+        rgba(7, 6, 9, 0.68) 0%,
+        rgba(7, 6, 9, 0.22) 64%,
+        transparent 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(7, 6, 9, 0.48) 0%,
+        rgba(7, 6, 9, 0.14) 28%,
+        rgba(8, 7, 10, 0.74) 68%,
+        rgba(7, 6, 8, 0.94) 100%
+      );
+  }
+
+  .lg-scene-stage {
+    justify-content: flex-start;
+    padding-top: calc(var(--shell-nav-height, 68px) + 18px);
+    padding-bottom: 18px;
+  }
+
+  .lg-opening-inner {
+    padding-inline: 18px;
+  }
+
+  .lg-opening-copy {
+    max-width: 100%;
+  }
+
+  .lg-opening-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+  }
+
+  #app-shell .monolith-home .lg-opening-title {
+    font-size: clamp(2.55rem, 11.8vw, 3.8rem);
+    letter-spacing: 0.1em;
+  }
+
+  #app-shell .monolith-home .lg-opening-subtitle {
+    font-size: clamp(1.28rem, 5.2vw, 1.62rem);
+    margin: 10px 0 18px;
+  }
+
+  .lg-opening-actions {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .lg-opening-actions > a,
+  .lg-opening-actions > button {
+    flex: 1 1 180px;
+    min-height: 48px;
+    padding-inline: 18px;
+    font-size: 11.5px;
+  }
+
+  .lg-opening-awareness {
+    width: 100%;
+    gap: 4px 12px;
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .lg-persistent-deck {
+    padding-bottom: 12px;
+    gap: 10px;
+  }
+
+  #app-shell .monolith-home .lg-hero-shell .monolith-hero-inner {
+    padding: 16px 18px;
+  }
+
+  #app-shell .monolith-home .lg-hero-shell .monolith-hero-copy {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .lg-slide-layout.home-network-slide,
+  .lg-slide-layout.home-radio-slide {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 12px 18px;
+  }
+
+  .home-radio-covers {
+    width: 88%;
+    max-width: 380px;
+    padding: 8px 0 32px;
+  }
+
+  .lg-persistent-deck {
+    padding-inline: 14px;
+    padding-bottom: 16px;
+    gap: 10px;
+  }
+
+  .lg-hud-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 2px;
+  }
+
+  .lg-hud-media {
+    display: none;
+  }
+
+  .lg-slide-selectors {
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: space-between;
+    padding: 3px 6px;
+    gap: 2px;
+  }
+
+  .lg-slide-selectors button {
+    padding: 6px 8px;
+    min-height: 36px;
+    gap: 5px;
+    font-size: 11px;
+  }
+
+  .lg-selector-num {
+    display: none;
+  }
+
+  .lg-fullscreen-btn {
+    display: none !important;
+  }
+
+  /* Readable stacked console in normal document flow on phones */
+  .lg-console-shell {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 18px;
+  }
+
+  .lg-console-record {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .lg-console-identity {
+    order: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .lg-console-brand-sub,
+  .lg-console-fact-primary,
+  .lg-console-fact-secondary {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .lg-console-facts {
+    order: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 232, 202, 0.14);
+  }
+
+  .lg-console-fact {
+    padding: 0;
+  }
+
+  .lg-console-fact + .lg-console-fact {
+    border-left: 0;
+  }
+
+  .lg-console-fact-time {
+    display: flex;
+  }
+
+  .lg-console-actions {
+    order: 3;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    padding-top: 4px;
+  }
+
+  .lg-console-cta {
+    flex: 1 1 auto;
+    min-height: 46px;
+  }
+
+  .lg-console-stepper {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 232, 202, 0.12);
+  }
+
+  .home-launch-signup {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 60px 24px;
+  }
+}
+
+/* Ultra-narrow phones (320px–380px): ensure zero clipping or overflow */
+@media (max-width: 420px) {
+  #app-shell .monolith-home .lg-opening-title {
+    font-size: clamp(2.15rem, 11vw, 2.85rem);
+    letter-spacing: 0.08em;
+  }
+
+  .lg-opening-awareness a {
+    min-height: 32px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+  }
+
+  .lg-frequency-svg {
+    width: 88px;
+  }
+
+  .lg-slide-selectors {
+    flex-basis: 100%;
+  }
+
+  .lg-selector-label {
+    font-size: 10.5px;
+  }
+
+  .lg-hud-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Short / landscape viewports: allow vertical growth, never clip copy or console */
+@media (max-height: 680px) and (min-width: 640px) {
+  .lg-scene-stage {
+    padding-top: calc(var(--shell-nav-height, 68px) + 14px);
+    padding-bottom: 12px;
+  }
+
+  #app-shell .monolith-home .lg-opening-title {
+    font-size: clamp(2.55rem, 6.2vw, 4.6rem);
+  }
+
+  #app-shell .monolith-home .lg-opening-subtitle {
+    font-size: clamp(1.25rem, 2vw, 1.7rem);
+    margin: 10px 0 16px;
+  }
+
+  .lg-opening-awareness {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+}
+
+/* Short phones: keep CTAs clear of the floating event console */
+@media (max-height: 780px) and (max-width: 767px) {
+  .lg-opening-awareness {
+    display: none;
+  }
+
+  #app-shell .monolith-home .lg-opening-subtitle {
+    margin-bottom: 14px;
+  }
+
+  .lg-console-record {
+    min-height: 0;
+    padding-block: 12px;
+  }
+}
+
+/* Reduced motion: disable automatic decorative motion and horizontal travel */
+@media (prefers-reduced-motion: reduce) {
+  .lg-scene-plate.is-scene-entering-ltr,
+  .lg-scene-plate.is-scene-exiting-ltr,
+  .lg-scene-plate.is-scene-entering-rtl,
+  .lg-scene-plate.is-scene-exiting-rtl,
+  .lg-scene-content.is-copy-entering-ltr,
+  .lg-scene-content.is-copy-entering-rtl,
+  .lg-console-record.is-console-entering-ltr,
+  .lg-console-record.is-console-exiting-ltr,
+  .lg-console-record.is-console-entering-rtl,
+  .lg-console-record.is-console-exiting-rtl,
+  .lg-opening-copy,
+  .lg-monolith-rim-bloom,
+  .lg-monolith-rim-core,
+  .lg-water-shimmer,
+  .lg-orbital-arc,
+  .lg-frequency-svg {
+    animation: none !important;
+  }
+
+  .lg-btn-amber,
+  .lg-btn-glass,
+  .lg-console-cta,
+  .home-entry-link {
+    transition: none !important;
+  }
+}

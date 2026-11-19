@@ -1,3 +1,4 @@
+import WorldEtching from "@/components/WorldEtching";
 import {
   TICKET_POLICY,
   SUNSETS_TICKET_HOLDER_UPDATE,
@@ -11,6 +12,7 @@ import ChasingSunsetsLogo from "@/components/ChasingSunsetsLogo";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import HomeEventFeature from "@/components/HomeEventFeature";
 import HomeTicketLink from "@/components/HomeTicketLink";
+import SeasonInvitation from "@/components/SeasonInvitation";
 import { archiveCollectionsBySlug } from "@/data/galleryData";
 import {
   currentSunsets as event,
@@ -95,6 +97,7 @@ export default function ChasingSunsets() {
           className="chasing-series-hero"
           aria-labelledby="chasing-hero-title"
         >
+          <WorldEtching />
           <ResponsiveImage
             src="/images/chasing-sunsets-castaways-hero.png"
             alt="Castaways Beach Club beside Lake Michigan at sunset"
@@ -118,9 +121,19 @@ export default function ChasingSunsets() {
             <div className="home-actions">
               <a
                 className="home-primary"
-                href={eventActive ? "#current-event" : "#chasing-records"}
+                href={
+                  sunsetsNeedsUpdate
+                    ? "#chasing-next-chapter"
+                    : eventActive
+                      ? "#current-event"
+                      : "#chasing-records"
+                }
               >
-                {eventActive ? "Explore the finale" : "Explore past shows"}
+                {sunsetsNeedsUpdate
+                  ? "The next sunset"
+                  : eventActive
+                    ? "Explore the show"
+                    : "Explore past shows"}
                 <ArrowUpRight size={18} aria-hidden="true" />
               </a>
               <a className="home-secondary" href="#chasing-gallery">
@@ -133,7 +146,11 @@ export default function ChasingSunsets() {
           className="chasing-section-nav"
           aria-label="Chasing Sunsets sections"
         >
-          {eventActive && <a href="#current-event">Event guide</a>}
+          {eventActive && (
+            <a href="#current-event">
+              {sunsetsNeedsUpdate ? "Ticket-holder update" : "Event guide"}
+            </a>
+          )}
           <a href="#chasing-venue">Castaways</a>
           <a href="#chasing-sound">The music</a>
           <a href="#chasing-records">Previous shows</a>
@@ -141,6 +158,7 @@ export default function ChasingSunsets() {
           <a href="#chasing-faq">FAQs</a>
         </nav>
         <HomeEventFeature />
+        <SeasonInvitation programme="sunsets" id="chasing-next-chapter" />
         <section
           id="chasing-venue"
           className="home-editorial-section chasing-venue-section"
@@ -481,6 +499,13 @@ export default function ChasingSunsets() {
               <h2 id="chasing-closing-title">Stay close to Sun(Sets).</h2>
               <p>Check the event guide for the latest published information.</p>
               <div className="home-actions">
+                <Link
+                  href="/newsletter"
+                  className="home-primary"
+                  data-first-access="true"
+                >
+                  Get First Access <ArrowUpRight size={18} aria-hidden="true" />
+                </Link>
                 <HomeTicketLink placement="chasing_series_close" />
                 <a
                   className="home-secondary"

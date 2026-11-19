@@ -1,3 +1,4 @@
+import WorldEtching from "@/components/WorldEtching";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
@@ -5,6 +6,7 @@ import SEO from "@/components/SEO";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import ConversionCTA from "@/components/ConversionCTA";
+import SeasonInvitation from "@/components/SeasonInvitation";
 import { publishedArchiveEntries } from "@/data/archiveEntries";
 import { ARTIST_ENTRIES } from "@/data/artists";
 import { INSTAGRAM_UNTOLD } from "@/data/events";
@@ -42,6 +44,7 @@ export default function UntoldStory() {
   const candidate = getSeriesExperienceEvent("untold-story", "funnel");
   const event =
     candidate &&
+    candidate.confirmationStatus !== "pending" &&
     !["draft", "hidden", "past"].includes(candidate.status) &&
     getEventWindowStatus(candidate) !== "past"
       ? candidate
@@ -54,7 +57,7 @@ export default function UntoldStory() {
   const schemaData = [
     buildFaqSchema(untoldFaqs),
     ...(event && dateConfirmed
-      ? [buildScheduledEventSchema(event, "/story")]
+      ? [buildScheduledEventSchema(event, "/untold-story")]
       : []),
   ];
 
@@ -64,7 +67,7 @@ export default function UntoldStory() {
         absoluteTitle
         title="Untold Story — Chicago after-dark house music"
         description="Explore Untold Story: Monolith's after-dark house music series. Event information, artists, previous chapters and the photo archive."
-        canonicalPath="/story"
+        canonicalPath="/untold-story"
         image={hero.src}
         schemaData={schemaData}
       />
@@ -75,6 +78,7 @@ export default function UntoldStory() {
           className="chasing-series-hero"
           aria-labelledby="untold-hero-title"
         >
+          <WorldEtching />
           <ResponsiveImage
             {...hero}
             alt="The chandelier and dancefloor at a previous Untold Story night"
@@ -117,41 +121,38 @@ export default function UntoldStory() {
           <a href="#untold-gallery">Gallery</a>
           <a href="#untold-faq">FAQs</a>
         </nav>
-        <section
-          id="untold-event"
-          className="home-event-feature home-etched-band"
-          data-home-etch-tone="untold"
-          aria-labelledby="untold-event-title"
-        >
-          <div className="container layout-wide home-event-grid">
-            <div className="untold-event-media">
-              <ResponsiveImage
-                src={event?.image || "/images/untold-story-moody.webp"}
-                alt={
-                  event?.image
-                    ? `${event.headline || event.title} artwork`
-                    : "The atmosphere of Untold Story"
-                }
-                width={1200}
-                height={900}
-                sizes="(min-width: 900px) 50vw, 100vw"
-              />
-              {!event && <span>From the Untold Story archive</span>}
-            </div>
-            <div className="home-event-copy">
-              <p className="home-eyebrow">
-                Untold Story / {event ? "Next chapter" : "Stay in the loop"}
-              </p>
-              <h2 id="untold-event-title">
-                {event?.headline ||
-                  event?.title ||
-                  "The next night starts here."}
-              </h2>
-              <p className="untold-event-intro">
-                {event?.description ||
-                  "Explore the nights that brought us here. New dates, guests and venue details will appear here when they’re announced."}
-              </p>
-              {event ? (
+        {event ? (
+          <section
+            id="untold-event"
+            className="home-event-feature home-etched-band"
+            data-home-etch-tone="untold"
+            aria-labelledby="untold-event-title"
+          >
+            <div className="container layout-wide home-event-grid">
+              <div className="untold-event-media">
+                <ResponsiveImage
+                  src={event?.image || "/images/untold-story-moody.webp"}
+                  alt={
+                    event?.image
+                      ? `${event.headline || event.title} artwork`
+                      : "The atmosphere of Untold Story"
+                  }
+                  width={1200}
+                  height={900}
+                  sizes="(min-width: 900px) 50vw, 100vw"
+                />
+              </div>
+              <div className="home-event-copy">
+                <p className="home-eyebrow">Untold Story / Next chapter</p>
+                <h2 id="untold-event-title">
+                  {event?.headline ||
+                    event?.title ||
+                    "The next night starts here."}
+                </h2>
+                <p className="untold-event-intro">
+                  {event?.description ||
+                    "Explore the nights that brought us here. New dates, guests and venue details will appear here when they’re announced."}
+                </p>
                 <>
                   <p className="untold-event-status">
                     {event.eventStatus === "EventPostponed"
@@ -209,20 +210,12 @@ export default function UntoldStory() {
                     </Link>
                   </div>
                 </>
-              ) : (
-                <div className="home-actions">
-                  <Link className="home-primary" href="/newsletter">
-                    Get Untold updates
-                    <ArrowUpRight size={18} aria-hidden="true" />
-                  </Link>
-                  <a className="home-secondary" href="#untold-records">
-                    Explore past shows
-                  </a>
-                </div>
-              )}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : (
+          <SeasonInvitation programme="untold" id="untold-event" />
+        )}
         <section
           id="untold-room"
           className="home-editorial-section"
@@ -291,16 +284,17 @@ export default function UntoldStory() {
                   key={artist.id}
                   href={`/artists/${artist.id}`}
                 >
-                  <div className="chasing-video-image">
+                  <div className="chasing-video-image !aspect-[4/5]">
                     <ResponsiveImage
                       src={artist.image}
                       alt={artist.name}
                       width={1000}
-                      height={700}
+                      height={1250}
                       sizes="(min-width: 640px) 50vw, 100vw"
                       style={{
-                        objectPosition: artist.imagePosition || "50% 30%",
+                        objectPosition: artist.imagePosition || "50% 0%",
                       }}
+                      className="h-full w-full object-cover object-top"
                     />
                   </div>
                   <div>
@@ -464,8 +458,12 @@ export default function UntoldStory() {
                 Follow along for the next chapter.
               </p>
               <div className="home-actions">
-                <Link className="home-primary" href="/newsletter">
-                  Get Untold updates
+                <Link
+                  className="home-primary"
+                  href="/newsletter"
+                  data-first-access="true"
+                >
+                  Get First Access
                   <ArrowUpRight size={18} aria-hidden="true" />
                 </Link>
                 <a

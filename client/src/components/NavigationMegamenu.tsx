@@ -1,5 +1,6 @@
-import { useLayoutEffect, useState, useRef } from "react";
+import { useEffect, useId, useLayoutEffect, useState, useRef } from "react";
 import { Link } from "wouter";
+import { ROUTES } from "@shared/routes";
 import { ChevronDown, ArrowUpRight, Play, Ticket } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 
@@ -20,6 +21,8 @@ export interface MegamenuProps {
       title: string;
       subtitle?: string;
       image: string;
+      /** Keep faces/heads visible in portrait feature tiles. */
+      imagePosition?: string;
       href: string;
       ctaText: string;
       icon?: "play" | "ticket" | "arrow";
@@ -46,12 +49,24 @@ export default function NavigationMegamenu({
   // Horizontal correction so the trigger-centered panel never clips the
   // viewport edge (left-most nav items would otherwise open off-screen).
   const [panelShift, setPanelShift] = useState(0);
-  const menuId = `megamenu-${brand}`;
+  const menuId = useId();
+  const disclosureRef = useRef<HTMLButtonElement | null>(null);
+  const focusFirstLink = useRef(false);
+  const section = href.includes("untold")
+    ? "untold"
+    : /sunsets|radio/.test(href)
+      ? "sunsets"
+      : "monolith";
+  const clearMenuTimer = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  };
+
+  useEffect(() => clearMenuTimer, []);
 
   useLayoutEffect(() => {
     if (!isOpen) return;
     setPanelShift(0);
-    requestAnimationFrame(() => {
+    const frame = requestAnimationFrame(() => {
       const rect = panelRef.current?.getBoundingClientRect();
       if (!rect) return;
       const margin = 12;
@@ -59,7 +74,12 @@ export default function NavigationMegamenu({
       const overflowRight = rect.right - (window.innerWidth - margin);
       if (overflowLeft > 0) setPanelShift(overflowLeft);
       else if (overflowRight > 0) setPanelShift(-overflowRight);
+      if (focusFirstLink.current) {
+        panelRef.current?.querySelector<HTMLAnchorElement>("a[href]")?.focus();
+        focusFirstLink.current = false;
+      }
     });
+    return () => cancelAnimationFrame(frame);
   }, [isOpen]);
 
   const openMenu = () => {
@@ -112,37 +132,31 @@ export default function NavigationMegamenu({
   let leftColumnItems = megamenu.items;
 
   if (type === "chasing-radio") {
-    leftColumnTitle = "SUN(SETS) Radio";
+    leftColumnTitle = "Chasing Sunsets Radio";
     leftColumnItems = [
-      { label: "S1E1: Benchek", href: "/radio/ep-01-benchek", icon: "play" },
+      { label: "All radio sessions", href: ROUTES.radio, icon: "arrow" },
+      { label: "SUNSETS.FM", href: ROUTES.sunsetsFM, icon: "arrow" },
       {
-        label: "S1E2: Terranova",
-        href: "/radio/ep-03-terranova",
+        label: "Benchek · Special NYE",
+        href: "/radio/ep-01-benchek",
         icon: "play",
       },
+      { label: "Ewerseen", href: "/radio/ep-02-ewerseen", icon: "play" },
+      { label: "Terranova", href: "/radio/ep-03-terranova", icon: "play" },
       {
-        label: "S1E3: Benchek Marbella",
+        label: "Benchek · Marbella II",
         href: "/radio/ep-004-benchek-part-2",
         icon: "play",
       },
-      {
-        label: "S1E4: Ewerseen Mix",
-        href: "/radio/ep-02-ewerseen",
-        icon: "play",
-      },
-      {
-        label: "S1E5: Terranova Guest",
-        href: "/radio/ep-03-terranova",
-        icon: "play",
-      },
+      { label: "Open Network", href: ROUTES.openNetwork, icon: "arrow" },
     ];
   } else if (type === "untold") {
     leftColumnTitle = "The Lore";
     leftColumnItems = [
-      { label: "The Vision", href: "/story#vision", icon: "arrow" },
-      { label: "What to Expect", href: "/story#expect", icon: "arrow" },
-      { label: "Dress Code", href: "/story#dresscode", icon: "arrow" },
-      { label: "Private Tables", href: "/story#tables", icon: "arrow" },
+      { label: "The Vision", href: "/untold-story#vision", icon: "arrow" },
+      { label: "What to Expect", href: "/untold-story#expect", icon: "arrow" },
+      { label: "Dress Code", href: "/untold-story#dresscode", icon: "arrow" },
+      { label: "Private Tables", href: "/untold-story#tables", icon: "arrow" },
       { label: "Story Archive", href: "/archive", icon: "arrow" },
     ];
   } else if (type === "monolith") {
@@ -156,45 +170,70 @@ export default function NavigationMegamenu({
 
   return (
     <div
-      className="relative flex h-full min-w-max shrink-0 flex-1 cursor-pointer items-center justify-center"
+      className="site-nav-item relative flex h-full min-w-max shrink-0 flex-1 items-center justify-center"
+      data-section={section}
+      data-active={isActive || undefined}
+      data-appearance={isLight ? "light" : "dark"}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      onFocusCapture={openMenu}
       onBlurCapture={e => {
         const nextTarget = e.relatedTarget as Node | null;
         if (!nextTarget || !e.currentTarget.contains(nextTarget)) {
+          clearMenuTimer();
           setIsOpen(false);
         }
       }}
       onKeyDown={e => {
-        if (e.key === "Escape") {
+        if (e.key === "Escape" && isOpen) {
+          e.preventDefault();
+          e.stopPropagation();
+          clearMenuTimer();
           setIsOpen(false);
+          disclosureRef.current?.focus();
+        }
+        if (e.key === "ArrowDown" && !isOpen) {
+          e.preventDefault();
+          clearMenuTimer();
+          focusFirstLink.current = true;
+          setIsOpen(true);
         }
       }}
     >
-      <button
-        type="button"
-        onClick={e => {
-          e.preventDefault();
-          if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      <Link
+        href={href}
+        className="site-nav-link"
+        aria-current={isActive ? "page" : undefined}
+        onClick={event => {
+          if (
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey ||
+            event.button !== 0
+          )
+            return;
+          event.preventDefault();
+          clearMenuTimer();
           setIsOpen(false);
           onNavigate(href);
         }}
-        aria-expanded={isOpen}
-        aria-haspopup="menu"
-        aria-controls={menuId}
-        aria-label={typeof label === "string" ? label : undefined}
-        className={`group shrink-0 flex items-center gap-1.5 text-[10px] lg:text-[10px] xl:text-[11px] 2xl:text-[12px] font-[800] tracking-[0.1em] lg:tracking-[0.08em] xl:tracking-[0.12em] 2xl:tracking-[0.15em] uppercase transition-all duration-300 py-4 ${
-          isLight
-            ? `hover:text-clay ${isActive ? "text-clay" : "text-stone"}`
-            : brand === "chasing-sunsets"
-              ? `hover:text-white hover:drop-shadow-[0_0_10px_rgba(232,184,109,0.55)] ${isActive ? "text-white drop-shadow-[0_0_10px_rgba(232,184,109,0.45)]" : "text-white/90"}`
-              : `hover:text-primary hover:drop-shadow-[0_0_8px_rgba(212,165,116,0.6)] ${isActive ? "text-primary drop-shadow-[0_0_8px_rgba(212,165,116,0.5)]" : "text-white/90 hover:text-white"}`
-        }`}
       >
         {label}
+      </Link>
+      <button
+        ref={disclosureRef}
+        type="button"
+        className="site-nav-disclosure"
+        aria-expanded={isOpen}
+        aria-controls={isOpen ? menuId : undefined}
+        aria-label={`Explore ${typeof label === "string" ? label.toLowerCase() : brand}`}
+        onClick={() => {
+          clearMenuTimer();
+          setIsOpen(open => !open);
+        }}
+      >
         <ChevronDown
-          className={`w-3 h-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+          className={`w-3 h-3 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -202,21 +241,22 @@ export default function NavigationMegamenu({
         <div
           id={menuId}
           ref={panelRef}
-          className={`absolute left-1/2 top-full z-30 mt-3 w-[min(42rem,calc(100vw-3rem))] rounded-[2rem] border p-2 shadow-[0_22px_48px_rgba(0,0,0,0.38)] backdrop-blur-xl ${
+          className={`site-nav-panel absolute left-1/2 top-full z-30 mt-3 w-[min(42rem,calc(100vw-3rem))] rounded-[2rem] border p-2 shadow-[0_26px_56px_rgba(0,0,0,0.46)] backdrop-blur-xl ${
             isLight
               ? "bg-white/97 border-black/6"
-              : "bg-[#0a0a0a]/97 border-white/10"
+              : "bg-[rgba(12,10,10,0.94)] border-[rgba(255,228,194,0.16)] shadow-[0_26px_56px_rgba(0,0,0,0.46),inset_0_1px_0_rgba(255,246,232,0.12)]"
           }`}
-          role="menu"
+          role="region"
+          aria-label={`${typeof label === "string" ? label : brand} links`}
           style={{
             pointerEvents: isOpen ? "auto" : "none",
             transform: `translateX(calc(-50% + ${panelShift}px))`,
           }}
         >
           <div className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-l border-t bg-inherit opacity-90" />
-          <div className="flex min-h-[240px] overflow-hidden rounded-3xl bg-transparent">
+          <div className="flex min-h-[300px] overflow-hidden rounded-3xl bg-transparent">
             {/* Left Column: Links */}
-            <div className="w-5/12 p-6 flex flex-col gap-5">
+            <div className="site-nav-directory w-5/12 p-6 flex flex-col gap-5">
               <span
                 className={`text-[10px] font-bold tracking-[0.2em] uppercase ${isLight ? "text-black/40" : "text-white/70"}`}
               >
@@ -230,11 +270,15 @@ export default function NavigationMegamenu({
                       {isGoRoute ? (
                         <a
                           href={item.href}
+                          data-first-access={
+                            /first\s+access/i.test(item.label)
+                              ? "true"
+                              : undefined
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => setIsOpen(false)}
-                          role="menuitem"
-                          className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${
+                          className={`site-nav-menu-link group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${
                             isLight
                               ? "text-charcoal hover:text-clay hover:border-clay/30"
                               : "text-white/80 hover:text-white hover:border-primary/40"
@@ -249,13 +293,17 @@ export default function NavigationMegamenu({
                       ) : (
                         <Link
                           href={item.href}
+                          data-first-access={
+                            /first\s+access/i.test(item.label)
+                              ? "true"
+                              : undefined
+                          }
                           onClick={e => {
                             e.preventDefault();
                             setIsOpen(false);
                             onNavigate(item.href);
                           }}
-                          role="menuitem"
-                          className={`group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${
+                          className={`site-nav-menu-link group/item flex items-center gap-2.5 text-sm font-medium tracking-wider transition-all hover:translate-x-1 duration-200 border-b border-transparent ${
                             isLight
                               ? "text-charcoal hover:text-clay hover:border-clay/30"
                               : "text-white/80 hover:text-white hover:border-primary/40"
@@ -274,10 +322,10 @@ export default function NavigationMegamenu({
               </ul>
             </div>
 
-            {/* Right Column: Featured Card */}
-            <div className="w-7/12 p-2">
+            {/* Right Column: Featured Card — portrait frame keeps heads intact */}
+            <div className="flex w-7/12 items-stretch p-2">
               <div
-                className={`relative h-full rounded-xl overflow-hidden group/card cursor-pointer shadow-none transition-shadow hover:shadow-[0_0_20px_rgba(212,165,116,0.15)] ${megamenu.feature.icon === "ticket" ? "border border-primary/30" : ""}`}
+                className={`site-nav-feature relative w-full aspect-[4/5] max-h-[22rem] self-center rounded-2xl overflow-hidden group/card cursor-pointer border border-white/10 bg-[#0d0c0b] shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-shadow hover:shadow-[0_0_28px_rgba(243,166,89,0.18)] ${megamenu.feature.icon === "ticket" ? "border-[#f3a659]/35" : ""}`}
               >
                 <ResponsiveImage
                   src={megamenu.feature.image}
@@ -285,11 +333,14 @@ export default function NavigationMegamenu({
                   sizes="28rem"
                   loading="lazy"
                   decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/card:scale-[1.03]"
+                  style={{
+                    objectPosition: megamenu.feature.imagePosition || "50% 0%",
+                  }}
+                  className="absolute inset-x-[7%] inset-y-[6%] h-auto w-auto max-h-[88%] max-w-[86%] m-auto object-contain object-top origin-top"
                 />
 
                 {/* Cinematic overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/35 to-transparent" />
 
                 {/* Blinking green live status dot for Untold tickets */}
                 {type === "untold" && megamenu.feature.badge ? (
@@ -334,10 +385,14 @@ export default function NavigationMegamenu({
                   {megamenu.feature.external ? (
                     <a
                       href={megamenu.feature.href}
+                      data-first-access={
+                        /first\s+access/i.test(megamenu.feature.ctaText)
+                          ? "true"
+                          : undefined
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsOpen(false)}
-                      role="menuitem"
                       className={`${megamenu.feature.icon === "ticket" ? "btn-pill-monolith" : "btn-pill-outline"} btn-pill-compact`}
                     >
                       <FeatureIcon className="w-4 h-4" />
@@ -348,12 +403,16 @@ export default function NavigationMegamenu({
                   ) : (
                     <Link
                       href={megamenu.feature.href}
+                      data-first-access={
+                        /first\s+access/i.test(megamenu.feature.ctaText)
+                          ? "true"
+                          : undefined
+                      }
                       onClick={e => {
                         e.preventDefault();
                         setIsOpen(false);
                         onNavigate(megamenu.feature.href);
                       }}
-                      role="menuitem"
                       className="btn-pill-outline btn-pill-compact"
                     >
                       <FeatureIcon className="w-4 h-4" />

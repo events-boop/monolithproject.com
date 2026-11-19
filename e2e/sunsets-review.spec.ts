@@ -14,7 +14,7 @@ for (const width of [360, 390, 430, 768, 1363]) {
         () => document.documentElement.scrollWidth <= innerWidth
       )
     ).toBe(true);
-    await expect(page.locator(".event-status-float")).toBeVisible();
+    await expect(page.locator("#event-status")).toBeVisible();
     await expect(page.locator("#event-status")).toContainText("POSTPONED");
     await expect(page.locator("#event-title")).toHaveText("JOEZI × MASSUMA");
     for (const img of await page.locator("img").all()) {

@@ -262,7 +262,7 @@ ${form.bio}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-20"
+            className="mb-10"
           >
             <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 block mb-5">
               {isDjSetSubmission
@@ -299,7 +299,7 @@ ${form.bio}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="lg:col-span-4"
+              className="lg:col-span-4 order-2 lg:order-1"
             >
               <p className="font-mono text-[10px] tracking-[0.3em] uppercase text-white/70 mb-6">
                 {isDjSetSubmission ? "What To Send" : "What We Look For"}
@@ -346,7 +346,7 @@ ${form.bio}
             </motion.div>
 
             {/* Right — form */}
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 order-1 lg:order-2">
               <AnimatePresence mode="wait">
                 {isSubmitted ? (
                   <motion.div

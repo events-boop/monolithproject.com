@@ -22,9 +22,7 @@ import {
   SUNSETS_JULY4_EVENT_TIME,
   SUNSETS_JULY4_EVENT_TITLE,
   SUNSETS_JULY4_EVENT_VENUE,
-  SUNSETS_JULY4_FIRST_ACCESS_CODE,
   SUNSETS_JULY4_LINEUP,
-  SUNSETS_JULY4_REVENUE,
   SUNSETS_JULY4_SET_TIMES,
   SUNSETS_JULY4_TABLE_MINIMUM,
   SUNSETS_JULY4_TABLE_RAIL,
@@ -43,8 +41,8 @@ const TICKET_RAIL_STATS = [
   },
   {
     label: "First Access",
-    value: SUNSETS_JULY4_FIRST_ACCESS_CODE,
-    note: "$30 hidden tier",
+    value: "Lake List",
+    note: "$30 early registration window",
   },
   {
     label: "Tables",

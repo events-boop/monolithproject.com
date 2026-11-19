@@ -1,3 +1,4 @@
+import { withPublicEventIntegrity } from "@shared/events/publicIntegrity";
 import { withApprovedSunsets } from "@shared/events/sunsets-current";
 import { useSyncExternalStore } from "react";
 import type {
@@ -50,12 +51,12 @@ export function primePublicSiteData(data: PublicSiteData) {
   snapshot = {
     path: normalizePathname(data.path),
     events: uniqueEvents(data.events || []).map(event =>
-      withApprovedSunsets(event)
+      withPublicEventIntegrity(withApprovedSunsets(event))
     ),
     featuredEvents: Object.fromEntries(
       Object.entries(data.featuredEvents || {}).map(([key, event]) => [
         key,
-        event ? withApprovedSunsets(event) : event,
+        event ? withPublicEventIntegrity(withApprovedSunsets(event)) : event,
       ])
     ),
   };

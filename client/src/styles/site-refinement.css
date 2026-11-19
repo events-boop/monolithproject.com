@@ -1,0 +1,1158 @@
+/* Page-family refinement. Scoped under the shell so controls and brand marks keep their identity. */
+#app-shell {
+  --page-display: "Syne", "General Sans", sans-serif;
+  --page-ember: #f0a080;
+  --page-rule: #ffffff20;
+}
+#app-shell[data-page]:not([data-page="/"]) main :is(h1, h2, h3) {
+  text-wrap: balance;
+  min-width: 0;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/faq"],
+    [data-page="/partners"],
+    [data-page="/guide"],
+    [data-page="/insights"],
+    [data-page="/archive"],
+    [data-page="/schedule"],
+    [data-page="/tickets"],
+    [data-page="/vip"]
+  )
+  .lg-cinematic-masthead {
+  min-height: 0;
+  padding-top: calc(var(--shell-nav-height, 96px) + 92px);
+  padding-bottom: 56px;
+  margin-bottom: 32px;
+  background: #0b0c0e;
+  border-bottom: 1px solid #c16e4d30;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/faq"],
+    [data-page="/partners"],
+    [data-page="/guide"],
+    [data-page="/insights"],
+    [data-page="/archive"],
+    [data-page="/schedule"],
+    [data-page="/tickets"],
+    [data-page="/vip"]
+  )
+  .lg-cinematic-masthead::before {
+  background: radial-gradient(ellipse at 95% 0, #aa442512, transparent 65%);
+  opacity: 1;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/faq"],
+    [data-page="/partners"],
+    [data-page="/guide"],
+    [data-page="/insights"],
+    [data-page="/archive"],
+    [data-page="/schedule"],
+    [data-page="/tickets"],
+    [data-page="/vip"]
+  )
+  .lg-cinematic-masthead::after {
+  display: none;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/faq"],
+    [data-page="/partners"],
+    [data-page="/guide"],
+    [data-page="/insights"],
+    [data-page="/archive"],
+    [data-page="/schedule"],
+    [data-page="/tickets"],
+    [data-page="/vip"],
+    [data-page="/press"],
+    [data-page="/travel"],
+    [data-page="/ambassadors"],
+    [data-page="/shop"]
+  )
+  main
+  h1 {
+  font-family: var(--page-display);
+  font-size: clamp(48px, 6.8vw, 104px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+  text-transform: none;
+  max-width: 14ch;
+  overflow-wrap: normal;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/faq"],
+    [data-page="/partners"],
+    [data-page="/guide"],
+    [data-page="/press"],
+    [data-page="/travel"],
+    [data-page="/ambassadors"]
+  )
+  main
+  :is(h2, h3) {
+  font-family: var(--page-display);
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  text-transform: none;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/partners"]
+  )
+  main
+  > section:not(:first-child) {
+  padding-block: 56px;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/partners"]
+  )
+  main
+  :is(.italic, .font-light) {
+  font-style: normal;
+  font-weight: 400;
+}
+#app-shell:is(
+    [data-page="/booking"],
+    [data-page="/contact"],
+    [data-page="/submit"],
+    [data-page="/press"],
+    [data-page="/faq"],
+    [data-page="/guide"]
+  )
+  .lg-glass-card {
+  background: #ffffff02;
+  border: 1px solid #ffffff18;
+  border-radius: 8px;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+#app-shell main :is(.editorial-status-note, .event-pending-note) {
+  border-top: 1px solid #d47c4d60;
+  padding: 32px 24px;
+  background: linear-gradient(100deg, #b4552b0a, transparent);
+}
+#app-shell main :is(.editorial-status-note, .event-pending-note) h2 {
+  font: 600 clamp(25px, 3vw, 40px)/1.2 var(--page-display);
+  margin-bottom: 16px;
+  letter-spacing: -0.035em;
+}
+#app-shell main :is(.editorial-status-note, .event-pending-note) p {
+  max-width: 65ch;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #c8c0b8;
+}
+#app-shell main :is(.editorial-status-note, .event-pending-note) a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: 12px;
+  color: #f2b38e;
+  font-size: 14px;
+}
+/* The artist is the hero. Portrait and copy have independent space. */
+#app-shell .artist-editorial-hero {
+  padding: calc(var(--shell-nav-height, 96px) + 60px) 32px 0;
+}
+#app-shell .artist-roster-back {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  color: #b7aea4;
+  font-size: 12px;
+}
+#app-shell .artist-editorial-stage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  min-height: 640px;
+}
+#app-shell .artist-editorial-portrait {
+  grid-column: 2;
+  grid-row: 1;
+  height: clamp(480px, 48vw, 700px);
+  background: radial-gradient(ellipse at 55% 70%, #b5592e13, transparent 66%);
+  overflow: hidden;
+  mask-image: linear-gradient(#000 85%, transparent);
+}
+#app-shell .artist-editorial-intro {
+  grid-column: 1;
+  grid-row: 1;
+  padding-bottom: 40px;
+  min-width: 0;
+}
+#app-shell .artist-editorial-kicker {
+  font-size: 10px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: #e5ad90;
+  line-height: 1.8;
+}
+#app-shell .artist-editorial-kicker span {
+  color: #b8aca3;
+}
+#app-shell .artist-editorial-intro h1 {
+  font-family: var(--page-display);
+  font-weight: 700;
+  font-size: clamp(54px, 7.3vw, 112px);
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+  margin: 24px 0 32px;
+  overflow-wrap: anywhere;
+  text-transform: none;
+  text-shadow: none;
+}
+#app-shell .artist-editorial-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 36px;
+  padding: 24px 0;
+  border-block: 1px solid #ffffff1c;
+}
+#app-shell .artist-editorial-facts dt {
+  font-size: 10px;
+  color: #a99e94;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 10px;
+}
+#app-shell .artist-editorial-facts dd {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e5ddd4;
+}
+#app-shell .artist-editorial-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 32px;
+  align-items: center;
+}
+#app-shell .artist-editorial-actions .lg-pill-amber {
+  background: #eea17c;
+  box-shadow: none;
+  border: 0;
+  color: #25150e;
+  min-height: 48px;
+}
+#app-shell .artist-editorial-save {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 16px;
+  font-size: 12px;
+  color: #d4c8bc;
+  border: 1px solid #ffffff30;
+  border-radius: 100px;
+}
+#app-shell .artist-editorial-secondary {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #bdb0a4;
+}
+#app-shell .artist-editorial-bio {
+  font-size: clamp(19px, 2vw, 27px);
+  line-height: 1.65;
+  letter-spacing: -0.015em;
+  color: #d0c9c0;
+}
+#app-shell .artist-profile-content {
+  padding-top: 64px;
+  padding-bottom: 32px;
+}
+#app-shell
+  .artist-profile-content
+  .space-y-32
+  > :not([hidden])
+  ~ :not([hidden]) {
+  margin-top: 64px;
+}
+#app-shell
+  .artist-profile-content
+  .space-y-12
+  > :not([hidden])
+  ~ :not([hidden]) {
+  margin-top: 28px;
+}
+#app-shell .artist-profile-content :is(h3, h4) {
+  font-family: var(--page-display);
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  text-transform: none;
+}
+#app-shell .artist-profile-content .rounded-3xl {
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 28px;
+  border-color: #ffffff18;
+}
+/* VIP: an invitation while packages are unavailable. */
+#app-shell .vip-between-shows main {
+  padding-top: calc(var(--shell-nav-height, 96px) + 88px);
+}
+#app-shell .vip-between-shows h1 {
+  margin-block: 28px 32px;
+  font-size: clamp(64px, 9vw, 128px);
+}
+#app-shell .vip-intro {
+  font-size: clamp(18px, 2vw, 23px);
+  line-height: 1.65;
+  max-width: 44ch;
+  color: #c9beb3;
+}
+#app-shell .vip-between-actions {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 36px 0 64px;
+}
+#app-shell .vip-between-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 24px;
+  border: 1px solid #d8947455;
+  border-radius: 100px;
+  font-size: 14px;
+  color: #f4bd99;
+  min-height: 52px;
+}
+#app-shell .vip-between-actions a:first-child {
+  background: #f0aa87;
+  color: #25160e;
+}
+#app-shell .vip-between-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding-top: 36px;
+  border-top: 1px solid #ffffff20;
+}
+#app-shell .vip-between-details h2 {
+  font: 600 28px/1.2 var(--page-display);
+  letter-spacing: -0.035em;
+  margin-bottom: 16px;
+}
+#app-shell .vip-between-details p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #c0b6ab;
+  max-width: 50ch;
+}
+#app-shell .vip-between-details a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: #e9ad87;
+  font-size: 13px;
+  margin-top: 8px;
+}
+#app-shell .vip-disclosure {
+  font-size: 13px;
+  color: #bfb3a7;
+  line-height: 1.8;
+  max-width: 72ch;
+  margin-top: 48px;
+}
+/* Gallery covers and journal pages share an editorial rhythm. */
+#app-shell .archive-index .lg-glass-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+#app-shell .archive-index .lg-glass-card::before,
+#app-shell .archive-index .lg-glass-card::after {
+  display: none;
+}
+#app-shell .archive-index .archive-grid {
+  gap: 56px 40px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+#app-shell .archive-index .archive-card-image {
+  aspect-ratio: 4/3;
+  border-radius: 5px;
+}
+#app-shell .archive-index .archive-card-copy {
+  padding: 24px 0 0;
+}
+#app-shell .archive-index h2 {
+  font-family: var(--page-display);
+  font-size: clamp(28px, 3vw, 42px);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  text-transform: none;
+}
+#app-shell .archive-index .archive-year-select {
+  background: #0c0d0e;
+  border: 1px solid #ffffff30;
+  border-radius: 5px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #e4d9ce;
+  min-height: 44px;
+}
+#app-shell[data-page^="/insights"] main h1 {
+  font-family: var(--page-display);
+  font-size: clamp(42px, 6.4vw, 88px);
+  line-height: 1.07;
+  letter-spacing: -0.05em;
+  text-transform: none;
+  max-width: 18ch;
+}
+#app-shell[data-page="/insights"] main h2 {
+  font-family: var(--page-display);
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  text-transform: none;
+}
+#app-shell[data-page="/insights"] .journal-tags button {
+  min-height: 44px;
+  color: #d3c4b5;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+#app-shell[data-page="/insights"] .journal-tags button[aria-pressed="true"] {
+  color: #ffccad;
+  border-color: #e59160;
+  background: #be6a2220;
+}
+#app-shell[data-page^="/insights/"] article {
+  max-width: 760px;
+  font-size: 17px;
+  line-height: 1.85;
+}
+#app-shell[data-page="/chasing-sunsets-facts"] main h1 {
+  font: 700 clamp(40px, 6vw, 80px)/1.08 var(--page-display);
+  letter-spacing: -0.045em;
+  text-transform: none;
+  max-width: 16ch;
+}
+#app-shell[data-page="/chasing-sunsets-facts"] .luxe-surface-dark {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  padding-inline: 0;
+}
+#app-shell .hof-success-card h1 {
+  font-size: clamp(32px, 6.8vw, 70px);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+  letter-spacing: -0.045em;
+}
+/* Mobile clarity: keep the hierarchy, remove the empty vertical travel. */
+@media (max-width: 767px) {
+  #app-shell:is(
+      [data-page="/booking"],
+      [data-page="/contact"],
+      [data-page="/submit"],
+      [data-page="/faq"],
+      [data-page="/partners"],
+      [data-page="/guide"],
+      [data-page="/insights"],
+      [data-page="/archive"],
+      [data-page="/schedule"],
+      [data-page="/tickets"],
+      [data-page="/vip"]
+    )
+    .lg-cinematic-masthead {
+    padding-top: calc(var(--shell-nav-height, 96px) + 52px);
+    padding-bottom: 36px;
+    margin-bottom: 24px;
+  }
+  #app-shell:is(
+      [data-page="/booking"],
+      [data-page="/contact"],
+      [data-page="/submit"],
+      [data-page="/faq"],
+      [data-page="/partners"],
+      [data-page="/guide"],
+      [data-page="/insights"],
+      [data-page="/archive"],
+      [data-page="/schedule"],
+      [data-page="/tickets"],
+      [data-page="/vip"],
+      [data-page="/press"],
+      [data-page="/travel"],
+      [data-page="/ambassadors"],
+      [data-page="/shop"]
+    )
+    main
+    h1 {
+    font-size: clamp(42px, 12vw, 64px);
+    max-width: 100%;
+  }
+  #app-shell .artist-editorial-hero {
+    padding: calc(var(--shell-nav-height, 96px) + 32px) 24px 0;
+  }
+  #app-shell .artist-editorial-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-height: 0;
+    align-items: stretch;
+  }
+  #app-shell .artist-editorial-portrait {
+    height: 400px;
+    max-height: 55svh;
+    width: 100%;
+    mask-image: linear-gradient(#000 90%, transparent);
+  }
+  #app-shell .artist-editorial-intro {
+    padding-bottom: 40px;
+  }
+  #app-shell .artist-editorial-intro h1 {
+    font-size: clamp(44px, 12vw, 68px);
+    margin: 18px 0 24px;
+  }
+  #app-shell .artist-editorial-facts {
+    gap: 20px;
+    padding: 20px 0;
+  }
+  #app-shell .artist-editorial-facts dd {
+    font-size: 13px;
+  }
+  #app-shell .artist-editorial-actions {
+    margin-top: 24px;
+    gap: 12px;
+  }
+  #app-shell .artist-profile-content {
+    padding-top: 40px;
+  }
+  #app-shell .artist-profile-content .rounded-3xl {
+    padding: 24px 0;
+    border-inline: 0;
+  }
+  #app-shell
+    .artist-profile-content
+    .space-y-32
+    > :not([hidden])
+    ~ :not([hidden]) {
+    margin-top: 48px;
+  }
+  #app-shell .vip-between-shows main {
+    padding-top: calc(var(--shell-nav-height, 96px) + 52px);
+  }
+  #app-shell .vip-between-details {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  #app-shell .vip-between-actions {
+    margin-bottom: 40px;
+    gap: 14px;
+  }
+  #app-shell .archive-index .archive-grid {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+  #app-shell[data-page^="/insights"] main h1 {
+    font-size: clamp(38px, 11.2vw, 60px);
+  }
+  #app-shell[data-page="/chasing-sunsets-facts"] main h1 {
+    font-size: clamp(36px, 10vw, 56px);
+  }
+  #app-shell .hof-success-card {
+    padding-inline: 24px;
+  }
+  #app-shell .hof-success-card h1 {
+    font-size: clamp(30px, 8vw, 42px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #app-shell .artist-editorial-portrait img {
+    transform: none;
+  }
+  #app-shell .artist-profile-page main * {
+    scroll-behavior: auto;
+  }
+}
+/* Invitations, real event stories, and practical pages. */
+#app-shell .first-access-hero {
+  min-height: 0;
+  padding-top: calc(var(--shell-nav-height, 96px) + 80px);
+  padding-bottom: 56px;
+}
+#app-shell .first-access-intro h1 {
+  font-family: var(--page-display);
+  font-size: clamp(56px, 7vw, 100px);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+}
+#app-shell .first-access-description {
+  font-size: 19px;
+  line-height: 1.75;
+  max-width: 35ch;
+  margin-top: 28px;
+  color: #bfb5a9;
+}
+#app-shell .first-access-choice {
+  border-top: 1px solid #ce92685c;
+  padding-top: 24px;
+}
+#app-shell .first-access-choice article {
+  padding: 28px 0;
+  border-bottom: 1px solid #ffffff20;
+  scroll-margin-top: 150px;
+  background: none !important;
+  border-radius: 0 !important;
+}
+#app-shell .first-access-choice article > span {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #bc9f8d;
+}
+#app-shell .first-access-choice h2 {
+  font: 600 32px/1.2 var(--page-display);
+  letter-spacing: -0.035em;
+  margin: 14px 0;
+}
+#app-shell .first-access-choice article > p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #bbb0a3;
+  max-width: 45ch;
+}
+#app-shell .first-access-choice a {
+  display: inline-flex;
+  gap: 18px;
+  align-items: center;
+  min-height: 48px;
+  font-size: 14px;
+  color: #ffc199 !important;
+  margin-top: 16px;
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  font-weight: 500;
+}
+#app-shell .first-access-choice-note {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #afa498;
+  margin-top: 20px;
+}
+#app-shell .first-access-programmes {
+  margin-top: 56px;
+}
+#app-shell .project-stories {
+  padding: 56px 24px 72px;
+}
+#app-shell .project-stories-heading {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 16px 32px;
+  margin-bottom: 32px;
+}
+#app-shell .project-stories-heading > p {
+  grid-column: 1/-1;
+  color: #e9ac88;
+}
+#app-shell .project-stories h2 {
+  font: 600 clamp(36px, 4vw, 60px)/1.08 var(--page-display);
+  letter-spacing: -0.045em;
+  text-transform: none;
+}
+#app-shell .project-stories-heading > a {
+  display: inline-flex;
+  gap: 16px;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+  color: #e6ac88;
+}
+#app-shell .project-stories-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+#app-shell .project-story figure {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 5px;
+}
+#app-shell .project-story > div {
+  padding-top: 24px;
+}
+#app-shell .project-story p {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b8a99b;
+}
+#app-shell .project-story h3 {
+  font: 600 36px/1.15 var(--page-display);
+  letter-spacing: -0.035em;
+  text-transform: none;
+  margin: 12px 0;
+}
+#app-shell .project-story span {
+  display: block;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #b9b0a6;
+}
+#app-shell .project-story .project-story-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 48px;
+  margin-top: 20px;
+  border-top: 1px solid #ffffff20;
+  color: #e7bb97;
+}
+#app-shell .archive-discovery {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 24px;
+  color: #beb0a3;
+  font-size: 12px;
+}
+#app-shell .archive-discovery label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+#app-shell .travel-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 64px;
+  padding-block: 30px 64px;
+}
+#app-shell .travel-intro h1 {
+  margin: 24px 0;
+}
+#app-shell .travel-intro > div > p:last-of-type {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #c3b8aa;
+  max-width: 42ch;
+}
+#app-shell .travel-intro .lg-pill-amber {
+  margin-top: 28px;
+  box-shadow: none;
+  background: #f0af8d;
+  color: #27180f;
+}
+#app-shell .travel-intro figure {
+  position: relative;
+  height: 480px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#app-shell .travel-intro figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, #000d);
+  padding: 40px 24px 24px;
+  font-size: 11px;
+  color: #f1e3d3;
+}
+#app-shell .travel-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding: 40px 0 64px;
+  border-top: 1px solid #ffffff20;
+}
+#app-shell .travel-steps span {
+  font-size: 11px;
+  color: #d79772;
+}
+#app-shell .travel-steps h2 {
+  font-size: 26px;
+  margin: 20px 0;
+}
+#app-shell .travel-steps p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #bcb1a4;
+}
+#app-shell .travel-steps a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: #f0ad84;
+  margin-top: 12px;
+  font-size: 13px;
+}
+#app-shell :is([data-room-concierge]) {
+  box-shadow: none;
+  backdrop-filter: none;
+  background: #ffffff02;
+  border-radius: 8px;
+}
+#app-shell [data-room-concierge] [role="group"] button {
+  min-height: 44px;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+#app-shell .travel-editorial .editorial-status-note {
+  margin-top: 48px;
+}
+#app-shell[data-page="/faq"] .faq-search {
+  display: block;
+  max-width: 760px;
+  margin: 0 auto 32px;
+}
+#app-shell[data-page="/faq"] .faq-search input {
+  width: 100%;
+  padding: 18px 20px;
+  background: #ffffff05;
+  border: 1px solid #ffffff25;
+  border-radius: 4px;
+  color: #f4e7d6;
+  font-size: 16px;
+}
+#app-shell[data-page="/faq"] .faq-search input:focus {
+  outline: 2px solid #df9671;
+  outline-offset: 4px;
+}
+#app-shell .sponsor-request-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 24px;
+  font-size: 13px;
+  color: #f0ac89;
+}
+#app-shell .legal-document :is(h1, h2) {
+  font-family: var(--page-display);
+  text-transform: none;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+#app-shell .legal-document h1 {
+  font-size: clamp(42px, 6.8vw, 80px);
+}
+#app-shell .legal-document h2 {
+  font-size: 28px;
+  scroll-margin-top: 150px;
+}
+#app-shell .legal-document main > .container {
+  max-width: 840px;
+}
+#app-shell .legal-document p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #c1b6a8;
+}
+#app-shell .legal-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  border-block: 1px solid #ffffff20;
+  padding-block: 20px;
+  margin-bottom: 40px;
+}
+#app-shell .legal-toc a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: #efb38b;
+  font-size: 13px;
+  text-decoration: none;
+}
+#app-shell .hof-section-navigation {
+  display: flex;
+  gap: 32px;
+  padding: 16px 24px;
+  border-block: 1px solid #ffffff20;
+  overflow-x: auto;
+}
+#app-shell .hof-section-navigation a {
+  font-size: 12px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  color: #d0c5b7;
+}
+#app-shell .hof-page .hof-section {
+  padding-block: 72px;
+}
+#app-shell .hof-page .hof-pathway-card,
+#app-shell .hof-page .hof-launch-card,
+#app-shell .hof-page .hof-benefit-card {
+  box-shadow: none;
+  border-radius: 6px;
+}
+#app-shell[data-page="/about"] main > section:first-child {
+  min-height: 650px;
+  height: 85svh;
+}
+#app-shell[data-page="/about"] main > section:first-child h1 {
+  font-family: var(--page-display);
+  font-size: clamp(58px, 9vw, 132px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  text-transform: none;
+  max-width: 10ch;
+}
+#app-shell[data-page="/about"] main > section:first-child .mix-blend-screen {
+  display: none;
+}
+#app-shell .monolith-manifesto main h1 {
+  font-family: var(--page-display);
+  font-size: clamp(48px, 9vw, 128px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+#app-shell .event-guide-page h1 {
+  font-family: var(--page-display);
+  font-size: clamp(48px, 6.5vw, 96px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  text-transform: none;
+}
+#app-shell .event-guide-page .lg-glass-card {
+  border-radius: 8px;
+  background: #09090988;
+  box-shadow: none;
+  border-color: #ffffff28;
+}
+#app-shell .archive-gallery-page main > section:first-child {
+  min-height: 660px;
+  height: 82svh;
+  padding-bottom: 48px;
+}
+#app-shell .archive-gallery-page h1 {
+  font-family: var(--page-display);
+  font-size: clamp(44px, 6.5vw, 88px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  text-transform: none;
+}
+#app-shell .chasing-series-page .chasing-hero-tagline {
+  font-family: var(--page-display);
+  font-size: clamp(28px, 3.8vw, 52px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+#app-shell .chasing-series-page .home-section-container h2 {
+  font-family: var(--page-display);
+  font-size: clamp(40px, 5.2vw, 78px);
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 1.08;
+}
+#app-shell .untold-series-page .untold-wordmark h1 {
+  font-family: var(--page-display);
+  letter-spacing: -0.06em;
+  font-weight: 700;
+}
+#app-shell .chasing-series-page .home-editorial-section {
+  padding-block: 88px;
+}
+#app-shell[data-page="/sunsets-fm"] .lg-cinematic-masthead {
+  min-height: 0;
+  padding-top: calc(var(--shell-nav-height, 96px) + 72px);
+  padding-bottom: 48px;
+  background: #0b1110;
+}
+#app-shell[data-page="/sunsets-fm"] .lg-cinematic-masthead::before,
+#app-shell[data-page="/sunsets-fm"] .lg-cinematic-masthead::after {
+  display: none;
+}
+#app-shell[data-page="/sunsets-fm"] h1 {
+  font-family: var(--page-display);
+  font-weight: 700;
+  letter-spacing: -0.065em;
+}
+#app-shell .monolith-network .section-pad {
+  padding-block: 64px;
+}
+#app-shell[data-page="/shop"] h1 {
+  font-family: var(--page-display);
+  letter-spacing: -0.045em;
+}
+#app-shell[data-page="/sponsors"] h1 {
+  font-family: var(--page-display);
+  text-transform: none;
+  letter-spacing: -0.035em;
+  font-size: 32px;
+}
+@media (max-width: 767px) {
+  #app-shell .first-access-hero {
+    padding-top: calc(var(--shell-nav-height, 96px) + 48px);
+    padding-bottom: 32px;
+  }
+  #app-shell .first-access-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  #app-shell .first-access-intro h1 {
+    font-size: clamp(52px, 14vw, 72px);
+  }
+  #app-shell .first-access-description {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  #app-shell .first-access-programmes {
+    margin-top: 40px;
+  }
+  #app-shell .first-access-full-links {
+    padding-top: 0;
+  }
+  #app-shell .project-stories {
+    padding-block: 40px 56px;
+  }
+  #app-shell .project-stories-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  #app-shell .project-stories-heading {
+    grid-template-columns: 1fr;
+  }
+  #app-shell .project-story h3 {
+    font-size: 30px;
+  }
+  #app-shell .travel-intro {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 0;
+    padding-bottom: 40px;
+  }
+  #app-shell .travel-intro figure {
+    height: 280px;
+  }
+  #app-shell .travel-intro > div > p:last-of-type {
+    font-size: 16px;
+  }
+  #app-shell .travel-steps {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-bottom: 40px;
+  }
+  #app-shell .travel-steps h2 {
+    margin-block: 12px;
+  }
+  #app-shell .archive-gallery-page main > section:first-child {
+    min-height: 640px;
+    height: auto;
+    padding-bottom: 36px;
+  }
+  #app-shell .archive-gallery-page h1 {
+    font-size: 42px;
+  }
+  #app-shell .archive-gallery-page .lg-glass-card {
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+    border-radius: 8px;
+  }
+  #app-shell .event-guide-page h1 {
+    font-size: clamp(40px, 11vw, 58px);
+  }
+  #app-shell .event-guide-page .event-guide-hero {
+    min-height: 0;
+    padding-top: calc(var(--shell-nav-height, 96px) + 40px);
+    padding-bottom: 32px;
+  }
+  #app-shell .event-guide-page .event-guide-hero > .flex-1 {
+    min-height: 160px;
+  }
+  #app-shell .event-guide-page main > div.grid {
+    padding-block: 56px;
+    gap: 48px;
+  }
+  #app-shell .chasing-series-page .chasing-hero-tagline {
+    font-size: 30px;
+    line-height: 1.25;
+  }
+  #app-shell .chasing-series-page .home-editorial-section {
+    padding-block: 64px;
+  }
+  #app-shell .hof-page .hof-section {
+    padding-block: 48px;
+  }
+  #app-shell .hof-page .hof-manifesto {
+    font-size: clamp(24px, 7vw, 36px);
+    line-height: 1.3;
+  }
+  #app-shell .hof-section-navigation {
+    gap: 24px;
+  }
+  #app-shell .monolith-network .section-pad {
+    padding-block: 44px;
+  }
+  #app-shell[data-page="/sponsors"] .p-12 {
+    padding: 28px;
+  }
+  #app-shell[data-page="/about"] main > section:first-child {
+    min-height: 640px;
+    height: 85svh;
+  }
+  #app-shell[data-page="/about"] main > section:first-child h1 {
+    font-size: clamp(54px, 14vw, 80px);
+  }
+  #app-shell[data-page="/press"] .project-stories {
+    padding-inline: 0;
+  }
+}
+#app-shell .journal-topic-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 230px;
+  font-size: 11px;
+  color: #bcaa9a;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+#app-shell .journal-topic-filter select {
+  padding: 14px;
+  background: #111214;
+  color: #e9dfd3;
+  border: 1px solid #ffffff30;
+  border-radius: 4px;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0;
+  min-height: 48px;
+}
+#app-shell[data-page="/insights"] .lg-cinematic-masthead .italic {
+  font-style: normal;
+}

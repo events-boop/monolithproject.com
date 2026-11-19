@@ -1,3 +1,4 @@
+import { uniqueHistoricalNights } from "@shared/events/publicIntegrity";
 import type { ScheduledEvent, SiteExperienceSlot } from "@shared/events/types";
 import { getFeaturedEventForSlot, getPublicEvents } from "./siteData";
 import {
@@ -19,6 +20,10 @@ export {
   isTicketOnSale,
 } from "@shared/events/lifecycle";
 export type { EventWindowStatus } from "@shared/events/lifecycle";
+import {
+  getPublishedEventState,
+  needsTicketHolderUpdate,
+} from "@shared/events/publishedState";
 
 function compareEvents(a: ScheduledEvent, b: ScheduledEvent) {
   const aStart = getEventStartTimestamp(a) ?? Number.POSITIVE_INFINITY;
@@ -26,6 +31,17 @@ function compareEvents(a: ScheduledEvent, b: ScheduledEvent) {
 
   if (aStart !== bStart) return aStart - bStart;
   return a.title.localeCompare(b.title);
+}
+
+/**
+ * A postponed show whose ticket holders are owed an update outranks whatever
+ * a slot is configured to feature, until the record is resolved.
+ */
+function getTicketHolderNoticeEvent(now: Date) {
+  return getPublicEvents().find(event => {
+    const state = getPublishedEventState(event, now);
+    return state.kind === "postponed" && needsTicketHolderUpdate(state);
+  });
 }
 
 export function getEventById(eventId?: string | null) {
@@ -43,9 +59,27 @@ export function getScheduledEvents(now: Date = new Date()) {
     .filter(
       event =>
         !["draft", "hidden", "past"].includes(event.status) &&
+        (event.confirmationStatus !== "pending" ||
+          needsTicketHolderUpdate(getPublishedEventState(event, now))) &&
         getEventWindowStatus(event, now) !== "past"
     )
     .sort(compareEvents);
+}
+
+export function getPastEvents(now: Date = new Date()) {
+  return uniqueHistoricalNights(
+    [...getPublicEvents()]
+      .filter(
+        event =>
+          !["draft", "hidden"].includes(event.status) &&
+          event.confirmationStatus !== "pending" &&
+          event.eventStatus !== "EventCancelled" &&
+          event.eventStatus !== "EventPostponed" &&
+          (event.status === "past" ||
+            getEventWindowStatus(event, now) === "past")
+      )
+      .sort((a, b) => compareEvents(b, a))
+  );
 }
 
 export function getSeriesEvents(
@@ -61,10 +95,7 @@ export function getSeriesExperienceEvent(
   now: Date = new Date()
 ) {
   const configuredEvent =
-    getPublicEvents().find(
-      event =>
-        event.id === "css-sep19" && event.eventStatus === "EventPostponed"
-    ) || getFeaturedEventForSlot(slot);
+    getTicketHolderNoticeEvent(now) || getFeaturedEventForSlot(slot);
   if (
     configuredEvent?.series === series &&
     (isUpcomingEvent(configuredEvent, now) ||
@@ -89,10 +120,7 @@ export function getExperienceEvent(
   now: Date = new Date()
 ) {
   const configuredEvent =
-    getPublicEvents().find(
-      event =>
-        event.id === "css-sep19" && event.eventStatus === "EventPostponed"
-    ) || getFeaturedEventForSlot(slot);
+    getTicketHolderNoticeEvent(now) || getFeaturedEventForSlot(slot);
   if (
     configuredEvent &&
     (isUpcomingEvent(configuredEvent, now) ||

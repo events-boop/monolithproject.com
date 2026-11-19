@@ -128,6 +128,16 @@ export default function InsightArticle() {
         tabIndex={-1}
         className="relative z-10 page-shell-start-loose pb-24"
       >
+        {article.accent === "sunsets" && (
+          <aside className="editorial-status-note container layout-default">
+            <p>
+              This story records the announcement as it was published. For
+              current dates and ticket information, check the{" "}
+              <Link href="/schedule">calendar</Link> and the{" "}
+              <Link href="/sunsets#event-update">September show update</Link>.
+            </p>
+          </aside>
+        )}
         {/* Editorial Header */}
         <motion.section
           className="container layout-default px-6"

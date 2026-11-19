@@ -1,11 +1,9 @@
 import { getCookieConsentState } from "./cookieConsent";
 
-// Dedicated Meta Pixel for the paid Sun(Sets) campaign (sunsets.vip).
-// Kept separate from the brand pixel in metaPixel.ts so the campaign Dataset is
-// never cross-contaminated. All events use `trackSingle` so that, on hosts where
-// both pixels load (e.g. monolithproject.com/lake), the campaign events are
-// scoped to this Dataset only. The id is hard-coded so marketing doesn't depend
-// on env wiring; override with VITE_LAKE_PIXEL_ID if a swap is ever needed.
+// Sun(Sets) and Monolith share the primary Meta Dataset ending in 6250.
+// Explicit campaign events use trackSingle to keep their destination stable
+// if an additional pixel is ever configured. The default matches metaPixel.ts
+// and both server-side lead handlers; VITE_LAKE_PIXEL_ID remains an override.
 export const LAKE_PIXEL_ID =
   import.meta.env.VITE_LAKE_PIXEL_ID || "1049241148606250";
 const LAKE_PIXEL_DEV_ENABLED =

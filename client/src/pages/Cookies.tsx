@@ -10,8 +10,12 @@ export default function Cookies() {
         description="Cookie policy for The Monolith Project website."
         canonicalPath="/cookies"
       />
-      <Navigation />
-      <section className="page-shell-start pb-20 px-6">
+      <Navigation variant="dark" />
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="page-shell-start pb-20 px-6"
+      >
         <div className="container layout-narrow">
           <p className="font-mono text-xs tracking-widest uppercase text-primary mb-4">
             Legal
@@ -23,9 +27,17 @@ export default function Cookies() {
             Last updated: September 21, 2026.
           </p>
 
+          <nav className="legal-toc" aria-label="On this page">
+            <a href="#essential-cookies">Essential Cookies</a>
+            <a href="#analytics-cookies">Analytics Cookies</a>
+            <a href="#managing-cookies">Managing Cookies</a>
+          </nav>
           <div className="space-y-8 text-muted-foreground leading-relaxed">
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="essential-cookies"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Essential Cookies
               </h2>
               <p>
@@ -34,7 +46,10 @@ export default function Cookies() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="analytics-cookies"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Analytics Cookies
               </h2>
               <p>
@@ -45,7 +60,10 @@ export default function Cookies() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="managing-cookies"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Managing Cookies
               </h2>
               <p>
@@ -55,7 +73,7 @@ export default function Cookies() {
             </section>
           </div>
         </div>
-      </section>
+      </main>
       <EntityBoostStrip tone="dark" className="pb-20" />
     </div>
   );

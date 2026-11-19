@@ -26,6 +26,34 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 describe("Brevo list delivery", () => {
+  it("verifies an already subscribed First Access retry without another contact update", async () => {
+    const fetch = vi.fn().mockResolvedValue(active([3]));
+    vi.stubGlobal("fetch", fetch);
+    await subscribeBrevoList({
+      email: "fan@example.com",
+      listId: 3,
+      skipExistingSubscription: true,
+    });
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch.mock.calls[0][1]).not.toHaveProperty("method");
+  });
+  it("still respects suppression when skipping existing subscriptions", async () => {
+    const fetch = vi
+      .fn()
+      .mockResolvedValue({
+        ok: true,
+        json: async () => ({ emailBlacklisted: true, listIds: [3] }),
+      });
+    vi.stubGlobal("fetch", fetch);
+    await expect(
+      subscribeBrevoList({
+        email: "fan@example.com",
+        listId: 3,
+        skipExistingSubscription: true,
+      })
+    ).rejects.toMatchObject({ code: "SUPPRESSED" });
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
   it("requires explicit positive list IDs", () => {
     for (const value of [
       undefined,
@@ -137,13 +165,11 @@ describe("Brevo list delivery", () => {
 });
 
 it("keeps forms closed when server credentials cannot reach Brevo", async () => {
-  const fetch = vi
-    .fn()
-    .mockResolvedValue({
-      ok: false,
-      status: 401,
-      json: async () => ({ message: "Unauthorized" }),
-    });
+  const fetch = vi.fn().mockResolvedValue({
+    ok: false,
+    status: 401,
+    json: async () => ({ message: "Unauthorized" }),
+  });
   vi.stubGlobal("fetch", fetch);
   expect(await isBrevoListReachable(98)).toBe(false);
   fetch.mockResolvedValue({ ok: true, json: async () => ({ id: 99 }) });

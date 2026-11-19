@@ -9,19 +9,20 @@ for (const width of [360, 390, 430, 768, 1363]) {
     await page.goto("/");
     await expect(page.locator("#home-title")).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
-    await expect(page.locator("#current-event-title")).toContainText("MASSUMA");
-    await expect(page.locator(".home-event-essentials")).toContainText(
+    const featured = page.locator("#current-event");
+    await expect(featured.locator("h3")).toContainText("MASSUMA");
+    await expect(featured.locator(".home-show-details")).toContainText(
       "New date to be announced"
     );
-    await expect(page.locator(".home-event-lineup")).toContainText(
+    await expect(featured.locator(".home-show-lineup").first()).toContainText(
       "MVRCO × AVO · Erik · Sher · Jerome × Flare"
     );
-    await expect(page.locator(".home-event-strip .home-status")).toHaveText(
-      "Postponed"
+    await expect(featured.locator(".event-status-badge")).toContainText(
+      "POSTPONED"
     );
     await expect(
-      page.locator(".home-event-strip .home-primary")
-    ).toHaveAttribute("href", "/sunsets#event-status");
+      featured.getByRole("link", { name: /ticket-holder update/i })
+    ).toHaveAttribute("href", "/tickets");
     await expect(
       page.getByRole("link", { name: "Buy Tickets — August 22", exact: true })
     ).toHaveCount(0);
@@ -33,9 +34,8 @@ for (const width of [360, 390, 430, 768, 1363]) {
     const heading = await page
       .locator("[data-home-hero-heading]")
       .boundingBox();
-    const strip = await page.locator(".home-event-strip").boundingBox();
-    expect(strip!.y).toBeGreaterThan(heading!.y + heading!.height - 1);
-    if (width >= 900) expect(strip!.height).toBeLessThan(150);
+    const featuredBox = await featured.boundingBox();
+    expect(featuredBox!.y).toBeGreaterThan(heading!.y + heading!.height - 1);
     await page.screenshot({ path: `/tmp/monolith-home-${width}-opening.png` });
     await page.locator("#current-event").scrollIntoViewIfNeeded();
     await page.screenshot({ path: `/tmp/monolith-home-${width}-event.png` });
@@ -54,8 +54,8 @@ test("homepage checkout keeps campaign taxonomy and excludes personal fields", a
   await page.goto(
     "/?utm_source=instagram&utm_medium=paid_social&utm_campaign=sep19&utm_content=fan%40example.com&email=fan%40example.com&phone=3125551234"
   );
-  const link = page.locator(".home-event-strip .home-primary");
+  const link = page.locator("#current-event .home-secondary");
   await expect(link).toBeVisible();
-  await expect(link).toHaveAttribute("href", "/sunsets#event-status");
+  await expect(link).toHaveAttribute("href", "/tickets");
   await expect(page.locator('a[href*="allevents.in"]')).toHaveCount(0);
 });

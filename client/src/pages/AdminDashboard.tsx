@@ -73,8 +73,8 @@ export default function AdminDashboard() {
 
   const handleAccessChallenge = (e: React.FormEvent) => {
     e.preventDefault();
-    const masterKey = import.meta.env.VITE_OPS_KEY || "1234";
-    if (accessKey === masterKey) {
+    const masterKey = (import.meta.env.VITE_OPS_KEY || "").trim();
+    if (masterKey.length > 0 && accessKey.trim() === masterKey) {
       setAuthorized(true);
     } else {
       setIsWrongKey(true);

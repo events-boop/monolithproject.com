@@ -1,33 +1,48 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Ticket } from "lucide-react";
+import { getPublicEvents, usePublicSiteDataVersion } from "@/lib/siteData";
+import { getPublishedCatalogue } from "@shared/events/publishedState";
 import {
   SUNSETS_JULY4_TICKET_PATH,
-  SUNSETS_TICKET_CTA_LABEL,
   captureSunsetsTicketCtaClick,
 } from "@/lib/sunsetsTicketing";
 
 export default function FixedTicketBadge() {
+  usePublicSiteDataVersion();
   const { scrollY } = useScroll();
   const rotate = useTransform(scrollY, [0, 1000], [0, 360]);
 
-  const href = SUNSETS_JULY4_TICKET_PATH;
-  const label = SUNSETS_TICKET_CTA_LABEL;
-  const ring = "Buy Tickets • July 4 • Posh • Buy Tickets •";
+  const { upcoming } = getPublishedCatalogue(getPublicEvents());
+  const onSaleEntry = upcoming.find(entry => entry.state.kind === "on-sale");
+
+  if (!onSaleEntry || onSaleEntry.state.kind !== "on-sale") {
+    return null;
+  }
+
+  const href = onSaleEntry.state.ticketUrl;
+  const label = `Get Tickets — ${onSaleEntry.event.headline || onSaleEntry.event.title}`;
+  const shortDate = onSaleEntry.event.date.replace(/,\s*\d{4}$/, "");
+  const ring = `Get Tickets • ${shortDate} • Posh • Get Tickets •`;
+  const isExternal = /^https?:\/\//i.test(href);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 hidden md:block mix-blend-difference">
       <a
         href={href}
-        onClick={() =>
-          captureSunsetsTicketCtaClick({
-            destinationUrl: SUNSETS_JULY4_TICKET_PATH,
-            pagePath:
-              typeof window !== "undefined"
-                ? window.location.pathname
-                : undefined,
-            ctaPosition: "footer",
-          })
-        }
+        target={isExternal ? "_blank" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
+        onClick={() => {
+          if (href === SUNSETS_JULY4_TICKET_PATH) {
+            captureSunsetsTicketCtaClick({
+              destinationUrl: href,
+              pagePath:
+                typeof window !== "undefined"
+                  ? window.location.pathname
+                  : undefined,
+              ctaPosition: "footer",
+            });
+          }
+        }}
         className="group relative flex h-32 w-32 cursor-pointer items-center justify-center rounded-full"
         aria-label={label}
       >

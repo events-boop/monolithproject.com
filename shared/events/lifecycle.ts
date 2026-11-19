@@ -49,6 +49,7 @@ export function getEventWindowStatus(
   event?: ScheduledEvent | null,
   now = new Date()
 ): EventWindowStatus {
+  if (event?.confirmationStatus === "pending") return "unscheduled";
   if (event?.status === "past") return "past";
   if (
     event?.eventStatus === "EventCancelled" ||
@@ -65,6 +66,7 @@ export function isTicketOnSale(
   now = new Date()
 ) {
   return Boolean(
+    event?.confirmationStatus !== "pending" &&
     event?.ticketUrl &&
     event.status === "on-sale" &&
     ["upcoming", "live"].includes(getEventWindowStatus(event, now))

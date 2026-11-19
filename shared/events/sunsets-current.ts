@@ -50,6 +50,16 @@ export function sunsetsTicketsEnabled(now = Date.now()) {
   );
 }
 
+/** The standalone page that owns the approved Sun(Sets) publication. */
+export const SUNSETS_LANDING_PATH = "/sunsets";
+export const SUNSETS_STATUS_PATH = "/sunsets#event-status";
+/** True for the event record bound to the approved /sunsets publication. */
+export function isCurrentSunsetsEvent(
+  event?: Pick<ScheduledEvent, "landingUrl"> | null
+) {
+  return event?.landingUrl === SUNSETS_LANDING_PATH;
+}
+
 export function withApprovedSunsets(
   event: ScheduledEvent,
   now = Date.now()
@@ -84,6 +94,11 @@ export function withApprovedSunsets(
     ticketUrl: sunsetsTicketsEnabled(now) ? approved.ticketUrl : undefined,
     image: "/sunsets/assets/hero-960.webp",
     eventNotice: `${sunsetsStatusLabel(now)}. ${approved.statusMessage}`,
+    landingUrl: SUNSETS_LANDING_PATH,
+    statusUrl: SUNSETS_STATUS_PATH,
+    ticketHolderNotice: sunsetsNeedsUpdate
+      ? approved.ticketHolderMessage
+      : undefined,
     tableReservationEmail: "events@monolithproject.com",
     // No inventory or VIP inclusions are approved in the current publication.
     vipPackages: undefined,

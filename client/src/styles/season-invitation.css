@@ -1,0 +1,144 @@
+.season-invitation {
+  --season-accent: #e8b86d;
+  --season-wash: #e8b86d0d;
+  padding: var(--editorial-section-space) 24px;
+  border-block: 1px solid var(--editorial-line);
+  background: #101411;
+  scroll-margin-top: 110px;
+}
+.season-invitation[data-programme="untold"] {
+  --season-accent: #9cdde3;
+  --season-wash: #9cdde30d;
+  background: #0d131b;
+}
+.season-invitation-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(40px, 7vw, 104px);
+  align-items: center;
+}
+.season-invitation-poster {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1 / 1.12;
+  padding: clamp(24px, 3vw, 42px);
+  border: 1px solid var(--season-accent);
+  border-radius: var(--editorial-radius);
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 16px,
+      var(--season-wash) 17px 18px
+    ),
+    #0b1011;
+  color: var(--season-accent);
+  overflow: hidden;
+}
+.season-invitation-poster-top,
+.season-invitation-poster-bottom,
+.season-invitation-kicker {
+  font: 500 10px/1.7 var(--font-mono);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.season-invitation-poster-top {
+  max-width: 28ch;
+}
+.season-invitation-mark {
+  margin-block: 22px;
+}
+.season-invitation-mark > svg {
+  width: 82px;
+  height: 64px;
+}
+.season-invitation-mark > img,
+.season-invitation-mark > picture {
+  display: block;
+  width: min(100%, 290px);
+}
+.season-invitation-year {
+  font: 500 clamp(90px, 11vw, 164px)/0.85 var(--font-hero);
+  letter-spacing: -0.07em;
+}
+.season-invitation-poster-bottom {
+  padding-top: 24px;
+  margin-top: 24px;
+  border-top: 1px dashed currentColor;
+}
+.season-invitation-kicker {
+  color: var(--season-accent);
+  margin-bottom: 22px;
+}
+.season-invitation-copy h2 {
+  font: 400 clamp(40px, 5vw, 70px)/1.05 var(--font-hero);
+  letter-spacing: -0.045em;
+  color: var(--editorial-ink);
+}
+.season-invitation-copy h2 em {
+  color: var(--season-accent);
+}
+.season-invitation-edition {
+  margin-top: 26px;
+  color: var(--season-accent);
+  font-size: 14px;
+  font-weight: 600;
+}
+.season-invitation-description {
+  max-width: 40ch;
+  margin-block: 14px 28px;
+  color: var(--editorial-muted);
+  font: 400 16px/1.75 var(--font-sans);
+}
+.season-invitation a.editorial-action {
+  background: var(--season-accent);
+}
+.season-invitation a.editorial-action:hover {
+  background: var(--editorial-ink);
+}
+.season-invitation-note {
+  margin-top: 16px;
+  color: var(--editorial-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 767px) {
+  .season-invitation-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .season-invitation-poster {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 76px;
+    gap: 22px 16px;
+    aspect-ratio: auto;
+  }
+  .season-invitation-mark {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
+    width: 76px;
+  }
+  .season-invitation-mark > svg {
+    width: 62px;
+    height: 48px;
+    margin-left: auto;
+  }
+  .season-invitation-year {
+    grid-column: 1 / -1;
+    font-size: clamp(86px, 26vw, 150px);
+  }
+  .season-invitation-poster-bottom {
+    grid-column: 1 / -1;
+    margin-top: 0;
+    padding-top: 20px;
+  }
+  .season-invitation-copy h2 {
+    font-size: clamp(40px, 10vw, 62px);
+  }
+  .season-invitation a.editorial-action {
+    width: 100%;
+  }
+}

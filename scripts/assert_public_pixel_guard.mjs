@@ -79,9 +79,24 @@ async function main() {
     }
   }
 
+  // The browser and server lead handlers must not split conversions across
+  // the retired brand Dataset and the primary Dataset ending in 6250.
+  const serverBundle = await readFile(
+    path.resolve(__dirname, "../dist/index.js"),
+    "utf8"
+  );
+  for (const blockedPixelId of BLOCKED_PIXEL_IDS) {
+    if (serverBundle.includes(blockedPixelId)) {
+      blockedMatches.push(`server bundle: ${blockedPixelId}`);
+    }
+  }
+  if (!serverBundle.includes(CAMPAIGN_PIXEL_ID)) {
+    throw new Error("Primary Meta Pixel ID is missing from the server bundle.");
+  }
+
   if (blockedMatches.length > 0) {
     console.error(
-      "[pixel:guard] Blocked Meta Pixel ID found in public build:\n" +
+      "[pixel:guard] Blocked Meta Pixel ID found in release build:\n" +
         blockedMatches.map(match => `  - ${match}`).join("\n")
     );
     process.exit(1);
@@ -103,7 +118,7 @@ async function main() {
   }
 
   console.log(
-    `[pixel:guard] Public build uses campaign Meta Pixel ${CAMPAIGN_PIXEL_ID}; blocked IDs and on-site checkout events absent.`
+    `[pixel:guard] Browser and server builds use primary Meta Pixel ${CAMPAIGN_PIXEL_ID}; blocked IDs and on-site checkout events absent.`
   );
 }
 

@@ -58,13 +58,16 @@ export default function SponsorAccess() {
                 PARTNER ACCESS
               </h1>
               <p className="text-muted-foreground text-sm mb-8 tracking-wide">
-                ENTER ACCESS TOKEN FOR SPONSORSHIP MATERIALS
+                Private materials for invited partners.
               </p>
 
               <form onSubmit={handleUnlock} className="space-y-4">
                 <div className="relative">
                   <input
                     type="password"
+                    aria-label="Partner access code"
+                    autoComplete="off"
+                    required
                     value={password}
                     onChange={e => {
                       setPassword(e.target.value);
@@ -93,6 +96,12 @@ export default function SponsorAccess() {
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </form>
+              <a
+                className="sponsor-request-link"
+                href="mailto:events@monolithproject.com?subject=Partner%20access%20request"
+              >
+                Request partner access →
+              </a>
             </motion.div>
           ) : (
             /* UNLOCKED CONTENT */

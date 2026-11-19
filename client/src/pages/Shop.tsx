@@ -1,72 +1,94 @@
-import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
-import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import SEO from "@/components/SEO";
-import RevealText from "@/components/RevealText";
-import { ShoppingBag } from "lucide-react";
+import ProgrammeLinks from "@/components/ProgrammeLinks";
+import { ROUTES } from "@shared/routes";
+import "@/styles/shop-editorial.css";
 
 export default function Shop() {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
+    <div className="collection-page min-h-screen">
       <SEO
         title="Shop"
         description="Official Monolith Project merchandise coming soon. Sign up for early access to the collection."
+        canonicalPath="/shop"
       />
-
-      {/* Background Atmosphere */}
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(224,90,58,0.08),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(139,92,246,0.06),transparent_45%)]" />
-        <div className="absolute inset-0 bg-noise opacity-[0.04]" />
-      </div>
-
       <Navigation />
-
-      <main className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 page-shell-start pb-32 min-h-[80vh]">
-        <div className="container layout-narrow text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-white/10 bg-white/5 mb-8 md:mb-12">
-            <ShoppingBag className="w-6 h-6 text-primary" />
-          </div>
-
-          <RevealText
-            as="h1"
-            className="font-display text-[clamp(3.5rem,10vw,8rem)] leading-[0.85] uppercase text-white mb-6 drop-shadow-2xl"
-            blurStrength={16}
-            delay={0.2}
-          >
-            COLLECTION 01
-          </RevealText>
-
-          <RevealText
-            as="p"
-            className="font-mono text-sm md:text-base text-primary tracking-[0.3em] uppercase mb-12"
-            delay={0.4}
-            stagger={0.02}
-          >
-            In development · Launch date to be announced
-          </RevealText>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-md mx-auto w-full"
-          >
-            <p className="text-white/70 text-sm mb-6 leading-relaxed">
-              Limited run garments and accessories for the underground. Be the
-              first to hear when the collection is ready. A launch date has not
-              been announced.
+      <main id="main-content" tabIndex={-1} className="page-shell-start-loose">
+        <section
+          className="container layout-wide collection-intro"
+          aria-labelledby="collection-title"
+        >
+          <div className="collection-copy">
+            <p className="collection-kicker">
+              The Monolith Project / Objects & editions
             </p>
-          </motion.div>
-        </div>
+            <span className="collection-status">In development</span>
+            <h1 id="collection-title">
+              Collection
+              <br />
+              <em>01.</em>
+            </h1>
+            <p className="collection-description">
+              For the nights that stay with you. Limited-run garments and
+              accessories from The Monolith Project.
+            </p>
+            <Link
+              href={ROUTES.newsletter}
+              data-first-access="true"
+              className="editorial-action"
+            >
+              Get First Access <ArrowUpRight size={20} aria-hidden="true" />
+            </Link>
+            <p className="collection-note">
+              Be the first to hear when it’s ready.
+            </p>
+          </div>
+          <div className="collection-poster" aria-hidden="true">
+            <div className="collection-poster-masthead">
+              <span>
+                Monolith
+                <br />
+                Project
+              </span>
+              <span>
+                Chicago
+                <br />
+                Collection 01
+              </span>
+            </div>
+            <div className="collection-poster-art">
+              <span>01</span>
+              <div className="collection-orbits" />
+            </div>
+            <div className="collection-poster-footer">
+              <span>
+                Made for
+                <br />
+                the memories.
+              </span>
+              <ArrowUpRight size={34} />
+            </div>
+            <span className="collection-poster-stub">
+              Collection 01 / In development
+            </span>
+          </div>
+        </section>
+        <section
+          className="container layout-wide collection-world"
+          aria-labelledby="collection-world-title"
+        >
+          <header>
+            <p className="collection-kicker">Until then</p>
+            <h2 id="collection-world-title">Step into our world.</h2>
+            <Link href={ROUTES.schedule}>
+              Explore the calendar <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          </header>
+          <ProgrammeLinks />
+        </section>
       </main>
-
-      {/* Newsletter Integration for "Notify Me" */}
-      <div className="relative z-20">
-        <SlimSubscribeStrip
-          title="GET NOTIFIED ON LAUNCH"
-          source="shop_coming_soon"
-        />
-      </div>
     </div>
   );
 }

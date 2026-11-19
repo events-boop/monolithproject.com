@@ -107,7 +107,7 @@
   grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
   gap: 24px;
   padding: 28px 0;
-  border-bottom: 1px solid #f4ecd92e;
+  border-bottom: 1px solid rgba(255, 228, 194, 0.14);
 }
 #app-shell .schedule-discovery-search label {
   display: grid;
@@ -115,9 +115,9 @@
   min-width: 0;
 }
 #app-shell .schedule-discovery-search label > span {
-  color: #bfb5a5;
-  font: 500 11px/1.5 var(--font-mono);
-  letter-spacing: 0.08em;
+  color: #d8ab83;
+  font: 600 11px/1.5 var(--font-mono);
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 #app-shell .schedule-discovery-search input,
@@ -125,16 +125,26 @@
   width: 100%;
   min-width: 0;
   min-height: 54px;
-  padding: 14px 16px;
-  border: 1px solid #f4ecd94d;
-  border-radius: 5px;
-  background: #161510;
-  color: #f4ecd9;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 228, 194, 0.18);
+  border-radius: 999px;
+  background: rgba(16, 13, 12, 0.62);
+  color: #fbf6ee;
   font: 400 16px/1.5 var(--font-body);
   color-scheme: dark;
+  box-shadow: inset 0 1px 0 rgba(255, 245, 230, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+#app-shell .schedule-discovery-search input:focus,
+#app-shell .schedule-discovery-search select:focus {
+  outline: none;
+  border-color: rgba(243, 166, 89, 0.55);
+  box-shadow: 0 0 0 1px rgba(243, 166, 89, 0.18);
 }
 #app-shell .schedule-discovery-search input::placeholder {
-  color: #aaa195;
+  color: rgba(244, 233, 216, 0.48);
 }
 #app-shell .schedule-result-summary {
   display: flex;
@@ -157,36 +167,45 @@
 }
 /* Profiles use the parent type system and real appearance records. */
 #app-shell .artist-profile-hero {
-  min-height: 650px;
-  padding-top: 150px;
-  padding-bottom: 52px;
+  min-height: max(760px, 100svh);
+  padding-top: calc(var(--shell-page-top-hero, 96px) + 12px);
+  padding-bottom: clamp(28px, 4vh, 48px);
 }
 #app-shell .artist-profile-media {
-  height: 120%;
+  height: 100%;
 }
-#app-shell .artist-profile-media img {
-  filter: brightness(1) saturate(1);
+#app-shell .artist-profile-key-portrait {
+  filter: brightness(1.04) contrast(1.04) saturate(1.04);
+  /* Softly feather the studio backdrop edges (top 4% above cap, sides, and bottom) into the dark stage */
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent 0%, #000 5%, #000 84%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(180deg, transparent 0%, #000 5%, #000 84%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
 }
 #app-shell .artist-profile-hero h1 {
   font-family: var(--font-hero);
-  font-size: 112px;
+  font-size: clamp(56px, 7.6vw, 114px);
   font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 0.95;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
   overflow-wrap: anywhere;
 }
 #app-shell .artist-profile-hero .flex.items-center.gap-8 {
   flex-wrap: wrap;
 }
 #app-shell .artist-profile-content {
-  padding-block: 72px;
+  padding-block: clamp(96px, 11vw, 152px);
 }
 #app-shell
   .artist-profile-content
   .space-y-32
   > :not([hidden])
   ~ :not([hidden]) {
-  margin-top: 64px;
+  margin-top: clamp(96px, 10.5vw, 144px);
 }
 #app-shell .artist-appearance-note {
   color: #c5bcad;
@@ -215,29 +234,37 @@
 }
 /* An event connects directly to the named artists and their recordings. */
 #app-shell .event-guide-hero {
-  min-height: 560px;
-  padding-top: 150px;
-  padding-bottom: 44px;
+  min-height: max(760px, 100svh);
+  padding-top: calc(var(--shell-page-top-hero, 96px) + 12px);
+  padding-bottom: clamp(28px, 4vh, 48px);
 }
 #app-shell .event-guide-photo {
-  opacity: 0.85;
-  filter: none;
+  opacity: 0.9;
+  filter: contrast(1.03) saturate(1.04);
 }
 #app-shell .event-guide-shade {
-  background: linear-gradient(
-    180deg,
-    #05050566,
-    #05050555 30%,
-    #050505bb 70%,
-    #050505f2
-  );
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 5, 5, 0.5) 0%,
+      rgba(5, 5, 5, 0.08) 28%,
+      rgba(5, 5, 5, 0.24) 56%,
+      rgba(5, 5, 5, 0.92) 86%,
+      #050505 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(5, 5, 5, 0.72) 0%,
+      rgba(5, 5, 5, 0.2) 56%,
+      rgba(5, 5, 5, 0.06) 90%
+    );
 }
 #app-shell .event-guide-hero h1 {
   font-family: var(--font-hero);
-  font-size: 88px;
+  font-size: clamp(46px, 6.2vw, 92px);
   font-weight: 500;
-  letter-spacing: -0.045em;
-  line-height: 0.98;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
   overflow-wrap: anywhere;
 }
 #app-shell .event-guide-hero .btn-text-action {
@@ -275,6 +302,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 0%;
 }
 #app-shell .event-artist-card > p {
   color: #c3b8a7;
@@ -354,20 +382,20 @@
     margin-inline: 0;
   }
   #app-shell .artist-profile-hero {
-    min-height: 580px;
-    padding-top: 140px;
-    padding-bottom: 36px;
+    min-height: max(700px, 92svh);
+    padding-top: calc(var(--shell-page-top-hero, 92px) + 8px);
+    padding-bottom: 40px;
   }
   #app-shell .artist-profile-hero h1 {
-    font-size: 60px;
+    font-size: 62px;
   }
   #app-shell .artist-profile-content {
     padding-block: 48px;
   }
   #app-shell .event-guide-hero {
-    min-height: 510px;
-    padding-top: 140px;
-    padding-bottom: 32px;
+    min-height: max(660px, 88svh);
+    padding-top: calc(var(--shell-page-top-hero, 92px) + 8px);
+    padding-bottom: 36px;
   }
   #app-shell .event-guide-hero h1 {
     font-size: 54px;

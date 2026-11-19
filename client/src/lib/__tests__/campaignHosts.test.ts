@@ -9,7 +9,7 @@ describe("campaign host routing", () => {
     expect(isHouseOfFriendsCampaignHost("HOUSEOFFRIENDS.VIP")).toBe(true);
     expect(isHouseOfFriendsCampaignHost("monolithproject.com")).toBe(false);
     expect(resolveCampaignHostPath("houseoffriends.vip", "/")).toBe(
-      "/house-of-friends"
+      "/house-of-friends/links"
     );
     expect(resolveCampaignHostPath("www.houseoffriends.vip", "/apply")).toBe(
       "/house-of-friends/apply"
@@ -23,7 +23,7 @@ describe("campaign host routing", () => {
   });
 
   it("preserves the existing Sunsets and Untold campaign roots", () => {
-    expect(resolveCampaignHostPath("sunsets.vip", "/")).toBe("/sunsets");
+    expect(resolveCampaignHostPath("sunsets.vip", "/")).toBe("/sunsets-links");
     expect(resolveCampaignHostPath("untold.vip", "/")).toBe("/untold");
   });
 });

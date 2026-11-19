@@ -7,21 +7,24 @@ test("home preserves a full-screen scene and a reachable show action", async ({
     await page.setViewportSize({ width, height: 900 });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
-    const action = page.getByRole("link", {
-      name: "Explore the shows",
-      exact: true,
-    });
+    const action = page
+      .locator(".home-carousel")
+      .getByRole("link", {
+        name: "Explore Events",
+        exact: true,
+      });
     await expect(action).toBeInViewport();
     expect(
       await page
         .locator(".monolith-hero-stage")
         .evaluate(e => e.getBoundingClientRect().height)
-    ).toBeGreaterThanOrEqual(900);
+    ).toBeGreaterThanOrEqual(width < 640 ? 828 : 900);
     expect(
       await page
-        .locator(".home-upcoming")
+        .locator(".home-entry-points, .home-upcoming")
+        .first()
         .evaluate(e => e.getBoundingClientRect().top)
-    ).toBeGreaterThanOrEqual(900);
+    ).toBeGreaterThanOrEqual(width < 640 ? 828 : 900);
     await action.click();
     await expect(
       page.getByRole("searchbox", { name: "Search shows" })

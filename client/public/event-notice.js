@@ -1,9 +1,20 @@
-/* One acknowledgement per published update, per browser session. No analytics. */
+/* Event details open only when a visitor explicitly requests them. Dismissal is keyed by updateId in localStorage. */
 export function mountEventNotice(dialog) {
   if (!dialog) return () => {};
-  const key = 'monolith:event-notice:' + dialog.dataset.revision;
-  let previousFocus, previousOverflow, timer;
-  const remember = () => { try { sessionStorage.setItem(key, 'seen'); } catch {} };
+  const updateId = dialog.dataset.updateId || dialog.dataset.revision || 'current';
+  const key = 'monolith:event-notice:' + updateId;
+  const legacyKey = dialog.dataset.revision ? 'monolith:event-notice:' + dialog.dataset.revision : null;
+  let previousFocus, previousOverflow;
+  const isDismissed = () => {
+    try {
+      return localStorage.getItem(key) === 'seen' || (legacyKey ? localStorage.getItem(legacyKey) === 'seen' || sessionStorage.getItem(legacyKey) === 'seen' : false);
+    } catch {
+      return false;
+    }
+  };
+  const remember = () => {
+    try { localStorage.setItem(key, 'seen'); } catch {}
+  };
   const open = () => {
     if (dialog.open || document.querySelector('dialog[open]')) return;
     previousFocus = document.activeElement;
@@ -19,6 +30,7 @@ export function mountEventNotice(dialog) {
     document.body.classList.remove('event-notice-open');
     if (previousFocus?.isConnected) previousFocus.focus({preventScroll:true});
   };
+  dialog.dataset.dismissed = String(isDismissed());
   const click = event => {
     if (event.target.closest('[data-open-event-notice]')) { event.preventDefault(); open(); }
     if (dialog.contains(event.target) && event.target.closest('[data-notice-close], [data-notice-link]')) { remember(); dialog.close(); }
@@ -34,11 +46,7 @@ export function mountEventNotice(dialog) {
   dialog.addEventListener('close', closed);
   dialog.addEventListener('cancel', remember);
   dialog.addEventListener('keydown', keydown);
-  let seen = false;
-  try { seen = sessionStorage.getItem(key) === 'seen'; } catch {}
-  if (!seen && dialog.dataset.autoOpen === 'true' && !['#event-update','#event-status'].includes(location.hash)) timer = setTimeout(open, 250);
   return () => {
-    clearTimeout(timer);
     document.removeEventListener('click', click);
     dialog.removeEventListener('keydown', keydown);
     if (dialog.open) { dialog.close(); closed(); }

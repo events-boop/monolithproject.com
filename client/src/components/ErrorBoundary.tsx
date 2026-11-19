@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { AlertTriangle, RotateCcw } from "lucide-react";
-import { Component, ReactNode } from "react";
+import { Component, ReactNode, ErrorInfo } from "react";
+import { recoverFromStaleChunk, isChunkLoadError } from "@/lib/chunkRecovery";
 
 interface Props {
   children: ReactNode;
@@ -19,6 +20,17 @@ class ErrorBoundary extends Component<Props, State> {
 
   static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (isChunkLoadError(error)) {
+      if (recoverFromStaleChunk()) {
+        return;
+      }
+    }
+    if (import.meta.env.DEV) {
+      console.error("[ErrorBoundary] Uncaught component error:", error, errorInfo);
+    }
   }
 
   render() {
@@ -59,7 +71,11 @@ class ErrorBoundary extends Component<Props, State> {
 
             <div className="flex flex-wrap gap-4">
               <button
-                onClick={() => window.location.reload()}
+                onClick={() => {
+                  if (!recoverFromStaleChunk()) {
+                    window.location.reload();
+                  }
+                }}
                 className="group flex items-center gap-3 px-6 py-3 bg-white text-black font-mono text-[11px] uppercase tracking-[0.2em] hover:bg-primary transition-all duration-500"
               >
                 <RotateCcw

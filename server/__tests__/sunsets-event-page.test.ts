@@ -145,8 +145,11 @@ describe("Sunsets review preview integrity", () => {
       "does not subscribe you automatically"
     );
     expect(
-      doc.querySelectorAll(".signup-form fieldset[disabled]")
-    ).toHaveLength(2);
+      doc.querySelectorAll(
+        ".signup-form fieldset[disabled], .signup-form fieldset[hidden]"
+      )
+    ).toHaveLength(0);
+    expect(html).not.toContain("Automatic signup is temporarily unavailable");
     expect(doc.querySelector("#set-times")?.textContent).toContain("Erik");
     expect(doc.querySelector("#set-times")?.textContent).not.toContain("6–8");
   });

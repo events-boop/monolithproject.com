@@ -52,7 +52,11 @@ export default function WordScrubReveal({
 
   // Reduced-motion: render the text plainly at full opacity, no scrub animation.
   if (prefersReducedMotion) {
-    return <div className={className}>{text}</div>;
+    return (
+      <div ref={containerRef} className={className}>
+        {text}
+      </div>
+    );
   }
 
   const words = text.split(" ");

@@ -1,0 +1,539 @@
+@font-face {
+  font-family: SunsetsRadio;
+  src: url("/open-network/assets/Manrope.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+.sunsets-radio-page {
+  --csr-cream: #eeeae3;
+  --csr-gold: #d8b47d;
+  --csr-muted: #c3cec5;
+  --csr-line: #b5c1b238;
+  background:
+    radial-gradient(ellipse at 100% 0, #85603924, transparent 45%), #10271f;
+  color: var(--csr-cream);
+  font-family: SunsetsRadio, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.65;
+  min-width: 0;
+}
+.sunsets-radio-page .csr-shell {
+  width: min(1320px, 88%);
+  margin-inline: auto;
+}
+.sunsets-radio-page .csr-intro {
+  padding: 56px 0 50px;
+}
+.sunsets-radio-page .csr-eyebrow {
+  font-size: 16px;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--csr-gold);
+  margin: 0;
+}
+.sunsets-radio-page .csr-intro-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: end;
+  gap: 48px;
+  margin-top: 32px;
+}
+.sunsets-radio-page .csr-intro h1 {
+  font:
+    400 clamp(44px, 5.5vw, 82px)/1.05 Georgia,
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.045em;
+  text-transform: none;
+  margin: 0;
+}
+.sunsets-radio-page .csr-intro em,
+.sunsets-radio-page .csr-network em {
+  color: var(--csr-gold);
+  font-weight: 400;
+}
+.sunsets-radio-page p {
+  margin: 0;
+  color: var(--csr-muted);
+}
+.sunsets-radio-page .csr-intro .csr-link {
+  margin-top: 20px;
+}
+.sunsets-radio-page a,
+.sunsets-radio-page button,
+.sunsets-radio-page input {
+  touch-action: manipulation;
+}
+.sunsets-radio-page :is(a, button, input):focus-visible {
+  outline: 2px solid var(--csr-gold);
+  outline-offset: 5px;
+}
+.sunsets-radio-page .csr-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  scroll-margin-top: 110px;
+  outline-offset: 6px;
+}
+.sunsets-radio-page .csr-cover {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.sunsets-radio-page .csr-profile {
+  min-width: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #1c352c;
+  padding: clamp(24px, 3vw, 44px);
+}
+.sunsets-radio-page .csr-profile h2 {
+  font:
+    400 clamp(34px, 3.8vw, 58px)/1.12 Georgia,
+    serif;
+  letter-spacing: -0.035em;
+  margin: 18px 0 12px;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+.sunsets-radio-page .csr-subtitle {
+  font-size: 18px;
+  line-height: 1.6;
+}
+.sunsets-radio-page .csr-tabs {
+  display: flex;
+  gap: 26px;
+  border-bottom: 1px solid var(--csr-line);
+  margin-top: 30px;
+}
+.sunsets-radio-page .csr-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--csr-muted);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 12px 0;
+  background: none;
+  cursor: pointer;
+}
+.sunsets-radio-page .csr-tabs button[aria-selected="true"] {
+  border-color: var(--csr-gold);
+  color: var(--csr-cream);
+}
+.sunsets-radio-page .csr-panel {
+  padding: 26px 0;
+  min-height: 175px;
+}
+.sunsets-radio-page .csr-panel p {
+  font-size: 18px;
+  line-height: 1.7;
+}
+.sunsets-radio-page .csr-panel .csr-meta {
+  font-size: 16px;
+  margin-top: 20px;
+}
+.sunsets-radio-page .csr-artist-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 25px;
+  margin-top: 18px;
+}
+.sunsets-radio-page .csr-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  font-size: 16px;
+  color: var(--csr-cream);
+  text-decoration: none;
+  border-bottom: 1px solid var(--csr-line);
+}
+.sunsets-radio-page .csr-credit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
+  padding: 20px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--csr-muted);
+  border-top: 1px solid var(--csr-line);
+}
+.sunsets-radio-page .csr-credit a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+.sunsets-radio-page .csr-player {
+  border-top: 1px solid var(--csr-line);
+  padding-top: 20px;
+  min-width: 0;
+}
+.sunsets-radio-page .csr-play {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: none;
+  border: 0;
+  color: var(--csr-cream);
+  font: inherit;
+  font-size: 18px;
+  text-align: left;
+  width: 100%;
+  padding: 0;
+  min-height: 52px;
+  cursor: pointer;
+}
+.sunsets-radio-page .csr-play-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #10271f;
+  background: var(--csr-cream);
+}
+.sunsets-radio-page .csr-play small {
+  margin-left: auto;
+  font-size: 16px;
+  color: var(--csr-muted);
+}
+.sunsets-radio-page .csr-playing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.sunsets-radio-page .csr-playing button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  background: none;
+  border: 0;
+  color: var(--csr-cream);
+  font: inherit;
+  cursor: pointer;
+}
+.sunsets-radio-page .csr-player iframe {
+  display: block;
+  width: 100%;
+  height: 166px;
+  border: 0;
+}
+.sunsets-radio-page .csr-collection {
+  padding: 56px 0 72px;
+  scroll-margin-top: 110px;
+}
+.sunsets-radio-page .csr-collection-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+.sunsets-radio-page .csr-collection-heading h2 {
+  font-size: 28px;
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+  text-transform: none;
+}
+.sunsets-radio-page .csr-collection-heading p {
+  font-size: 16px;
+}
+.sunsets-radio-page .csr-search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+  min-width: 0;
+  border-bottom: 1px solid #bbc7bc;
+  padding: 8px 0;
+}
+.sunsets-radio-page .csr-search input {
+  min-height: 40px;
+  font: inherit;
+  font-size: 16px;
+  width: 100%;
+  min-width: 0;
+  color: var(--csr-cream);
+  border: 0;
+  background: none;
+}
+.sunsets-radio-page .csr-search input::placeholder {
+  color: var(--csr-muted);
+  opacity: 1;
+}
+.sunsets-radio-page .csr-search svg {
+  flex-shrink: 0;
+}
+.sunsets-radio-page .csr-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 34px 22px;
+}
+.sunsets-radio-page .csr-sleeve {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+  color: var(--csr-cream);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.sunsets-radio-page .csr-sleeve-art {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+  aspect-ratio: 1;
+}
+.sunsets-radio-page .csr-sleeve-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.sunsets-radio-page .csr-sleeve-art > span {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--csr-cream);
+  color: #10271f;
+  font-size: 26px;
+}
+.sunsets-radio-page .csr-sleeve[aria-pressed="true"] .csr-sleeve-art {
+  outline: 2px solid var(--csr-gold);
+  outline-offset: 4px;
+}
+.sunsets-radio-page .csr-sleeve strong {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.sunsets-radio-page .csr-sleeve > span:last-child {
+  font-size: 16px;
+  color: var(--csr-muted);
+  line-height: 1.6;
+}
+.sunsets-radio-page .csr-search-status {
+  font-size: 16px;
+  margin-top: 18px;
+  min-height: 26px;
+}
+.sunsets-radio-page .csr-empty {
+  padding: 24px 0;
+}
+.sunsets-radio-page .csr-empty button {
+  font: inherit;
+  color: var(--csr-gold);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+.sunsets-radio-page .csr-network {
+  background: #eee9df;
+  padding: 72px 0;
+  color: #17372c;
+  --csr-cream: #17372c;
+  --csr-muted: #42574c;
+  --csr-gold: #77582f;
+  --csr-line: #17372c33;
+}
+.sunsets-radio-page .csr-network-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+}
+.sunsets-radio-page .csr-network h2 {
+  font:
+    400 clamp(42px, 4.6vw, 66px)/1.12 Georgia,
+    serif;
+  margin: 22px 0 0;
+  letter-spacing: -0.045em;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+.sunsets-radio-page .csr-network p + p {
+  margin-top: 18px;
+}
+.sunsets-radio-page .csr-network-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  margin: 28px 0 16px;
+  align-items: center;
+}
+.sunsets-radio-page .csr-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 22px;
+  background: #17372c;
+  color: #f3efe5;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.sunsets-radio-page .csr-signoff {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-block: 36px;
+}
+.sunsets-radio-page .csr-signoff p {
+  font:
+    italic 26px/1.4 Georgia,
+    serif;
+  color: var(--csr-gold);
+}
+.sunsets-radio-page .csr-signoff a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: var(--csr-cream);
+  text-decoration: none;
+  min-height: 44px;
+}
+@media (max-width: 1100px) {
+  .sunsets-radio-page .csr-shell {
+    width: 90%;
+  }
+  .sunsets-radio-page .csr-intro-row {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+  }
+  .sunsets-radio-page .csr-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sunsets-radio-page .csr-play {
+    flex-wrap: wrap;
+  }
+  .sunsets-radio-page .csr-play small {
+    margin-left: 60px;
+  }
+  .sunsets-radio-page .csr-network-layout {
+    gap: 40px;
+  }
+}
+@media (max-width: 760px) {
+  .sunsets-radio-page .csr-intro {
+    padding: 32px 0;
+  }
+  .sunsets-radio-page .csr-intro-row {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .sunsets-radio-page .csr-intro h1 {
+    font-size: clamp(40px, 8.5vw, 58px);
+  }
+  .sunsets-radio-page .csr-feature {
+    grid-template-columns: 1fr;
+  }
+  .sunsets-radio-page .csr-profile {
+    padding: 26px 22px;
+  }
+  .sunsets-radio-page .csr-panel {
+    min-height: 0;
+    padding: 24px 0;
+  }
+  .sunsets-radio-page .csr-tabs {
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .sunsets-radio-page .csr-collection {
+    padding: 40px 0 48px;
+  }
+  .sunsets-radio-page .csr-collection-heading {
+    display: grid;
+    gap: 22px;
+  }
+  .sunsets-radio-page .csr-search {
+    max-width: none;
+  }
+  .sunsets-radio-page .csr-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 16px;
+  }
+  .sunsets-radio-page .csr-network {
+    padding: 48px 0;
+  }
+  .sunsets-radio-page .csr-network-layout {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .sunsets-radio-page .csr-network h2 {
+    margin-top: 18px;
+  }
+  .sunsets-radio-page .csr-signoff {
+    align-items: start;
+    flex-direction: column;
+  }
+  .sunsets-radio-page .csr-sleeve-art > span {
+    width: 32px;
+    height: 32px;
+    font-size: 22px;
+    right: 8px;
+    bottom: 8px;
+  }
+}
+@media (max-width: 380px) {
+  .sunsets-radio-page .csr-profile {
+    padding: 24px 18px;
+  }
+  .sunsets-radio-page .csr-tabs {
+    gap: 18px;
+  }
+  .sunsets-radio-page .csr-grid {
+    grid-template-columns: 1fr;
+  }
+  .sunsets-radio-page .csr-button {
+    padding: 16px;
+    gap: 10px;
+  }
+  .sunsets-radio-page .csr-play {
+    gap: 10px;
+  }
+  .sunsets-radio-page .csr-play small {
+    margin-left: 56px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sunsets-radio-page * {
+    scroll-behavior: auto !important;
+  }
+}

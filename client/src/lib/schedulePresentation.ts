@@ -95,6 +95,7 @@ export function compareScheduleEvents(a: ScheduledEvent, b: ScheduledEvent) {
 
 export function canAddEventToCalendar(event: ScheduledEvent) {
   if (
+    event.status === "past" ||
     event.confirmationStatus === "pending" ||
     ["EventPostponed", "EventCancelled"].includes(event.eventStatus || "")
   )

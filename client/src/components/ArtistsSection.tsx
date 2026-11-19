@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import { ArrowRight, MapPin, Music, Radio, Sun } from "lucide-react";
 import ResponsiveImage from "./ResponsiveImage";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { POSH_TICKET_URL } from "@/data/events";
+import { ROUTES } from "@shared/routes";
 import { ARTIST_ENTRIES, type ArtistSeries } from "@/data/artists";
 import EditorialHeader from "./EditorialHeader";
 import KineticDecryption from "./KineticDecryption";
@@ -111,11 +111,11 @@ function ArtistCard({
           <ResponsiveImage
             src={artist.image}
             alt={artist.name}
-            style={{ objectPosition: artist.imagePosition }}
+            style={{ objectPosition: artist.imagePosition || "50% 0%" }}
             loading="lazy"
             decoding="async"
             sizes="(min-width: 1024px) 25vw, 100vw"
-            className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000"
+            className="w-full h-full object-cover object-top transition-all duration-1000"
           />
           {/* Gradients */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/20 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
@@ -264,7 +264,7 @@ export default function ArtistsSection() {
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </a>
             </Link>
-            <a href={POSH_TICKET_URL}>
+            <a href={ROUTES.newsletter} data-first-access="true">
               <div className="btn-pill-untold group">
                 <span>First Access</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />

@@ -238,8 +238,8 @@ export async function persistPoshWebhookPurchase(
   const trackingLink = cleanString(payload.tracking_link);
   const orderNumber = cleanString(payload.order_number);
   const orderKey =
-    trackingLink ||
     orderNumber ||
+    trackingLink ||
     createHash("sha256")
       .update(
         JSON.stringify({ type, eventExternalId, eventTitle, email, items })

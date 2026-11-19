@@ -99,8 +99,8 @@ const TICKET_RAIL_STATS = [
   },
   {
     label: "First Access",
-    value: SUNSETS_PRELAUNCH_LOCKED ? "Locked" : "SUNSET26",
-    note: SUNSETS_PRELAUNCH_LOCKED ? "Lake List only" : "$30 Lake List code",
+    value: SUNSETS_PRELAUNCH_LOCKED ? "Locked" : "Lake List",
+    note: SUNSETS_PRELAUNCH_LOCKED ? "Lake List only" : "$30 early access",
   },
   {
     label: "Tables",

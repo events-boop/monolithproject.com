@@ -83,7 +83,8 @@ export default function EpisodeGallery({
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  style={{ objectPosition: "50% 0%" }}
+                  className="h-full w-full object-cover object-top origin-top transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(18,13,9,0.12)_48%,rgba(18,13,9,0.7))]" />
                 <div className="absolute left-4 top-4 rounded-full border border-white/18 bg-black/28 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/82 backdrop-blur-sm">
@@ -169,7 +170,8 @@ export default function EpisodeGallery({
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+              style={{ objectPosition: "50% 0%" }}
+              className="h-full w-full object-cover object-top origin-top transition-transform duration-1000 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-40" />
 

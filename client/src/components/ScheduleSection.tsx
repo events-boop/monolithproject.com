@@ -16,6 +16,7 @@ import ResponsiveImage from "./ResponsiveImage";
 import EventArtistStack from "./EventArtistStack";
 import ScheduleSeriesKey from "./ScheduleSeriesKey";
 import { cn } from "@/lib/utils";
+import { getPublishedEventState } from "@shared/events/publishedState";
 import { getSeriesColor, getScheduledEvents } from "@/lib/siteExperience";
 import { downloadEventCalendar } from "@/lib/calendar";
 import { MONOLITH_ORANGE } from "@/lib/brand";
@@ -45,11 +46,14 @@ const eventImageOverrides: Record<string, string> = {
   "css-jul04": "/images/css-2026-poster.jpg",
 };
 
-function getStatusLabel(status: ScheduledEvent["status"]) {
-  if (status === "on-sale") return "ON SALE";
-  if (status === "coming-soon") return "COMING SOON";
-  if (status === "sold-out") return "SOLD OUT";
-  return "PAST";
+function getStatusLabel(event: ScheduledEvent) {
+  const state = getPublishedEventState(event);
+  if (state.kind === "postponed") return "POSTPONED — NEW DATE TO BE CONFIRMED";
+  if (state.kind === "cancelled") return "CANCELLED";
+  if (state.kind === "on-sale") return "ON SALE";
+  if (state.kind === "sold-out") return "SOLD OUT";
+  if (state.kind === "past") return "PAST";
+  return "DETAILS PENDING";
 }
 
 export default function ScheduleSection({
@@ -391,7 +395,8 @@ export default function ScheduleSection({
                                 NEW DROP
                               </span>
                             )}
-                            {event.featured && event.status === "on-sale" ? (
+                            {event.featured &&
+                            getPublishedEventState(event).kind === "on-sale" ? (
                               <span
                                 className="rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-black shadow-sm"
                                 style={{ backgroundColor: seriesAccent }}
@@ -400,9 +405,10 @@ export default function ScheduleSection({
                               </span>
                             ) : (
                               <span className="text-[10px] font-black tracking-[0.2em] uppercase px-2.5 py-1 bg-black text-white rounded-full shadow-sm">
-                                {event.confirmationStatus === "pending"
+                                {event.confirmationStatus === "pending" &&
+                                event.eventStatus !== "EventPostponed"
                                   ? "DETAILS PENDING"
-                                  : getStatusLabel(event.status)}
+                                  : getStatusLabel(event)}
                               </span>
                             )}
                           </div>
@@ -474,7 +480,8 @@ export default function ScheduleSection({
                                 sizes="(min-width: 1024px) 33vw, 100vw"
                                 loading="lazy"
                                 decoding="async"
-                                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                                style={{ objectPosition: "50% 0%" }}
+                                className="w-full h-full object-cover object-top origin-top transition-transform duration-1000 group-hover:scale-105"
                               />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                               <div className="absolute bottom-4 left-4 flex flex-col">

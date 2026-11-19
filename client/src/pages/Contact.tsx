@@ -62,13 +62,13 @@ export default function Contact() {
         description="Get in touch with The Monolith Project for bookings, partnerships, and general inquiries."
         canonicalPath="/contact"
       />
-      <Navigation />
+      <Navigation variant="dark" />
 
       {/* Atmosphere */}
       <div className="pointer-events-none fixed inset-0 z-0 atmo-surface opacity-35" />
 
-      <main className="relative z-10 page-shell-start-loose pb-24">
-        <section className="px-6">
+      <main className="relative z-10 pb-32 lg-dusk-atmosphere">
+        <section className="lg-cinematic-masthead px-6 mb-16 md:mb-24">
           <div className="container layout-default">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
@@ -76,35 +76,39 @@ export default function Contact() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="max-w-3xl"
             >
-              <span className="section-kicker text-foreground/80 block mb-5">
+              <span className="section-kicker text-[#f3b572] block mb-5">
                 Get In Touch
               </span>
-              <h1 className="section-display-title text-foreground">CONTACT</h1>
-              <p className="mt-5 text-foreground/80 leading-relaxed max-w-2xl">
+              <h1 className="section-display-title text-foreground">Contact</h1>
+              <p className="mt-6 text-foreground/80 text-base md:text-xl leading-relaxed max-w-2xl">
                 Use the form for general inquiries, or jump directly to booking,
                 partners, or legal.
               </p>
 
-              <div className="mt-7 flex flex-wrap items-center gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-3.5">
                 <a
                   href="mailto:events@monolithproject.com"
-                  className="btn-pill-outline"
+                  className="lg-pill-glass"
                 >
                   <Mail className="w-3.5 h-3.5" />
-                  Email
+                  <span>Email</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
                 </a>
                 <Link href="/booking" asChild>
-                  <a className="btn-pill-monolith">
+                  <a className="lg-pill-amber">
                     <Music className="w-3.5 h-3.5" />
-                    Booking
+                    <span>Booking</span>
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
                   </a>
                 </Link>
               </div>
             </motion.div>
+          </div>
+        </section>
 
-            <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <section className="px-6">
+          <div className="container layout-default">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {contactTiles.map((tile, idx) => (
                 <motion.div
                   key={tile.title}

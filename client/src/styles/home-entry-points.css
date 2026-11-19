@@ -1,0 +1,195 @@
+.home-entry-points {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      ellipse 48% 80% at 88% 0%,
+      rgba(243, 166, 89, 0.08) 0%,
+      transparent 70%
+    ),
+    linear-gradient(180deg, #0d0b0a 0%, #100e0c 100%);
+  border-block: 1px solid rgba(255, 228, 194, 0.14);
+}
+.home-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.home-entry-link {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(28px, 3.2vw, 52px);
+  color: #f8f1e6;
+  text-decoration: none;
+  background: transparent;
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+.home-entry-link + .home-entry-link {
+  border-left: 1px solid rgba(255, 228, 194, 0.12);
+}
+.home-entry-link:hover {
+  background: linear-gradient(
+    165deg,
+    rgba(255, 214, 166, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 242, 224, 0.12);
+}
+.home-entry-access {
+  background: linear-gradient(
+    180deg,
+    rgba(243, 166, 89, 0.07) 0%,
+    rgba(216, 180, 125, 0.03) 100%
+  );
+}
+.home-entry-access:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(243, 166, 89, 0.12) 0%,
+    rgba(216, 180, 125, 0.05) 100%
+  );
+}
+.home-entry-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(232, 198, 154, 0.82);
+  font: 500 10px/1.5 var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+.home-entry-title {
+  margin-top: 22px;
+  font-family: var(--font-hero);
+  font-size: clamp(26px, 2.4vw, 38px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+.home-entry-description {
+  max-width: 34ch;
+  margin-block: 12px 28px;
+  color: rgba(214, 204, 188, 0.88);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.home-entry-action {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 228, 194, 0.12);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #f4e7d4;
+}
+.home-entry-access .home-entry-action {
+  color: #f3b572;
+  border-top-color: rgba(243, 166, 89, 0.28);
+}
+.home-entry-network .home-entry-title,
+.home-entry-network .home-entry-action {
+  color: #9fd5cf;
+}
+.home-entry-network {
+  background: linear-gradient(180deg, #9fd5cf0a, transparent);
+}
+.home-entry-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px clamp(24px, 3vw, 48px);
+  border-top: 1px solid rgba(255, 228, 194, 0.14);
+  background: rgba(243, 166, 89, 0.04);
+}
+.home-entry-notice > div {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.home-entry-notice-status {
+  padding: 5px 9px;
+  border: 1px solid #e7bd795c;
+  color: #e7bd79;
+  font: 500 10px/1.5 var(--font-mono, monospace);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.home-entry-notice p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.home-entry-notice strong {
+  color: #e4e4de;
+  font-weight: 600;
+}
+.home-entry-notice p span {
+  color: #bdbdb7;
+}
+.home-entry-notice a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  color: #f1f0e9;
+  font-size: 12px;
+  text-underline-offset: 4px;
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .home-entry-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-entry-link:nth-child(odd) {
+    border-left: 0;
+  }
+  .home-entry-link:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 228, 194, 0.12);
+  }
+}
+@media (max-width: 767px) {
+  .home-entry-grid {
+    grid-template-columns: 1fr;
+  }
+  .home-entry-link + .home-entry-link {
+    border-left: 0;
+    border-top: 1px solid #ffffff1f;
+  }
+  .home-entry-title {
+    margin-top: 14px;
+    font-size: 30px;
+  }
+  .home-entry-description {
+    max-width: 40ch;
+    margin-bottom: 18px;
+  }
+  .home-entry-notice,
+  .home-entry-notice > div {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .home-entry-notice a {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-entry-link {
+    transition: none;
+  }
+}

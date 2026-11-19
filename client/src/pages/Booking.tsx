@@ -52,7 +52,7 @@ export default function Booking() {
       </div>
 
       <main className="relative z-10">
-        <section className="pt-40 md:pt-56 pb-20 px-6">
+        <section className="lg-cinematic-masthead px-6 mb-16 md:mb-24">
           <div className="container layout-default">
             {/* Breadcrumbs */}
             <nav
@@ -71,11 +71,11 @@ export default function Booking() {
               animate={{ y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="section-display-title mb-4 text-white">BOOKING</h1>
-              <p className="section-display-title-compact text-white/38">
-                &amp; INQUIRY
+              <h1 className="section-display-title mb-4 text-white">Booking</h1>
+              <p className="section-display-title-compact text-white/42 mb-6">
+                &amp; inquiry
               </p>
-              <p className="text-white/60 text-lg md:text-2xl max-w-xl font-light italic leading-relaxed">
+              <p className="text-white/74 text-lg md:text-2xl max-w-2xl font-light italic leading-relaxed">
                 Whether you represent an artist, venue, or brand partner, we
                 review every submission for musical fit, room awareness, and
                 alignment with the world we build.
@@ -85,6 +85,34 @@ export default function Booking() {
         </section>
 
         {/* Curation Standards Pillars */}
+        {/* Formal Inquiry Section */}
+        <section className="py-24 md:py-32 px-6 border-t border-white/5 bg-white/[0.01]">
+          <div className="container layout-narrow">
+            <div className="mb-16 text-center">
+              <span className="section-kicker text-white/70 mb-4 block">
+                Booking Request
+              </span>
+              <h2 className="section-display-title-compact">
+                Start The Conversation
+              </h2>
+            </div>
+
+            <ViewportLazy minHeightClassName="min-h-[420px]">
+              <Suspense
+                fallback={
+                  <div
+                    className="border border-white/5 p-8 md:p-12 min-h-[420px] bg-black/40 rounded-xl animate-pulse"
+                    aria-hidden="true"
+                  />
+                }
+              >
+                <div className="bg-black/40 backdrop-blur-md rounded-xl border border-white/10 p-2 overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
+                  <BookingFormSection />
+                </div>
+              </Suspense>
+            </ViewportLazy>
+          </div>
+        </section>
         <section className="py-20 px-6 border-t border-white/5">
           <div className="container layout-default">
             <div className="mb-12 max-w-2xl">
@@ -124,35 +152,6 @@ export default function Booking() {
                 </motion.div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Formal Inquiry Section */}
-        <section className="py-24 md:py-32 px-6 border-t border-white/5 bg-white/[0.01]">
-          <div className="container layout-narrow">
-            <div className="mb-16 text-center">
-              <span className="section-kicker text-white/70 mb-4 block">
-                Booking Request
-              </span>
-              <h2 className="section-display-title-compact">
-                Start The Conversation
-              </h2>
-            </div>
-
-            <ViewportLazy minHeightClassName="min-h-[640px]">
-              <Suspense
-                fallback={
-                  <div
-                    className="border border-white/5 p-8 md:p-12 min-h-[640px] bg-black/40 rounded-[2.5rem] animate-pulse"
-                    aria-hidden="true"
-                  />
-                }
-              >
-                <div className="bg-black/40 backdrop-blur-md rounded-[2.5rem] border border-white/10 p-2 overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
-                  <BookingFormSection />
-                </div>
-              </Suspense>
-            </ViewportLazy>
           </div>
         </section>
       </main>

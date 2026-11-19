@@ -20,6 +20,7 @@ export async function subscribeBrevoList(input: {
   listId: number;
   firstName?: string;
   lastName?: string;
+  skipExistingSubscription?: boolean;
 }) {
   if (!brevoConfigured(brevoListId(String(input.listId))))
     throw new BrevoSubscriptionError("UNAVAILABLE");
@@ -38,6 +39,16 @@ export async function subscribeBrevoList(input: {
       const contact = await existing.json();
       if (contact.emailBlacklisted === true)
         throw new BrevoSubscriptionError("SUPPRESSED");
+      // A retry after an uncertain response can verify membership without
+      // issuing another contact update. Other signup integrations keep their
+      // existing name-update behavior unless they explicitly opt in.
+      if (
+        input.skipExistingSubscription &&
+        contact.emailBlacklisted === false &&
+        Array.isArray(contact.listIds) &&
+        contact.listIds.includes(input.listId)
+      )
+        return;
     } else if (existing.status !== 404)
       throw new BrevoSubscriptionError("DELIVERY_FAILED");
     const response = await fetch("https://api.brevo.com/v3/contacts", {

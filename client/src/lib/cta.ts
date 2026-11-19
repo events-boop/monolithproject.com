@@ -56,7 +56,7 @@ function getSeriesDetailsHref(series: ScheduledEvent["series"]) {
     case "chasing-sunsets":
       return ROUTES.chasingSunsets;
     case "untold-story":
-      return ROUTES.story;
+      return ROUTES.untoldStory;
     default:
       return ROUTES.tickets;
   }
@@ -87,7 +87,17 @@ export function getEventCta(event?: Partial<ScheduledEvent> | null): EventCta {
     getEventWindowStatus(event as ScheduledEvent) !== "past" &&
     !["EventCancelled", "EventPostponed"].includes(event.eventStatus || "")
   )
-    return event.primaryCta ?? resolveEventPrimaryCta(event as ScheduledEvent);
+    return event.primaryCta
+      ? /first\s+access|unlock\s+presale/i.test(event.primaryCta.label)
+        ? {
+            ...event.primaryCta,
+            label: CTA_LABELS.unlockPresale,
+            href: ROUTES.newsletter,
+            tool: "laylo",
+            isExternal: false,
+          }
+        : event.primaryCta
+      : resolveEventPrimaryCta(event as ScheduledEvent);
   return resolveEventPrimaryCta(event as ScheduledEvent | null);
 }
 

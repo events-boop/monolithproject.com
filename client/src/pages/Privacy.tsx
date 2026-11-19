@@ -10,8 +10,12 @@ export default function Privacy() {
         description="Privacy policy for The Monolith Project website and event communications."
         canonicalPath="/privacy"
       />
-      <Navigation />
-      <section className="page-shell-start pb-20 px-6">
+      <Navigation variant="dark" />
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="page-shell-start pb-20 px-6"
+      >
         <div className="container layout-narrow">
           <p className="font-mono text-xs tracking-widest uppercase text-primary mb-4">
             Legal
@@ -23,9 +27,18 @@ export default function Privacy() {
             Last updated: February 11, 2026.
           </p>
 
+          <nav className="legal-toc" aria-label="On this page">
+            <a href="#what-we-collect">What We Collect</a>
+            <a href="#how-we-use-data">How We Use Data</a>
+            <a href="#data-sharing">Data Sharing</a>
+            <a href="#contact">Contact</a>
+          </nav>
           <div className="space-y-8 text-muted-foreground leading-relaxed">
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="what-we-collect"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 What We Collect
               </h2>
               <p>
@@ -35,7 +48,10 @@ export default function Privacy() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="how-we-use-data"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 How We Use Data
               </h2>
               <p>
@@ -45,7 +61,10 @@ export default function Privacy() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="data-sharing"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Data Sharing
               </h2>
               <p>
@@ -54,7 +73,10 @@ export default function Privacy() {
               </p>
             </section>
             <section>
-              <h2 className="font-display text-3xl text-foreground mb-3 uppercase">
+              <h2
+                id="contact"
+                className="font-display text-3xl text-foreground mb-3 uppercase"
+              >
                 Contact
               </h2>
               <p>
@@ -70,7 +92,7 @@ export default function Privacy() {
             </section>
           </div>
         </div>
-      </section>
+      </main>
       <EntityBoostStrip tone="dark" className="pb-20" />
     </div>
   );

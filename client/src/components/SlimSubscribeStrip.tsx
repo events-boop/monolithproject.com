@@ -20,8 +20,12 @@ export default function SlimSubscribeStrip({
             Monolith.
           </p>
         </div>
-        <Link href="/newsletter" className="btn-pill-monolith">
-          Get updates <ArrowUpRight size={18} aria-hidden="true" />
+        <Link
+          href="/newsletter"
+          className="editorial-action"
+          data-first-access="true"
+        >
+          Get First Access <ArrowUpRight size={18} aria-hidden="true" />
         </Link>
       </div>
     </section>

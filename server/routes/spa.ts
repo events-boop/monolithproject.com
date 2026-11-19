@@ -47,7 +47,33 @@ const staticPath = resolveStaticPath();
 const indexHtmlPath = path.join(staticPath, "index.html");
 let cachedIndexHtml: string | null = null;
 
+// The roster's canonical URL is /lineup; /artists/<id> remains permanent.
+// Resolve before express.static's automatic directory-slash redirect.
+router.get(["/artists", "/artists/"], (req, res) => {
+  const queryStart = req.originalUrl.indexOf("?");
+  const query = queryStart >= 0 ? req.originalUrl.slice(queryStart) : "";
+  res.redirect(301, `/lineup${query}`);
+});
+
 router.use(express.static(staticPath, { index: false }));
+
+// Canonical Untold Story route: /story redirects cleanly to /untold-story.
+router.get(["/story", "/story/"], (_req, res) => {
+  res.redirect(301, "/untold-story");
+});
+
+router.get(
+  ["/events/monolith-launch", "/events/monolith-launch/"],
+  (_req, res) => {
+    res.redirect(301, "/events/css-oct10");
+  }
+);
+
+// Missing static assets must 404 rather than falling through to SPA HTML,
+// which returns HTML with immutable cache headers and poisons browser chunk caches.
+router.use("/assets", (_req, res) => {
+  res.status(404).type("text/plain").send("Asset not found");
+});
 
 function resolvePrerenderedRoutePath(requestPath: string) {
   const cleanPath = requestPath.split("?")[0]?.split("#")[0] || "/";

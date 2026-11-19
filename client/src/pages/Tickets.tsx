@@ -2,6 +2,7 @@ import {
   TICKET_POLICY,
   SUNSETS_REFUND_REQUEST_URL,
 } from "@shared/events/ticket-policy";
+import { getPublishedEventState } from "@shared/events/publishedState";
 import {
   currentSunsets,
   sunsetsNeedsUpdate,
@@ -90,16 +91,33 @@ export default function Tickets() {
     featuredEvent?.activeFunnels?.length &&
     !["posh", "allevents"].includes(cta.tool)
   );
-  const isFirstAccess = featuredEvent?.status !== "on-sale";
-  const accessHeading = isFirstAccess ? "NEXT SIGNAL" : "TICKETS LIVE";
-  const accessStatus = isFirstAccess
-    ? `${featuredEvent?.episode || "NEXT CHAPTER"} / FIRST ACCESS OPEN`
-    : `${featuredEvent?.episode || "CURRENT RELEASE"} / TICKETS LIVE`;
-  const accessCopy = featuredEvent
-    ? isFirstAccess
-      ? `${featuredHeadline} is next. Join the Lake List for the artist reveal, first ticket window, and table access before the public release.`
-      : `${featuredHeadline} — tickets are available through ${cta.tool === "allevents" ? "AllEvents" : "the event checkout"}.`
-    : "Explore confirmed shows and event announcements from The Monolith Project.";
+  const publishedState = featuredEvent
+    ? getPublishedEventState(featuredEvent)
+    : null;
+  const isOnSale = publishedState?.kind === "on-sale";
+  const isPostponed = publishedState?.kind === "postponed";
+  const isFirstAccess = !isOnSale;
+  const accessHeading = isPostponed
+    ? "EVENT UPDATE"
+    : !featuredEvent
+      ? "BETWEEN SHOWS"
+      : isOnSale
+        ? "TICKETS LIVE"
+        : "FIRST ACCESS";
+  const accessStatus = isPostponed
+    ? "POSTPONED — NEW DATE TO BE CONFIRMED"
+    : !featuredEvent
+      ? "BETWEEN SHOWS — NO TICKETS CURRENTLY ON SALE"
+      : isOnSale
+        ? `${featuredEvent.episode || "CURRENT RELEASE"} / TICKETS LIVE`
+        : `${featuredEvent.episode || "DETAILS PENDING"} / FIRST ACCESS OPEN`;
+  const accessCopy = isPostponed
+    ? `${featuredHeadline} is postponed. Read the official ticket-holder instructions below.`
+    : featuredEvent
+      ? isFirstAccess
+        ? `${featuredHeadline} is between release windows. Join First Access for the artist reveal, initial ticket window, and updates before public sale — or revisit our July 4 Castaways recap and radio archive.`
+        : `${featuredHeadline} — tickets are available through ${cta.tool === "allevents" ? "AllEvents" : "the event checkout"}.`
+      : "No shows are currently on sale between seasons. Explore the July 4 Castaways recap proof, listen to Chasing Sunsets Radio, or join First Access for upcoming dates.";
 
   const handlePurchase = (source: string, destinationUrl?: string) => {
     if (!destinationUrl) return;
@@ -143,7 +161,7 @@ export default function Tickets() {
     !comingSoonKey
   ) {
     return (
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-background text-foreground lg-dusk-atmosphere">
         <SEO
           title="Sun(Sets) III postponed — ticket-holder update"
           description={currentSunsets.statusMessage}
@@ -153,41 +171,101 @@ export default function Tickets() {
         <main
           id="main-content"
           tabIndex={-1}
-          className="page-shell-start-loose px-6 pb-24"
+          className="pb-32"
         >
-          <section className="mx-auto max-w-2xl rounded-xl border border-amber-300/60 bg-[#1d1f18] p-7 md:p-12">
-            <p className="text-sm text-amber-200 mb-5">
-              OFFICIAL EVENT UPDATE · JOEZI × MASSUMA
-            </p>
-            <h1 className="text-4xl md:text-5xl leading-tight mb-6">
-              Postponed due to weather.
-            </h1>
-            <p className="text-base leading-relaxed mb-5">
-              {currentSunsets.statusMessage}
-            </p>
-            <p className="text-base leading-relaxed mb-5">
-              {currentSunsets.ticketHolderMessage}
-            </p>
-            <p className="text-base leading-relaxed mb-8">
-              {TICKET_POLICY.sunsetsRefund}
-            </p>
-            <a
-              href={SUNSETS_REFUND_REQUEST_URL}
-              className="btn-pill-monolith mb-5"
-            >
-              Request a refund ↗
-            </a>
-            <p className="text-sm leading-relaxed mb-6">
-              This opens a draft in your email app. Send it with your booking
-              details for team review. {TICKET_POLICY.refundProcessing}
-            </p>
-            <a
-              className="inline-flex min-h-12 items-center rounded bg-amber-200 px-6 py-3 font-semibold text-black"
-              href="/sunsets#event-update"
-            >
-              Read the full update ↗
-            </a>
+          <section className="lg-cinematic-masthead px-6 mb-14 md:mb-20">
+            <div className="container layout-wide">
+              <div className="flex flex-wrap items-center gap-3 mb-5">
+                <p className="font-mono text-[11px] uppercase tracking-[0.26em] text-[#ffd8a6]">
+                  POSTPONED — NEW DATE TO BE CONFIRMED
+                </p>
+                <span className="rounded-full border border-[#f3a659]/45 bg-[#f3a659]/12 px-3.5 py-1 font-mono text-[11px] uppercase tracking-[0.14em] text-[#ffd8a6]">
+                  JOEZI × MASSUMA
+                </span>
+              </div>
+              <h1 className="section-display-title text-[#fbf6ee] max-w-4xl mb-6">
+                Postponed due to weather.
+              </h1>
+              <p className="max-w-2xl text-base md:text-xl leading-relaxed text-white/78">
+                {currentSunsets.statusMessage}
+              </p>
+            </div>
           </section>
+
+          <div className="container layout-default px-6 space-y-10">
+            <section className="max-w-4xl lg-glass-card rounded-2xl p-8 md:p-12">
+              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-[#f3b572] mb-4">
+                Official Ticket-Holder Options & Refund Window
+              </p>
+              <p className="text-base md:text-lg leading-relaxed text-white/85 mb-5">
+                {currentSunsets.ticketHolderMessage}
+              </p>
+              <p className="text-base leading-relaxed text-white/75 mb-8">
+                {TICKET_POLICY.sunsetsRefund}
+              </p>
+              <div className="flex flex-wrap gap-3.5 mb-6">
+                <a
+                  href="/sunsets#event-update"
+                  className="lg-pill-amber"
+                >
+                  <span>TICKET-HOLDER UPDATE</span>
+                  <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                </a>
+                <a
+                  href={SUNSETS_REFUND_REQUEST_URL}
+                  className="lg-pill-glass"
+                >
+                  <span>Request a refund</span>
+                  <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                </a>
+                <Link
+                  href="/events/css-sep19"
+                  className="lg-pill-glass"
+                >
+                  <span>Event status page</span>
+                  <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+              </div>
+              <p className="text-xs leading-relaxed text-white/65 border-t border-white/10 pt-5">
+                Refund requests open a draft in your email app. Send it with your
+                booking details for team review. {TICKET_POLICY.refundProcessing}
+              </p>
+            </section>
+
+            <section
+              aria-label="Between shows — archive, radio and first access"
+              className="max-w-4xl lg-glass-card rounded-2xl p-8 md:p-12"
+            >
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-[#f3b572] mb-3">
+              Between Shows · No Tickets Currently On Sale
+            </p>
+            <h2 className="font-display text-2xl md:text-3xl uppercase text-[#fbf6ee] mb-4">
+              While the next date is finalized.
+            </h2>
+            <p className="text-sm md:text-base leading-relaxed text-white/75 mb-6">
+              Zero events are currently on sale. Revisit our July 4 lakefront
+              chapter at Castaways (10-hour gathering · 2,800 attendees), tune
+              into Chasing Sunsets Radio, or register for First Access.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/newsletter" data-first-access="true" className="lg-pill-amber">
+                <span>Get First Access</span>
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </Link>
+              <Link
+                href="/chasing-sunsets/sunsets-i-2026"
+                className="lg-pill-glass"
+              >
+                <span>July 4 recap proof</span>
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </Link>
+              <Link href="/radio" className="lg-pill-glass">
+                <span>Radio archive</span>
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </Link>
+            </div>
+          </section>
+          </div>
         </main>
       </div>
     );
@@ -197,40 +275,39 @@ export default function Tickets() {
   // Pass). The current chapters sell direct via the Aug 22 rail.
   if (comingSoonKey) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <div className="min-h-screen bg-background text-foreground flex flex-col lg-dusk-atmosphere">
         <SEO
           title="SUN(SETS) Tickets | Chasing Sun(Sets)"
           description="Find current event availability and official ticket destinations."
         />
         <Navigation />
-        <div className="flex flex-col items-center justify-center flex-1 px-6 py-24 text-center space-y-6 max-w-md mx-auto">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#dfc27a]">
-            SUN(SETS) 2026 — CASTAWAYS
-          </p>
-          <h1 className="text-3xl font-black tracking-tight text-white">
-            CHECK EVENT AVAILABILITY
-          </h1>
-          <p className="text-sm leading-relaxed text-stone-400">
-            This ticket release is not available yet. Explore the current
-            schedule for confirmed shows and available tickets.
-          </p>
-          <a
-            href="/schedule"
-            className="inline-flex items-center justify-center gap-2 h-12 w-full bg-[#dfc27a] text-xs font-black uppercase tracking-[0.12em] text-black hover:bg-[#efd48d] transition-colors"
-          >
-            <Ticket className="size-4" />
-            View current events
-          </a>
-          <p className="text-[11px] text-stone-500 uppercase tracking-[0.14em]">
-            Availability is listed for each event.
-          </p>
+        <div className="flex flex-1 items-center justify-center px-6 py-24">
+          <div className="lg-glass-card mx-auto w-full max-w-lg space-y-6 rounded-3xl px-8 py-10 text-center md:px-10">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-[#f3b572]">
+              SUN(SETS) 2026 — CASTAWAYS
+            </p>
+            <h1 className="font-display text-3xl uppercase leading-[0.95] tracking-[-0.03em] text-[#fbf6ee] md:text-4xl">
+              Check event availability
+            </h1>
+            <p className="text-sm leading-relaxed text-white/70 md:text-base">
+              This ticket release is not available yet. Explore the current
+              schedule for confirmed shows and available tickets.
+            </p>
+            <a href="/schedule" className="lg-pill-amber w-full">
+              <Ticket className="size-4" aria-hidden="true" />
+              <span>View current events</span>
+            </a>
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/48">
+              Availability is listed for each event.
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden lg-dusk-atmosphere">
       <SEO
         title={`${featuredHeadline} | ${isFirstAccess ? "First Access" : "Tickets"} — Chasing Sun(Sets)`}
         description={accessCopy}
@@ -244,29 +321,29 @@ export default function Tickets() {
 
       <main id="main-content" tabIndex={-1}>
         {/* Header */}
-        <section className="page-shell-start-loose pb-16 px-6 relative">
+        <section className="lg-cinematic-masthead px-6 mb-14 relative">
           <div className="container layout-default">
             <motion.div
               initial={{ y: 30 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="font-serif italic text-lg text-primary block mb-6">
+              <span className="section-kicker mb-5 block text-[#f3b572]">
                 {featuredEyebrow}
               </span>
-              <h1 className="font-display text-[clamp(3rem,10vw,8rem)] leading-[0.9] uppercase mb-6 bg-clip-text text-transparent bg-[linear-gradient(135deg,rgba(255,255,255,1)_0%,rgba(255,255,255,0.7)_50%,rgba(255,255,255,0.3)_100%)] drop-shadow-sm">
+              <h1 className="section-display-title max-w-[10ch] text-[#fbf6ee] mb-6">
                 {accessHeading}
               </h1>
-              <p className="text-white/80 text-lg max-w-lg mb-4">
+              <p className="mb-4 max-w-xl text-base leading-relaxed text-[#f4e9d8]/78 md:text-xl">
                 {accessCopy}
               </p>
               <div className="flex items-center gap-3">
-                <span className="inline-block w-2 h-2 bg-primary rounded-full animate-pulse" />
-                <span className="font-mono text-xs text-primary tracking-widest uppercase">
+                <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-[#f3a659]" />
+                <span className="font-mono text-xs uppercase tracking-[0.22em] text-[#f3b572]">
                   {accessStatus}
                 </span>
               </div>
-              <div className="mt-8 flex flex-col gap-6 sm:flex-row items-center">
+              <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
                 <MagneticButton strength={0.3}>
                   <a
                     href={cta.href}
@@ -279,19 +356,16 @@ export default function Tickets() {
                         cta.href
                       )
                     }
-                    className={`
-                      px-12 py-5 text-[12px] font-black uppercase tracking-[0.3em] transition-all duration-500 flex items-center justify-center min-w-[220px] rounded-none
-                      ${cta.tool === "posh" ? "cta-posh" : "cta-laylo"}
-                      ${ctaToneClass}
-                    `}
+                    className={`lg-pill-amber min-w-[220px] ${ctaToneClass}`}
                   >
-                    {cta.label}
-                    <ArrowUpRight className="w-4 h-4 ml-2" />
+                    <span>{cta.label}</span>
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
                 </MagneticButton>
                 <MagneticButton strength={0.22}>
-                  <Link href="/schedule" asChild>
-                    <a className="cta-ghost">View All Season Dates</a>
+                  <Link href="/schedule" className="lg-pill-glass">
+                    <span>View All Season Dates</span>
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
                 </MagneticButton>
               </div>
@@ -312,12 +386,12 @@ export default function Tickets() {
             <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-24 items-start">
               {/* Left — Visual Focus */}
               <div className="lg:col-span-7 w-full">
-                <div className="relative group overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02]">
+                <div className="group relative overflow-hidden rounded-3xl border border-[rgba(255,228,194,0.16)] bg-[#0d0c0b] shadow-[0_28px_64px_rgba(0,0,0,0.45)]">
                   <SmartImage
                     src={featuredPoster}
                     alt={featuredHeadline}
                     priority
-                    className="w-full h-auto aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105"
+                    className="aspect-[4/5] h-auto w-full object-cover object-top origin-top transition-transform duration-1000 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                 </div>
@@ -336,8 +410,8 @@ export default function Tickets() {
                       {featuredEyebrow}
                     </span>
                   </div>
-                  <h2 className="font-display text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.95] text-white tracking-widest block mb-8">
-                    <KineticDecryption text={featuredHeadline} />
+                  <h2 className="font-display text-5xl md:text-6xl lg:text-7xl uppercase leading-[0.95] text-[#fbf6ee] tracking-wide block mb-8">
+                    {featuredHeadline}
                   </h2>
                   <div className="h-px w-20 bg-primary/40 mb-8" />
                   <p className="text-lg md:text-xl leading-relaxed text-white/70 max-w-lg font-light">
@@ -366,7 +440,7 @@ export default function Tickets() {
                     {
                       icon: <Users className="w-4 h-4" />,
                       label: "Headliner",
-                      value: featuredEvent?.lineup || "GENE FARRIS",
+                      value: featuredEvent?.lineup || "Artists to be confirmed",
                     },
                   ].map(item => (
                     <div key={item.label} className="flex flex-col gap-3">
@@ -377,7 +451,7 @@ export default function Tickets() {
                         </span>
                       </div>
                       <span className="font-display text-lg uppercase tracking-wider text-white/90">
-                        <KineticDecryption text={item.value} />
+                        {item.value}
                       </span>
                     </div>
                   ))}
@@ -396,14 +470,14 @@ export default function Tickets() {
                           cta.href
                         )
                       }
-                      className={`
-                             px-12 py-6 text-xs font-black tracking-[0.4em] transition-all duration-500 min-w-[280px] flex items-center justify-center rounded-none
-                             ${cta.tool === "posh" ? "cta-posh" : "cta-laylo"}
-                             ${ctaToneClass}
-                           `}
+                      className={`lg-pill-amber min-w-[280px] !min-h-[56px] !px-10 ${ctaToneClass}`}
                     >
-                      {cta.label === CTA_LABELS.tickets ? "TICKETS" : cta.label}
-                      <ArrowUpRight className="w-4 h-4 ml-3" />
+                      <span>
+                        {cta.label === CTA_LABELS.tickets
+                          ? "TICKETS"
+                          : cta.label}
+                      </span>
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                     </a>
                   </MagneticButton>
                 </div>
@@ -508,7 +582,7 @@ export default function Tickets() {
                       </>
                     ) : (
                       <span className="text-[10px] font-black uppercase tracking-[0.4em]">
-                        Coming Soon
+                        First Access Open
                       </span>
                     )}
                   </button>
@@ -604,6 +678,55 @@ export default function Tickets() {
                 </div>
               </div>
             </div>
+            {!isOnSale && (
+              <div className="mt-8 grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/40 p-6 md:grid-cols-3">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                    July 4 Recap Proof
+                  </p>
+                  <p className="mt-2 text-sm text-white/75">
+                    Castaways Beach Club · 10-hour gathering · 2,800 attendees.
+                  </p>
+                  <Link
+                    href="/chasing-sunsets/sunsets-i-2026"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-[0.2em] text-white/90 hover:text-primary"
+                  >
+                    Relive Chapter One
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                    Chasing Sunsets Radio
+                  </p>
+                  <p className="mt-2 text-sm text-white/75">
+                    Between-shows mixes and resident episodes powered by sunsets.fm.
+                  </p>
+                  <Link
+                    href="/radio"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-[0.2em] text-white/90 hover:text-primary"
+                  >
+                    Open Radio Archive
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-primary">
+                    First Access Signup
+                  </p>
+                  <p className="mt-2 text-sm text-white/75">
+                    Get the first release window when the next date is confirmed.
+                  </p>
+                  <Link
+                    href="/newsletter"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-[0.2em] text-white/90 hover:text-primary"
+                  >
+                    Get First Access
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </main>

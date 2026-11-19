@@ -32,7 +32,7 @@ describe("scenes", () => {
           monolith: "/",
           story: "/story",
           sunsets: "/chasing-sunsets",
-          radio: "/radio",
+          radio: "/radio/episode-5",
           paper: "/newsletter",
         };
         const scene = getSceneForPath(pathMap[sceneId]);
@@ -83,7 +83,7 @@ describe("scenes", () => {
     });
 
     it("radio scene has correct properties", () => {
-      const scene = getSceneForPath("/radio");
+      const scene = getSceneForPath("/radio/episode-5");
       expect(scene).toEqual<SceneConfig>({
         id: "radio",
         variant: "dark",
@@ -121,7 +121,7 @@ describe("scenes", () => {
       expect(sunsetsScene.brand).toBe("chasing-sunsets");
       expect(getSceneForPath("/").brand).toBe("monolith");
       expect(getSceneForPath("/story").brand).toBe("untold-story");
-      expect(getSceneForPath("/radio").brand).toBe("radio");
+      expect(getSceneForPath("/radio").brand).toBe("monolith");
       expect(getSceneForPath("/newsletter").brand).toBe("monolith");
     });
   });
@@ -161,8 +161,8 @@ describe("scenes", () => {
     });
 
     // Radio scene
-    it("returns radio scene for /radio", () => {
-      expect(getSceneForPath("/radio").id).toBe("radio");
+    it("keeps the Open Network in the parent Monolith scene", () => {
+      expect(getSceneForPath("/radio").id).toBe("monolith");
     });
 
     it("returns radio scene for /radio/episode-5", () => {
@@ -227,13 +227,13 @@ describe("scenes", () => {
     it("strips trailing slashes before matching", () => {
       expect(getSceneForPath("/story/").id).toBe("story");
       expect(getSceneForPath("/chasing-sunsets/").id).toBe("sunsets");
-      expect(getSceneForPath("/radio/").id).toBe("radio");
+      expect(getSceneForPath("/radio/").id).toBe("monolith");
       expect(getSceneForPath("/newsletter/").id).toBe("paper");
     });
 
     it("strips query strings before matching", () => {
       expect(getSceneForPath("/story?foo=bar").id).toBe("story");
-      expect(getSceneForPath("/radio?episode=5").id).toBe("radio");
+      expect(getSceneForPath("/radio?episode=5").id).toBe("monolith");
       expect(getSceneForPath("/contact?ref=footer").id).toBe("paper");
     });
 
@@ -245,7 +245,7 @@ describe("scenes", () => {
 
     it("strips both query string and hash", () => {
       expect(getSceneForPath("/story?a=1#heading").id).toBe("story");
-      expect(getSceneForPath("/radio?ep=2#listen").id).toBe("radio");
+      expect(getSceneForPath("/radio?ep=2#listen").id).toBe("monolith");
     });
 
     it("handles undefined pathname and defaults to monolith", () => {

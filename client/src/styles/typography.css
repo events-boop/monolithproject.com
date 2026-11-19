@@ -48,7 +48,7 @@
 
   .event-system-kicker {
     font-family: var(--font-sans);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     font-weight: 900;
     letter-spacing: 0.22em;
     line-height: 1.1;
@@ -65,7 +65,7 @@
 
   .event-system-meta {
     font-family: var(--font-sans);
-    font-size: 0.625rem;
+    font-size: 0.6875rem;
     font-weight: 850;
     letter-spacing: 0.16em;
     line-height: 1.45;

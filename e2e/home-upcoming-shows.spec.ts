@@ -21,11 +21,10 @@ for (const width of [390, 1363]) {
       "href",
       "/sunsets"
     );
-    const pending = section.locator('[data-event-id="css-oct10"]');
-    await expect(pending).toContainText("Details to be announced");
-    await expect(
-      pending.getByRole("link", { name: "View event details" })
-    ).toHaveAttribute("href", "/events/monolith-launch");
+    // The October 10 date was removed; it must not come back as a pending card.
+    await expect(section.locator('[data-event-id="css-oct10"]')).toHaveCount(
+      0
+    );
     await expect(section).not.toContainText("August 22");
     await expect(section).not.toContainText("LIVE");
     expect(
@@ -52,5 +51,5 @@ test("postponed finale retains its update after the original date", async ({
   ).toHaveCount(1);
   await expect(
     page.locator('#schedule [data-event-id="css-oct10"]')
-  ).toBeVisible();
+  ).toHaveCount(0);
 });

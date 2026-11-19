@@ -1,47 +1,46 @@
-/* --- THE MONOLITH PROJECT BACKGROUND UTILITIES --- */
-/* Abstracted these out from inline Tailwind values to preserve integrity of build */
+/* --- THE MONOLITH PROJECT — Tickets dusk-amber atmosphere --- */
 
 .bg-tickets-top-glow {
   background-image:
     radial-gradient(
-      circle at 12% 18%,
-      rgba(34, 211, 238, 0.16),
-      transparent 34%
+      ellipse 52% 40% at 82% 16%,
+      rgba(243, 158, 78, 0.16),
+      transparent 70%
     ),
     radial-gradient(
-      circle at 86% 20%,
-      rgba(224, 90, 58, 0.14),
-      transparent 32%
+      ellipse 44% 36% at 14% 24%,
+      rgba(216, 132, 62, 0.1),
+      transparent 68%
     ),
     radial-gradient(
-      circle at 50% 78%,
-      rgba(139, 92, 246, 0.14),
-      transparent 42%
+      ellipse 48% 42% at 50% 78%,
+      rgba(194, 112, 62, 0.08),
+      transparent 70%
     );
 }
 
 .bg-tickets-bottom-glow {
   background-image: linear-gradient(
     180deg,
-    rgba(6, 6, 15, 0.45) 0%,
-    rgba(6, 6, 15, 0) 30%,
-    rgba(6, 6, 15, 0.55) 100%
+    rgba(8, 7, 7, 0.35) 0%,
+    rgba(8, 7, 7, 0) 30%,
+    rgba(8, 7, 7, 0.62) 100%
   );
 }
 
 .bg-tickets-card {
   background-image: linear-gradient(
     140deg,
-    rgba(139, 92, 246, 0.24),
-    rgba(34, 211, 238, 0.16) 38%,
-    rgba(224, 90, 58, 0.2) 100%
+    rgba(243, 166, 89, 0.22),
+    rgba(224, 137, 63, 0.14) 42%,
+    rgba(194, 112, 62, 0.18) 100%
   );
 }
 
 .bg-tickets-event-overlay {
   background-image: linear-gradient(
     120deg,
-    rgba(255, 255, 255, 0.08),
+    rgba(255, 236, 206, 0.1),
     transparent 45%
   );
 }
@@ -49,7 +48,7 @@
 .bg-tickets-tier {
   background-image: linear-gradient(
     145deg,
-    rgba(255, 255, 255, 0.06),
+    rgba(255, 228, 194, 0.07),
     rgba(255, 255, 255, 0.02)
   );
 }
@@ -57,7 +56,7 @@
 .bg-tickets-tier-highlight {
   background-image: linear-gradient(
     145deg,
-    rgba(224, 90, 58, 0.2),
-    rgba(139, 92, 246, 0.16)
+    rgba(243, 166, 89, 0.22),
+    rgba(224, 137, 63, 0.12)
   );
 }

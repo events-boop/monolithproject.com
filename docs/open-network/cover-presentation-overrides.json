@@ -1,0 +1,101 @@
+{
+  "updatedAt": "2026-11-02T23:44:00.091Z",
+  "reason": "Use today's approved Chasing SUN(SETS) cover designs and color variations",
+  "sourceFile": "client/src/data/chasingRadioEpisodes.ts",
+  "originalPublisherImport": "cover-provenance.json",
+  "recordingSourcesUnchanged": true,
+  "seriesImage": "/media/chasing-radio/series-main.webp",
+  "covers": [
+    {
+      "id": "real-sommers-chasing-011",
+      "previousImage": "/media/open-network/covers/chasing-011-066c87.webp",
+      "image": "/media/chasing-radio/sommers-uk-episode-011.webp",
+      "imageSmall": "/media/chasing-radio/sommers-uk-episode-011-640.webp",
+      "sha256": "2dbc07f578871d3ab2105d7e1df6f4887598384216a6e39b02afedffd0a0a208"
+    },
+    {
+      "id": "real-chasing-ewerseen-chasing-sun-sets-1",
+      "previousImage": "/media/open-network/covers/chasing-0015-67ac42.webp",
+      "image": "/media/chasing-radio/ewerseen-episode-015.webp",
+      "imageSmall": "/media/chasing-radio/ewerseen-episode-015-640.webp",
+      "sha256": "189f58a196eee92f44c6daff5cbfaa0e79bf577e6572d14a948a08641cbb9dda"
+    },
+    {
+      "id": "real-chasing-kce-x-chasing-sun-sets-sn003",
+      "previousImage": "/media/open-network/covers/chasing-14-c7a401.webp",
+      "image": "/media/chasing-radio/kce-sn003-episode-14.webp",
+      "imageSmall": "/media/chasing-radio/kce-sn003-episode-14-640.webp",
+      "sha256": "0ae2b797915aea5ccb5ada7aaef906ba897cbf7648d9b55d9969d09b8e95d671"
+    },
+    {
+      "id": "real-chasing-chris-idh-x-cssep012-chasing",
+      "previousImage": "/media/open-network/covers/chasing-012-568b00.webp",
+      "image": "/media/chasing-radio/chris-idh-episode-012.webp",
+      "imageSmall": "/media/chasing-radio/chris-idh-episode-012-640.webp",
+      "sha256": "08fe6aa80cc0a791a4238080f0716b7ea946ae5ec572931598661d3edc4b66c0"
+    },
+    {
+      "id": "real-chasing-radian-x-chasing-sunsets-chapter-ii-x-no-sleep",
+      "previousImage": "/media/open-network/covers/chasing-012-34710f.webp",
+      "image": "/media/chasing-radio/radian-no-sleep-chapter-ii-012.webp",
+      "imageSmall": "/media/chasing-radio/radian-no-sleep-chapter-ii-012-640.webp",
+      "sha256": "aafc56d9a69bacc1e26641115f6f9a360abd58f5c4161a99f8f3be6c491509b6"
+    },
+    {
+      "id": "real-chasing-ccsep010-chapter-iii-chasing-sunsets-special-nye-by-benchek",
+      "previousImage": "/media/open-network/covers/chasing-010-dbca21.webp",
+      "image": "/media/chasing-radio/benchek-special-nye-episode-010.webp",
+      "imageSmall": "/media/chasing-radio/benchek-special-nye-episode-010-640.webp",
+      "sha256": "07707aafded89c965ae9c642dc0141f86a0016b7ee66f5a4e35ebdaef18c2729"
+    },
+    {
+      "id": "real-chasing-terranova",
+      "previousImage": "/media/open-network/covers/chasing-009-b9a041.webp",
+      "image": "/media/chasing-radio/terranova-episode-009.webp",
+      "imageSmall": "/media/chasing-radio/terranova-episode-009-640.webp",
+      "sha256": "cf3839538d2ddc55fc0b87f678ed8b7c55367e4fe96ac3b0e4a25a90e8c69e86"
+    },
+    {
+      "id": "real-chasing-ewerseen-chasing-sunsets-mix-vol3",
+      "previousImage": "/media/open-network/covers/chasing-008-17582b.webp",
+      "image": "/media/chasing-radio/ewerseen-episode-008.webp",
+      "imageSmall": "/media/chasing-radio/ewerseen-episode-008-640.webp",
+      "sha256": "18f8726658a35851c03a7bd56d150d323700b10c619bfa5611e5a666a2b15cbf"
+    },
+    {
+      "id": "real-chasing-radianofc-set",
+      "previousImage": "/media/open-network/covers/chasing-fe50d7edd8-fe50d7.webp",
+      "image": "/media/chasing-radio/radian-untold-story.webp",
+      "imageSmall": "/media/chasing-radio/radian-untold-story-640.webp",
+      "sha256": "1f7782a7e9b627faed29b7901855c187db63074d711b965bde2f8fb315785ba6"
+    },
+    {
+      "id": "real-chasing-ewerseen-x-chasing-sunsets-collab-mix-vol2",
+      "previousImage": "/media/open-network/covers/chasing-11093eb119-11093e.webp",
+      "image": "/media/chasing-radio/ewerseen-collab-vol-2.webp",
+      "imageSmall": "/media/chasing-radio/ewerseen-collab-vol-2-640.webp",
+      "sha256": "73d764f549aa7cb47bf9f79961700da5999aefa73e0f4aed9b26a3f82939db9f"
+    },
+    {
+      "id": "real-chasing-benchek-chasing-sunsets-collab-ep02-live-from-marbella",
+      "previousImage": "/media/open-network/covers/chasing-02-803207.webp",
+      "image": "/media/chasing-radio/benchek-marbella-episode-02.webp",
+      "imageSmall": "/media/chasing-radio/benchek-marbella-episode-02-640.webp",
+      "sha256": "a690765a1110cd2e2a97422a39385a88454b1d18be0fbc12ed1ff3f134822d19"
+    },
+    {
+      "id": "real-chasing-ewerseen",
+      "previousImage": "/media/open-network/covers/chasing-d39aa29082-d39aa2.webp",
+      "image": "/media/chasing-radio/ewerseen-july-4-chapter-ii.webp",
+      "imageSmall": "/media/chasing-radio/ewerseen-july-4-chapter-ii-640.webp",
+      "sha256": "5703eb224c578e39ae29b413bcd4b8e4c4d4cca4fb430f6a533376453bb95762"
+    },
+    {
+      "id": "real-chasing-benchek-collab-for-chasing-sunsets-may-31st-sunset-protocol-live-from-marbella",
+      "previousImage": "/media/open-network/covers/chasing-f3900013f0-f39000.webp",
+      "image": "/media/chasing-radio/benchek-sunset-protocol.webp",
+      "imageSmall": "/media/chasing-radio/benchek-sunset-protocol-640.webp",
+      "sha256": "0d471ee4f208a0cd579d2ebb3ccb6075868875b9aa6aef57c8c39b9313b1999e"
+    }
+  ]
+}

@@ -11,8 +11,15 @@ import Navigation from "@/components/Navigation";
 import SEO from "@/components/SEO";
 import ConversionCTA from "@/components/ConversionCTA";
 import JoinSignalSection from "@/components/JoinSignalSection";
+import HomeNextChapter from "@/components/HomeNextChapter";
 import ScheduleSeriesKey from "@/components/ScheduleSeriesKey";
-import { getScheduledEvents, getSeriesLabel } from "@/lib/siteExperience";
+import EventStatusBadge from "@/components/EventStatusBadge";
+import { toggleSavedEvent, useSavedPassport } from "@/lib/savedPassport";
+import {
+  getScheduledEvents,
+  getPastEvents,
+  getSeriesLabel,
+} from "@/lib/siteExperience";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
 import {
   getScheduleDate,
@@ -20,22 +27,26 @@ import {
   compareScheduleEvents,
   canAddEventToCalendar,
 } from "@/lib/schedulePresentation";
-import { downloadEventCalendar } from "@/lib/calendar";
+import {
+  buildGoogleCalendarUrl,
+  downloadEventCalendar,
+} from "@/lib/calendar";
 import { getEventDetailsHref } from "@/lib/cta";
 import { buildScheduleSchema } from "@/lib/schema";
 import { TICKET_POLICY } from "@shared/events/ticket-policy";
+import { getPublishedEventState } from "@shared/events/publishedState";
 import type { ScheduledEvent } from "@shared/events/types";
 import "@/styles/schedule.css";
 
 function statusLabel(event: ScheduledEvent) {
-  if (event.eventStatus === "EventPostponed") return "Postponed";
-  if (event.eventStatus === "EventCancelled") return "Cancelled";
+  const state = getPublishedEventState(event);
+  if (state.kind === "postponed") return "POSTPONED — NEW DATE TO BE CONFIRMED";
+  if (state.kind === "cancelled") return "Cancelled";
+  if (state.kind === "past") return "Past event";
+  if (state.kind === "on-sale") return "Tickets available";
+  if (state.kind === "sold-out") return "Sold out";
   if (event.confirmationStatus === "pending") return "Details pending";
-  return event.status === "on-sale"
-    ? "Tickets available"
-    : event.status === "sold-out"
-      ? "Sold out"
-      : "Announcement to follow";
+  return "Details pending";
 }
 function eventTime(event: ScheduledEvent) {
   if (event.eventStatus === "EventPostponed") return "New date to be announced";
@@ -43,67 +54,223 @@ function eventTime(event: ScheduledEvent) {
     return "Date / time to be confirmed";
   return event.time;
 }
+function matchesSearchAndSeries(
+  event: ScheduledEvent,
+  series: string,
+  query: string
+) {
+  const searchable = [
+    event.title,
+    event.headline,
+    event.lineup,
+    getScheduleVenue(event),
+    event.location,
+    getSeriesLabel(event.series),
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLocaleLowerCase();
+  return (
+    (series === "all" || event.series === series) &&
+    searchable.includes(query.trim().toLocaleLowerCase())
+  );
+}
 export default function Schedule() {
   usePublicSiteDataVersion();
   const events = [...getScheduledEvents()].sort(compareScheduleEvents);
+  const pastEvents = [...getPastEvents()].sort((a, b) =>
+    compareScheduleEvents(b, a)
+  );
+  const hasOnSale = events.some(
+    event => getPublishedEventState(event).kind === "on-sale"
+  );
   const [filter, setFilter] = useState("ALL");
   const [query, setQuery] = useState("");
   const [series, setSeries] = useState("all");
-  const [saved, setSaved] = useState<string[]>(() => {
-    try {
-      const values = JSON.parse(
-        localStorage.getItem("monolith-starred-rites") || "[]"
-      );
-      return Array.isArray(values)
-        ? values.filter((id): id is string => typeof id === "string")
-        : [];
-    } catch {
-      return [];
-    }
-  });
-  useEffect(() => {
-    try {
-      localStorage.setItem("monolith-starred-rites", JSON.stringify(saved));
-    } catch {
-      /* Browsing remains available without device storage. */
-    }
-  }, [saved]);
+  const passport = useSavedPassport();
+  const saved = passport.events;
+  const toggleSaved = (id: string) => {
+    toggleSavedEvent(id);
+  };
   const months = [
     "ALL",
     ...Array.from(new Set(events.map(event => getScheduleDate(event).month))),
   ];
-  const visible = events.filter(event => {
-    const matchesDate =
-      filter === "ALL" ||
-      (filter === "MY_LINEUP"
-        ? saved.includes(event.id)
-        : getScheduleDate(event).month === filter);
-    const searchable = [
-      event.title,
-      event.headline,
-      event.lineup,
-      getScheduleVenue(event),
-      event.location,
-      getSeriesLabel(event.series),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLocaleLowerCase();
-    return (
-      matchesDate &&
-      (series === "all" || event.series === series) &&
-      searchable.includes(query.trim().toLocaleLowerCase())
-    );
-  });
+  const filterOptions = [
+    ...months,
+    ...(pastEvents.length > 0 ? ["PAST"] : []),
+    "MY_LINEUP",
+  ];
+  const visible =
+    filter === "PAST"
+      ? []
+      : events.filter(event => {
+          const matchesDate =
+            filter === "ALL" ||
+            (filter === "MY_LINEUP"
+              ? saved.includes(event.id)
+              : getScheduleDate(event).month === filter);
+          return matchesDate && matchesSearchAndSeries(event, series, query);
+        });
+  const showArchiveSection =
+    pastEvents.length > 0 && (filter === "ALL" || filter === "PAST");
+  const pastVisible = showArchiveSection
+    ? pastEvents.filter(event => matchesSearchAndSeries(event, series, query))
+    : [];
+  const totalVisibleCount = visible.length + pastVisible.length;
   const groups = Array.from(
     new Set(visible.map(event => getScheduleDate(event).key))
   );
-  const toggleSaved = (id: string) =>
-    setSaved(items =>
-      items.includes(id) ? items.filter(value => value !== id) : [...items, id]
+  const renderScheduleCard = (
+    event: ScheduledEvent,
+    { isArchiveCard = false }: { isArchiveCard?: boolean } = {}
+  ) => {
+    const postponed = event.eventStatus === "EventPostponed";
+    const date = getScheduleDate(event);
+    const detailsHref = getEventDetailsHref(event);
+    const calendarReady = canAddEventToCalendar(event);
+    const googleCalendarUrl = calendarReady
+      ? buildGoogleCalendarUrl(event)
+      : null;
+
+    return (
+      <article
+        key={event.id}
+        data-event-id={event.id}
+        data-event-status={event.eventStatus}
+        className="schedule-editorial-card signal-etched-frame"
+        data-signal-tone={event.series}
+      >
+        <div className="schedule-editorial-date">
+          <span>
+            {postponed
+              ? "Original date"
+              : isArchiveCard
+                ? "Completed"
+                : date.hasDay
+                  ? "Confirmed date"
+                  : "Date pending"}
+          </span>
+          <strong>{date.label}</strong>
+          <span>{eventTime(event)}</span>
+          {event.artistImages && event.artistImages.length > 0 && (
+            <div
+              className="schedule-editorial-avatars"
+              aria-label="Featured artist portraits"
+            >
+              {event.artistImages.slice(0, 3).map(portrait => (
+                <img
+                  key={portrait.src}
+                  src={portrait.src}
+                  alt={portrait.alt || portrait.artist}
+                  width={36}
+                  height={36}
+                  loading="lazy"
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="schedule-editorial-copy">
+          <div className="schedule-editorial-tags">
+            <span>{getSeriesLabel(event.series)}</span>
+            <EventStatusBadge
+              status={getPublishedEventState(event).kind}
+              label={
+                getPublishedEventState(event).kind === "first-access"
+                  ? undefined
+                  : statusLabel(event)
+              }
+            />
+          </div>
+          <h3>
+            <Link href={detailsHref}>{event.headline || event.title}</Link>
+          </h3>
+          {(postponed || event.description || event.experienceIntro) && (
+            <p>
+              {postponed
+                ? event.eventNotice
+                : event.description || event.experienceIntro}
+            </p>
+          )}
+          <p className="schedule-editorial-venue">
+            {postponed ? "Original venue: " : ""}
+            {getScheduleVenue(event)} · {event.location}
+          </p>
+        </div>
+        <div className="schedule-editorial-actions">
+          <ConversionCTA event={event} size="sm" showUrgency={false} />
+          <div className="schedule-editorial-tools">
+            <button
+              type="button"
+              aria-pressed={saved.includes(event.id)}
+              aria-label={`${saved.includes(event.id) ? "Remove" : "Save"} ${event.title}`}
+              onClick={() => toggleSaved(event.id)}
+            >
+              {saved.includes(event.id) ? (
+                <Check size={18} aria-hidden="true" />
+              ) : (
+                <Bookmark size={18} aria-hidden="true" />
+              )}
+            </button>
+            <button
+              type="button"
+              disabled={!calendarReady}
+              aria-label={
+                calendarReady
+                  ? `Add ${event.title} to calendar`
+                  : "Calendar unavailable"
+              }
+              title={
+                calendarReady
+                  ? "Download .ics calendar file"
+                  : "Calendar available once the date is confirmed"
+              }
+              onClick={() => calendarReady && downloadEventCalendar(event)}
+            >
+              <CalendarPlus size={18} aria-hidden="true" />
+            </button>
+            {googleCalendarUrl && (
+              <a
+                href={googleCalendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="schedule-editorial-tool-link"
+                aria-label={`Add ${event.title} to Google Calendar`}
+                title="Add to Google Calendar"
+              >
+                <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+            )}
+          </div>
+        </div>
+        <details className="schedule-editorial-details">
+          <summary>
+            More information <Plus size={16} aria-hidden="true" />
+          </summary>
+          <div>
+            <dl>
+              <div>
+                <dt>{postponed ? "Original lineup" : "Lineup"}</dt>
+                <dd>{event.lineup || "To be announced"}</dd>
+              </div>
+              <div>
+                <dt>Admission</dt>
+                <dd>{event.age || "Entry information to be announced"}</dd>
+              </div>
+            </dl>
+            {postponed && <p>{TICKET_POLICY.sunsetsRefund}</p>}
+            <Link className="home-text-link" href={detailsHref}>
+              {postponed ? "Ticket-holder information" : "Full event details"}{" "}
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+        </details>
+      </article>
     );
+  };
   return (
-    <div className="monolith-schedule min-h-screen bg-background text-foreground">
+    <div className="monolith-schedule min-h-screen bg-background text-foreground lg-dusk-atmosphere">
       <SEO
         title="Upcoming Shows | The Monolith Project"
         absoluteTitle
@@ -115,27 +282,31 @@ export default function Schedule() {
       <main
         id="main-content"
         tabIndex={-1}
-        className="page-shell-start schedule-editorial-main"
+        className="schedule-editorial-main"
       >
+        <section className="lg-cinematic-masthead -mx-6 px-6 mb-10 md:mb-14">
+          <div className="container layout-wide">
+            <header className="schedule-editorial-header !border-t-0 !pb-0">
+              <div>
+                <p className="section-kicker">The Monolith Project / Calendar</p>
+                <h1 className="schedule-page-title">
+                  Find your
+                  <br />
+                  next night.
+                </h1>
+                <p className="schedule-page-intro">
+                  Confirmed dates, forthcoming chapters and the latest
+                  ticket-holder updates. All times are Chicago time.
+                </p>
+              </div>
+              <Link href="/newsletter" className="lg-pill-amber shrink-0">
+                <span>Get show announcements</span>
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </Link>
+            </header>
+          </div>
+        </section>
         <div className="container layout-wide">
-          <header className="schedule-editorial-header">
-            <div>
-              <p className="section-kicker">The Monolith Project / Calendar</p>
-              <h1 className="schedule-page-title">
-                Find your
-                <br />
-                next night.
-              </h1>
-              <p className="schedule-page-intro">
-                Confirmed dates, forthcoming chapters and the latest
-                ticket-holder updates. All times are Chicago time.
-              </p>
-            </div>
-            <Link href="/newsletter" className="home-text-link">
-              Get show announcements{" "}
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </Link>
-          </header>
           <div className="schedule-discovery-search">
             <label className="schedule-search-field">
               <span>Find a show</span>
@@ -167,7 +338,7 @@ export default function Schedule() {
               role="group"
               aria-label="Filter events"
             >
-              {[...months, "MY_LINEUP"].map(month => (
+              {filterOptions.map(month => (
                 <button
                   type="button"
                   key={month}
@@ -177,11 +348,13 @@ export default function Schedule() {
                 >
                   {month === "MY_LINEUP"
                     ? "Saved"
-                    : month === "TO BE ANNOUNCED"
-                      ? "Dates pending"
-                      : month === "ALL"
-                        ? "All shows"
-                        : month}
+                    : month === "PAST"
+                      ? "Season archive"
+                      : month === "TO BE ANNOUNCED"
+                        ? "Dates pending"
+                        : month === "ALL"
+                          ? "All shows"
+                          : month}
                 </button>
               ))}
             </div>
@@ -189,7 +362,7 @@ export default function Schedule() {
           </div>
           <div className="schedule-result-summary" role="status">
             <p>
-              {visible.length} {visible.length === 1 ? "show" : "shows"}
+              {totalVisibleCount} {totalVisibleCount === 1 ? "show" : "shows"}
               {query.trim() ? ` matching “${query.trim()}”` : " in view"}
             </p>
             {(query || series !== "all") && (
@@ -206,7 +379,7 @@ export default function Schedule() {
             )}
           </div>
           <div className="schedule-editorial-groups" aria-live="polite">
-            {!visible.length && (
+            {totalVisibleCount === 0 && (
               <div className="schedule-editorial-empty">
                 <h2>
                   {query.trim() || series !== "all"
@@ -241,137 +414,51 @@ export default function Schedule() {
                   <h2 data-calendar-month>
                     {getScheduleDate(groupEvents[0]).heading}
                   </h2>
-                  {groupEvents.map(event => {
-                    const postponed = event.eventStatus === "EventPostponed";
-                    const date = getScheduleDate(event);
-                    const detailsHref =
-                      event.id === "css-sep19"
-                        ? "/sunsets#event-update"
-                        : getEventDetailsHref(event);
-                    return (
-                      <article
-                        key={event.id}
-                        data-event-id={event.id}
-                        data-event-status={event.eventStatus}
-                        className="schedule-editorial-card signal-etched-frame"
-                        data-signal-tone={event.series}
-                      >
-                        <div className="schedule-editorial-date">
-                          <span>
-                            {postponed
-                              ? "Original date"
-                              : date.hasDay
-                                ? "Confirmed date"
-                                : "Date pending"}
-                          </span>
-                          <strong>{date.label}</strong>
-                          <span>{eventTime(event)}</span>
-                        </div>
-                        <div className="schedule-editorial-copy">
-                          <div className="schedule-editorial-tags">
-                            <span>{getSeriesLabel(event.series)}</span>
-                            <span data-event-state={event.eventStatus}>
-                              {statusLabel(event)}
-                            </span>
-                          </div>
-                          <h3>
-                            <Link href={detailsHref}>
-                              {event.headline || event.title}
-                            </Link>
-                          </h3>
-                          <p>
-                            {postponed
-                              ? event.eventNotice
-                              : event.description ||
-                                event.experienceIntro ||
-                                "The next announcement will include the confirmed details."}
-                          </p>
-                          <p className="schedule-editorial-venue">
-                            {postponed ? "Original venue: " : ""}
-                            {getScheduleVenue(event)} · {event.location}
-                          </p>
-                        </div>
-                        <div className="schedule-editorial-actions">
-                          <ConversionCTA
-                            event={event}
-                            size="sm"
-                            showUrgency={false}
-                          />
-                          <div className="schedule-editorial-tools">
-                            <button
-                              type="button"
-                              aria-pressed={saved.includes(event.id)}
-                              aria-label={`${saved.includes(event.id) ? "Remove" : "Save"} ${event.title}`}
-                              onClick={() => toggleSaved(event.id)}
-                            >
-                              {saved.includes(event.id) ? (
-                                <Check size={18} aria-hidden="true" />
-                              ) : (
-                                <Bookmark size={18} aria-hidden="true" />
-                              )}
-                            </button>
-                            <button
-                              type="button"
-                              disabled={!canAddEventToCalendar(event)}
-                              aria-label={
-                                canAddEventToCalendar(event)
-                                  ? `Add ${event.title} to calendar`
-                                  : "Calendar unavailable"
-                              }
-                              title={
-                                canAddEventToCalendar(event)
-                                  ? "Add to calendar"
-                                  : "Calendar available once the date is confirmed"
-                              }
-                              onClick={() =>
-                                canAddEventToCalendar(event) &&
-                                downloadEventCalendar(event)
-                              }
-                            >
-                              <CalendarPlus size={18} aria-hidden="true" />
-                            </button>
-                          </div>
-                        </div>
-                        <details className="schedule-editorial-details">
-                          <summary>
-                            More information{" "}
-                            <Plus size={16} aria-hidden="true" />
-                          </summary>
-                          <div>
-                            <dl>
-                              <div>
-                                <dt>
-                                  {postponed ? "Original lineup" : "Lineup"}
-                                </dt>
-                                <dd>{event.lineup || "To be announced"}</dd>
-                              </div>
-                              <div>
-                                <dt>Admission</dt>
-                                <dd>
-                                  {event.age ||
-                                    "Entry information to be announced"}
-                                </dd>
-                              </div>
-                            </dl>
-                            {postponed && <p>{TICKET_POLICY.sunsetsRefund}</p>}
-                            <Link className="home-text-link" href={detailsHref}>
-                              {postponed
-                                ? "Ticket-holder information"
-                                : "Full event details"}{" "}
-                              <ArrowUpRight size={16} aria-hidden="true" />
-                            </Link>
-                          </div>
-                        </details>
-                      </article>
-                    );
-                  })}
+                  {groupEvents.map(event => renderScheduleCard(event))}
                 </section>
               );
             })}
+            {pastVisible.length > 0 && (
+              <section
+                className="schedule-editorial-group schedule-archive-section"
+                aria-labelledby="schedule-archive-heading"
+              >
+                <h2 id="schedule-archive-heading">2026 SEASON ARCHIVE</h2>
+                {pastVisible.map(event =>
+                  renderScheduleCard(event, { isArchiveCard: true })
+                )}
+              </section>
+            )}
           </div>
+          {!hasOnSale && (
+            <>
+              <HomeNextChapter headingLevel="h2" />
+              <section
+                className="schedule-editorial-empty mt-10"
+                aria-label="From the archive"
+              >
+                <h2>Until we meet again.</h2>
+                <p>
+                  Revisit July 4 at Castaways: a 10-hour gathering with 2,800
+                  attendees. Or find your next set in Chasing Sunsets Radio.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-6">
+                  <Link
+                    className="home-text-link"
+                    href="/chasing-sunsets/sunsets-i-2026"
+                  >
+                    Revisit July 4 <ArrowUpRight size={18} aria-hidden="true" />
+                  </Link>
+                  <Link className="home-text-link" href="/radio">
+                    Radio archive <ArrowUpRight size={18} aria-hidden="true" />
+                  </Link>
+                </div>
+              </section>
+            </>
+          )}
         </div>
       </main>
-      <JoinSignalSection />
+      {hasOnSale && <JoinSignalSection />}
     </div>
   );
 }

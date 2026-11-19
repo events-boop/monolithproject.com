@@ -4,7 +4,7 @@ import { buildPublicSiteData } from "../data/public-site-data";
 
 // The public finale uses the same approved publication as /sunsets.
 const expectedSunsetsCta = {
-  label: "Event update",
+  label: "Ticket-Holder Update",
   href: "/sunsets#event-status",
   tool: "posh",
 };
@@ -56,7 +56,7 @@ describe("buildPublicSiteData", () => {
     expect(data.events.some(event => event.id === "css-sep19")).toBe(true);
     expect(untoldEvent?.primaryCta).toMatchObject({
       label: "View archive",
-      href: "/archive",
+      href: "/archive/eran-hersh-international",
       tool: "laylo",
     });
     expect(untoldEvent?.ticketUrl).toBeUndefined();
@@ -74,7 +74,7 @@ describe("buildPublicSiteData", () => {
     expect(scheduleUntold?.lineup).toBeDefined();
     expect(scheduleUntold?.primaryCta).toMatchObject({
       label: "View archive",
-      href: "/archive",
+      href: "/archive/eran-hersh-international",
       tool: "laylo",
     });
     expect(scheduleUntold?.ticketUrl).toBeUndefined();
@@ -195,7 +195,7 @@ describe("buildPublicSiteData", () => {
 
     expect(featuredSunsets?.id).toBe("css-sep19");
     expect(featuredSunsets?.primaryCta).toMatchObject({
-      label: "Event update",
+      label: "Ticket-Holder Update",
       href: "/sunsets#event-status",
       tool: "posh",
     });

@@ -1,3 +1,4 @@
+import ProjectStories from "@/components/ProjectStories";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
@@ -86,7 +87,7 @@ const partnerTypes = [
   {
     icon: Building2,
     title: "Venue Partners",
-    subtitle: "Canvas Selection",
+    subtitle: "VENUE PARTNERS",
     inquiryType: "venue",
     description:
       "Rooftops, warehouses, outdoor spaces, clubs — if your space fits the vibe, we'll bring the crowd, sound, and creative direction. We handle production; you provide the setting.",
@@ -125,7 +126,7 @@ export default function Partners() {
 
       <main className="relative z-10">
         {/* Hero */}
-        <section className="pt-40 md:pt-56 pb-20 px-6">
+        <section className="lg-cinematic-masthead px-6">
           <div className="container layout-default">
             <motion.div
               initial={{ y: 30 }}
@@ -133,16 +134,16 @@ export default function Partners() {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="flex items-center gap-4 mb-8">
-                <span className="section-kicker text-primary">
+                <span className="section-kicker text-[#f3b572]">
                   Partner With Monolith
                 </span>
-                <div className="h-px w-20 bg-white/10" />
+                <div className="h-px w-20 bg-white/15" />
               </div>
-              <h1 className="section-display-title mb-4 text-white flex flex-col">
-                <span>PARTNERS</span>
-                <span className="text-white/38">&amp; CREW</span>
+              <h1 className="section-display-title mb-6 text-white flex flex-col">
+                <span>Partners</span>
+                <span className="text-white/42">&amp; crew</span>
               </h1>
-              <p className="text-white/60 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
+              <p className="text-white/74 text-lg md:text-2xl max-w-2xl font-light leading-relaxed italic">
                 We work with venues, brands, crew, and creative collaborators
                 who want to help produce strong shows and reach a real Chicago
                 audience.
@@ -151,8 +152,9 @@ export default function Partners() {
           </div>
         </section>
 
+        <ProjectStories />
         {/* Partnership Types — Large Immerisve Blocks */}
-        <section className="py-20 px-6 border-t border-white/5">
+        <section className="py-28 md:py-36 px-6">
           <div className="container layout-default">
             <div className="mb-12 max-w-3xl">
               <span className="section-kicker mb-4 block text-primary">
@@ -163,7 +165,9 @@ export default function Partners() {
               </h2>
               <p className="text-base leading-relaxed text-white/55 md:text-lg">
                 The pitch is direct: strong audience energy, clear creative fit,
-                and production that protects the room.
+                and production that protects the room — proven on the Chicago
+                lakefront on July 4 at Castaways Beach Club (10-hour gathering ·
+                2,800 attendees).
               </p>
             </div>
             <div className="grid md:grid-cols-2 gap-8">
@@ -188,7 +192,7 @@ export default function Partners() {
                       {partner.title}
                     </h3>
                     <p className="font-mono text-[10px] text-primary tracking-[0.3em] uppercase mb-10">
-                      [ {partner.subtitle} ]
+                      {partner.subtitle}
                     </p>
                     <p className="text-white/70 leading-relaxed mb-12 font-light text-lg md:text-xl">
                       {partner.description}
@@ -228,7 +232,7 @@ export default function Partners() {
             >
               <div className="md:w-[65%]">
                 <span className="section-kicker text-white/70 mb-4 block">
-                  Resource_Network
+                  PRODUCTION CREW
                 </span>
                 <h2 className="section-display-title-compact text-white">
                   PRODUCTION{" "}

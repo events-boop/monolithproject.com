@@ -65,7 +65,7 @@ async function buildPayload(key: CmsDocumentKey): Promise<unknown> {
       // behavior change until a consumer reads this document.
       return toJsonPayload({
         metaPixelId: "1049241148606250",
-        metaBrandPixelId: "166134370742863",
+        metaBrandPixelId: "1049241148606250",
         ga4MeasurementId: "G-DE8Z8VS263",
         notes: "Initial import of the production tracking IDs",
       });

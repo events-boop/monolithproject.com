@@ -74,10 +74,10 @@ test("phone homepage uses the mobile hero and keeps refund requests distinct fro
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const hero = page.locator(".monolith-hero-photo img");
+  const hero = page.locator(".monolith-hero-photo img").first();
   await expect
     .poll(() => hero.evaluate((img: HTMLImageElement) => img.currentSrc))
-    .toMatch(/monolith-crowd-hero-mobile-v2-(480|720)\.(avif|webp)$/);
+    .toMatch(/hero-monolith-mobile-(480|780)\.(avif|webp)$/);
   await expect(page.locator(".monolith-hero-photo video")).toHaveCount(0);
   const help = page.locator("#current-event .home-show-support");
   await help.locator("summary").click();
@@ -89,11 +89,15 @@ test("phone homepage uses the mobile hero and keeps refund requests distinct fro
   await expect(page.locator("dialog.event-notice")).toHaveCount(0);
 });
 
-test("pending show details do not advertise a provisional date", async ({
+test("the removed October 10 date leads to the calendar, not a placeholder", async ({
   page,
 }) => {
-  await page.goto("/events/css-oct10");
-  await expect(page.locator("body")).not.toContainText("October 10");
-  await expect(page.locator("body")).toContainText("Date to be announced");
-  await expect(page).toHaveTitle(/Details to be announced/);
+  for (const path of ["/events/css-oct10", "/events/monolith-launch"]) {
+    await page.goto(path);
+    await expect(page).toHaveURL(/\/schedule\/?$/);
+    await expect(page.locator("body")).not.toContainText("October 10");
+    await expect(page.locator("body")).not.toContainText(
+      "Details to be announced"
+    );
+  }
 });

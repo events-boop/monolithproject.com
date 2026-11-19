@@ -23,14 +23,15 @@ export function resolveCampaignHostPath(host: string, location: string) {
     normalizedHost === CAMPAIGN_HOSTS.untoldVipWww;
   const isHouseOfFriendsHost = isHouseOfFriendsCampaignHost(normalizedHost);
 
+  // sunsets.vip opens on its link in bio; the full event page is one link away at /sunsets.
   if (normalizedLocation === ROUTES.home && isSunsetsHost) {
-    return ROUTES.sunsets;
+    return ROUTES.sunsetsBio;
   }
   if (normalizedLocation === ROUTES.home && isUntoldHost) {
     return ROUTES.untoldVip;
   }
   if (normalizedLocation === ROUTES.home && isHouseOfFriendsHost) {
-    return ROUTES.houseOfFriends;
+    return ROUTES.houseOfFriendsBio;
   }
   if (normalizedLocation === "/apply" && isHouseOfFriendsHost) {
     return ROUTES.houseOfFriendsApply;

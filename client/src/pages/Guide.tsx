@@ -1,32 +1,50 @@
 import {
   Clock,
-  MapPin,
   AlertCircle,
   CheckCircle,
-  ArrowRight,
+  ArrowUpRight,
+  Sparkles,
 } from "lucide-react";
+import { Link } from "wouter";
 import Navigation from "@/components/Navigation";
-import TacticalVenueMap from "@/components/TacticalVenueMap";
+import RoomConciergeCard from "@/components/RoomConciergeCard";
 import SEO from "@/components/SEO";
 import {
   getEventEyebrow,
-  getEventVenueLabel,
   getExperienceEvent,
   getPrimaryTicketUrl,
+  getEventWindowStatus,
 } from "@/lib/siteExperience";
-import { getEventPillToneClass } from "@/lib/ctaTone";
 import { usePublicSiteDataVersion } from "@/lib/siteData";
+import { ROUTES } from "@shared/routes";
 
 const checklist = [
-  { icon: CheckCircle, text: "Valid Government ID (21+)" },
-  { icon: CheckCircle, text: "Ticket QR Code (Screenshot it!)" },
-  { icon: CheckCircle, text: "Credit/Debit Card (Cashless Bar)" },
-  { icon: AlertCircle, text: "No Professional Cameras" },
-  { icon: AlertCircle, text: "No Outside Drinks" },
-];
-
-const venueMapHref =
-  "https://maps.google.com/?q=1240+W+Randolph+St+Chicago+IL+60607";
+  {
+    icon: CheckCircle,
+    text: "Valid Physical Government Photo ID (21+ strictly enforced)",
+    tone: "ok",
+  },
+  {
+    icon: CheckCircle,
+    text: "Mobile Ticket QR Code (save to Apple/Google Wallet or screenshot)",
+    tone: "ok",
+  },
+  {
+    icon: CheckCircle,
+    text: "Tap-to-Pay / Credit or Debit Card (cashless bar & hospitality)",
+    tone: "ok",
+  },
+  {
+    icon: AlertCircle,
+    text: "No Detached-Lens Professional Cameras without Press Clearance",
+    tone: "warn",
+  },
+  {
+    icon: AlertCircle,
+    text: "No Outside Beverages, Large Bags, or Unauthorized Totems",
+    tone: "warn",
+  },
+] as const;
 
 function formatIsoTime(value?: string) {
   if (!value) return null;
@@ -36,146 +54,194 @@ function formatIsoTime(value?: string) {
   return new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: "America/Chicago",
   }).format(date);
 }
 
 export default function Guide() {
   usePublicSiteDataVersion();
-  const guideEvent = getExperienceEvent("guide");
+  const candidate = getExperienceEvent("guide");
+  const guideEvent =
+    candidate &&
+    candidate.confirmationStatus !== "pending" &&
+    ["live", "upcoming"].includes(getEventWindowStatus(candidate))
+      ? candidate
+      : undefined;
   const ticketUrl = getPrimaryTicketUrl(guideEvent);
+  const isPostponed = guideEvent?.eventStatus === "EventPostponed";
+
   const timeline = guideEvent
     ? [
         {
-          time: guideEvent.doors || guideEvent.time,
-          event: "Doors Open",
-          desc: "Arrive in the first hour for the easiest entry and the full room arc.",
+          time: isPostponed
+            ? "First 90 Min"
+            : guideEvent.doors || guideEvent.time,
+          event: "Doors & Golden-Hour Arrival",
+          desc: "Arrive in the opening window for zero-friction check-in and the deliberate warmup progression.",
         },
         {
-          time: guideEvent.mainExperience || "Peak Window",
-          event:
-            guideEvent.title === "AUTOGRAF"
-              ? "Featured Performance"
-              : "Main Experience",
-          desc:
-            guideEvent.description ||
-            "This is when the room locks in and the production hits full intensity.",
+          time: isPostponed
+            ? "Peak Arc"
+            : guideEvent.mainExperience || "Peak Window",
+          event: "Headline & Room Lock-In",
+          desc: "When the room fills and the full sound and lighting envelope lock together.",
         },
         {
-          time: formatIsoTime(guideEvent.endsAt) || "Late",
-          event: "Closing Arc",
-          desc: "Last call energy. Confirm your exit plan before you leave the venue.",
+          time: formatIsoTime(guideEvent.endsAt) || "Closing",
+          event: "Final Selection & Exit",
+          desc: "Coordinate your rideshare pickup pin with your group before stepping outside.",
         },
       ]
     : [];
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground relative overflow-hidden lg-dusk-atmosphere">
       <SEO
-        title="Arrival Guide"
-        description="Know before you go. Set times, parking, entry requirements, and pro-tips for a smooth night."
+        title="Arrival & Room Concierge"
+        description="Know before you go. Chicago room profiles, rideshare drop-off pins, entry checklist, and VIP arrival notes for Monolith Project events."
+        canonicalPath="/guide"
       />
       <Navigation />
 
-      {/* Mobile-focused minimal header */}
-      <main className="relative z-10 page-shell-start pb-32">
-        <div className="container layout-narrow px-6">
-          <div className="flex justify-between items-end mb-12 border-b border-white/10 pb-6">
-            <div>
-              <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-primary mb-2">
-                ● {getEventEyebrow(guideEvent)}
-              </p>
-              <h1 className="font-display text-4xl md:text-6xl uppercase text-white">
-                The Night Of
-              </h1>
-            </div>
-            <div className="text-right hidden sm:block">
-              <p className="font-mono text-xs text-white/70 tracking-wide">
-                {guideEvent?.date || "Date TBA"}
-              </p>
-              <p className="font-mono text-xs text-white/70 tracking-wide">
-                {guideEvent?.venue || "Venue TBA"}
-              </p>
-            </div>
+      <main id="main-content" tabIndex={-1} className="relative z-10 pb-36">
+        <section className="lg-cinematic-masthead px-6 mb-16 md:mb-20">
+          <div className="container layout-wide">
+            <header className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.24em] uppercase text-[#f3b572] mb-5">
+                  <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span>{getEventEyebrow(guideEvent)} · Arrival Concierge</span>
+                </p>
+                <h1 className="section-display-title text-[#fbf6ee]">
+                  Know The Room.
+                </h1>
+                <p className="mt-6 max-w-2xl text-base md:text-xl text-white/76 leading-relaxed">
+                  Every Monolith session is built around the room, the light,
+                  and how people arrive together. Explore our Chicago lakefront
+                  and West Loop room guides below.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                {guideEvent && ticketUrl ? (
+                  <a
+                    href={ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="lg-pill-amber"
+                  >
+                    <span>Get Tickets</span>
+                    <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                  </a>
+                ) : (
+                  <Link href={ROUTES.schedule} className="lg-pill-amber">
+                    <span>View Calendar</span>
+                    <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+                  </Link>
+                )}
+                <Link href={ROUTES.faq} className="lg-pill-glass">
+                  <span>Full FAQ</span>
+                </Link>
+              </div>
+            </header>
           </div>
+        </section>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Timeline */}
-            <section>
-              <h2 className="font-display text-2xl uppercase text-white mb-6 flex items-center gap-3">
-                <Clock className="w-5 h-5 text-primary" /> Set Times
+        <div className="container layout-wide px-6 space-y-16 md:space-y-20">
+          {/* Interactive Chicago Room Switcher & Arrival Concierge */}
+          {!guideEvent && (
+            <aside className="editorial-status-note">
+              <h2>Plan around the confirmed show.</h2>
+              <p>
+                No current arrival schedule is published. The room profiles
+                below are venue references; your event confirmation will provide
+                the final address and hours.
+              </p>
+              <Link href="/sunsets#event-update">
+                September ticket-holder update →
+              </Link>
+            </aside>
+          )}
+          <RoomConciergeCard event={guideEvent} allowRoomSwitch />
+
+          {/* Night Pacing & Entry Checklist */}
+          <div className="grid gap-8 lg:grid-cols-12">
+            <section className="lg:col-span-6 lg-glass-card rounded-2xl p-6 md:p-8">
+              <h2 className="font-display text-2xl uppercase text-[#fbf6ee] mb-6 flex items-center gap-3">
+                <Clock className="w-5 h-5 text-[#f3b572]" aria-hidden="true" />
+                <span>How The Night Moves</span>
               </h2>
-              <div className="space-y-0 relative border-l border-white/10 ml-2 pl-8 pb-2">
+              <div className="space-y-0 relative border-l border-[#f3a659]/25 ml-2 pl-7 pb-1">
+                {timeline.length === 0 && (
+                  <p className="text-sm leading-relaxed text-white/75">
+                    Doors, set times, and closing will appear here when a new
+                    show is confirmed. All published times use Chicago local
+                    time.
+                  </p>
+                )}
                 {timeline.map((slot, idx) => (
-                  <div key={slot.time} className="relative mb-10 last:mb-0">
-                    <span className="absolute -left-[37px] top-1 w-4 h-4 rounded-full bg-background border-2 border-white/20" />
-                    {idx === 0 && (
-                      <span className="absolute -left-[37px] top-1 w-4 h-4 rounded-full bg-primary animate-ping opacity-75" />
-                    )}
-
-                    <p className="font-mono text-xs text-primary mb-1 tracking-widest">
+                  <div key={slot.event} className="relative mb-8 last:mb-0">
+                    <span
+                      className={`absolute -left-[35px] top-1 w-3.5 h-3.5 rounded-full border ${
+                        idx === 0
+                          ? "bg-[#f3a659] border-[#ffe6c2]"
+                          : "bg-[#121010] border-white/30"
+                      }`}
+                    />
+                    <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#f3b572] mb-1">
                       {slot.time}
                     </p>
-                    <h3 className="font-display text-xl uppercase text-white mb-1">
+                    <h3 className="font-display text-xl uppercase text-[#fbf6ee] mb-1.5">
                       {slot.event}
                     </h3>
-                    <p className="text-sm text-white/70">{slot.desc}</p>
+                    <p className="text-sm leading-relaxed text-white/70">
+                      {slot.desc}
+                    </p>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Checklist & Map placeholder */}
-            <section className="space-y-12">
-              {/* Entry Requirements */}
-              <div
-                id="entry"
-                className="scroll-mt-32 bg-white/5 border border-white/10 rounded-xl p-6"
-              >
-                <h3 className="font-display text-lg uppercase text-white mb-4">
+            <section
+              id="entry"
+              className="lg:col-span-6 scroll-mt-32 lg-glass-card rounded-2xl p-6 md:p-8 flex flex-col justify-between gap-6"
+            >
+              <div>
+                <h2 className="font-display text-2xl uppercase text-[#fbf6ee] mb-6">
                   Entry Checklist
-                </h3>
-                <ul className="space-y-3">
-                  {checklist.map((item, i) => (
+                </h2>
+                <ul className="space-y-3.5">
+                  {checklist.map(item => (
                     <li
-                      key={i}
-                      className="flex items-center gap-3 text-sm text-white/80"
+                      key={item.text}
+                      className="flex items-start gap-3 rounded-xl border border-white/10 bg-black/25 px-4 py-3 text-sm text-white/85"
                     >
                       <item.icon
-                        className={`w-4 h-4 ${i < 3 ? "text-green-400" : "text-amber-400"}`}
+                        className={`mt-0.5 w-4 h-4 shrink-0 ${
+                          item.tone === "ok"
+                            ? "text-[#b5e1be]"
+                            : "text-[#f3b572]"
+                        }`}
+                        aria-hidden="true"
                       />
-                      {item.text}
+                      <span>{item.text}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Arrival Map */}
-              <div className="space-y-6">
-                <h3 className="font-display text-lg uppercase text-white flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-primary" /> Arrival Strategy
-                </h3>
-
-                <TacticalVenueMap />
-
-                <p className="mt-3 text-xs text-white/70 font-mono tracking-wide">
-                  Use the main entrance for general admission. <br />
-                  {guideEvent
-                    ? `${getEventVenueLabel(guideEvent)}.`
-                    : "VIP/Table check-in fast lane on the left."}
-                </p>
-              </div>
-
-              {guideEvent && ticketUrl && (
-                <a
-                  href={ticketUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${getEventPillToneClass(guideEvent)} btn-pill-compact group`}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5">
+                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/65">
+                  Questions on group arrival or accessibility?
+                </span>
+                <Link
+                  href={ROUTES.contact}
+                  className="lg-pill-glass !min-h-[38px] !px-4 !py-1.5"
                 >
-                  Tickets
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              )}
+                  <span>Contact Host Team</span>
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </Link>
+              </div>
             </section>
           </div>
         </div>

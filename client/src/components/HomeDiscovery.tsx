@@ -88,7 +88,7 @@ export function HomeSeries() {
             </div>
           </Link>
           <Link
-            href="/story"
+            href="/untold-story"
             className="home-series-card home-series-night"
             aria-label="Explore Untold Story"
           >
@@ -222,22 +222,6 @@ export function HomeCommunity() {
               </Link>
             </div>
           </div>
-        </div>
-        <div className="home-venue-credits">
-          <p className="home-eyebrow">The places we come together</p>
-          <ul aria-label="Venue partners">
-            {[
-              "Castaways",
-              "Kashmir Chicago",
-              "La Sonesta",
-              "Hideaway Chicago",
-              "Bassment Chicago",
-              "Mosaic Chicago",
-              "J. Parker",
-            ].map(name => (
-              <li key={name}>{name}</li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

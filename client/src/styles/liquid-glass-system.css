@@ -1,0 +1,443 @@
+/* ==========================================================================
+   MONOLITH SHARED LIQUID-GLASS & DUSK-AMBER DESIGN SYSTEM
+   Used across Command Palette, Persistent Audio Dock, Saved Drawer,
+   Room Concierge, Tickets, Schedule, Archive, Lineup & Series Hubs.
+   ========================================================================== */
+
+:root {
+  --lg-surface-amber: #f3a659;
+  --lg-surface-amber-soft: #ffe6c2;
+  --lg-surface-ivory: #fbf6ee;
+  --lg-surface-muted: rgba(244, 233, 216, 0.74);
+  --lg-surface-border: rgba(255, 228, 194, 0.16);
+  --lg-surface-border-strong: rgba(255, 214, 166, 0.38);
+  --sticky-audio-dock-height: 0px;
+}
+
+.lg-glass-card {
+  position: relative;
+  border: 1px solid var(--lg-surface-border);
+  background: rgba(15, 12, 11, 0.88);
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.42),
+    inset 0 1px 0 rgba(255, 245, 230, 0.14);
+  transition:
+    border-color 0.24s ease,
+    box-shadow 0.24s ease,
+    transform 0.24s ease;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-glass-card {
+    background: linear-gradient(
+      145deg,
+      rgba(24, 18, 14, 0.62) 0%,
+      rgba(12, 10, 11, 0.72) 56%,
+      rgba(22, 15, 11, 0.58) 100%
+    );
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+}
+
+.lg-glass-card-interactive:hover {
+  border-color: var(--lg-surface-border-strong);
+  transform: translateY(-2px);
+  box-shadow:
+    0 28px 64px rgba(0, 0, 0, 0.56),
+    inset 0 1px 0 rgba(255, 246, 232, 0.26),
+    0 10px 32px -12px rgba(243, 166, 89, 0.32);
+}
+
+.lg-pill-amber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 236, 206, 0.72);
+  background: linear-gradient(180deg, #ffe9ca 0%, #f5b574 54%, #e5944c 100%);
+  color: #181009;
+  font: 600 11.5px/1.2 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    0 6px 24px rgba(243, 152, 70, 0.3),
+    inset 0 1px 0 rgba(255, 253, 248, 0.8);
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+}
+
+.lg-pill-amber:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.lg-pill-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 232, 202, 0.26);
+  background: rgba(16, 13, 12, 0.72);
+  color: #f8efe2;
+  font: 500 11.5px/1.2 var(--font-monolith, "General Sans", sans-serif);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 244, 228, 0.14);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-pill-glass {
+    background: rgba(18, 14, 13, 0.48);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+.lg-pill-glass:hover {
+  border-color: rgba(255, 206, 148, 0.56);
+  background: rgba(34, 24, 17, 0.62);
+}
+
+/* Dusk-amber ambient page aura for inner pages */
+.lg-dusk-atmosphere {
+  position: relative;
+  isolation: isolate;
+}
+
+.lg-dusk-atmosphere::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 52% 38% at 82% 14%,
+      rgba(243, 158, 78, 0.11) 0%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 48% 42% at 14% 78%,
+      rgba(216, 132, 62, 0.06) 0%,
+      transparent 70%
+    ),
+    linear-gradient(180deg, #09080a 0%, #070607 100%);
+}
+
+/* --------------------------------------------------------------------------
+   LIQUID-GLASS SONIC COMMAND PALETTE (⌘K)
+   -------------------------------------------------------------------------- */
+.lg-cmdk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10040;
+  background: rgba(5, 4, 6, 0.76);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-cmdk-overlay {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+.lg-cmdk-dialog {
+  position: fixed;
+  top: clamp(48px, 10vh, 112px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10041;
+  width: min(680px, calc(100vw - 24px));
+  max-height: min(640px, calc(100svh - 96px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 224, 186, 0.24);
+  background: rgba(14, 11, 10, 0.94);
+  color: var(--lg-surface-ivory);
+  box-shadow:
+    0 34px 96px rgba(0, 0, 0, 0.74),
+    inset 0 1px 0 rgba(255, 246, 232, 0.22),
+    inset 0 -1px 0 rgba(243, 158, 76, 0.26);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-cmdk-dialog {
+    background: linear-gradient(
+      155deg,
+      rgba(26, 18, 14, 0.84) 0%,
+      rgba(12, 10, 11, 0.9) 60%,
+      rgba(22, 15, 12, 0.86) 100%
+    );
+    backdrop-filter: blur(26px) saturate(150%);
+    -webkit-backdrop-filter: blur(26px) saturate(150%);
+  }
+}
+
+.lg-cmdk-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: inherit;
+}
+
+.lg-cmdk-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(255, 230, 198, 0.14);
+}
+
+.lg-cmdk-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: #fdf8f0;
+  font: 400 15.5px/1.4 var(--font-sans, sans-serif);
+  outline: none;
+}
+
+.lg-cmdk-input::placeholder {
+  color: rgba(240, 226, 206, 0.48);
+}
+
+.lg-cmdk-kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 230, 198, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  font: 500 11px/1 var(--font-mono, monospace);
+  color: rgba(244, 230, 210, 0.72);
+}
+
+.lg-cmdk-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 10px;
+  overscroll-behavior: contain;
+}
+
+.lg-cmdk-empty {
+  padding: 36px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(240, 228, 210, 0.68);
+}
+
+.lg-cmdk-root [cmdk-group-heading] {
+  padding: 10px 10px 6px;
+  font: 600 10.5px/1.3 var(--font-mono, monospace);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(243, 194, 134, 0.8);
+}
+
+.lg-cmdk-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #f8f1e5;
+  transition: background 0.14s ease;
+}
+
+.lg-cmdk-item[data-selected="true"] {
+  background: rgba(243, 166, 89, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(255, 214, 164, 0.28);
+}
+
+.lg-cmdk-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 16px;
+  border-top: 1px solid rgba(255, 230, 198, 0.12);
+  background: rgba(8, 7, 8, 0.45);
+  font: 500 11px/1.3 var(--font-mono, monospace);
+  color: rgba(238, 224, 204, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   LIQUID-GLASS PERSISTENT AUDIO DOCK (StickyPlayer)
+   -------------------------------------------------------------------------- */
+.lg-audio-dock-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 65;
+  padding: 0 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+}
+
+.lg-audio-dock {
+  pointer-events: auto;
+  position: relative;
+  max-width: 1120px;
+  margin-inline: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 224, 186, 0.22);
+  background: rgba(13, 11, 10, 0.94);
+  box-shadow:
+    0 20px 54px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 246, 232, 0.2),
+    inset 0 -1px 0 rgba(243, 156, 74, 0.28);
+  overflow: hidden;
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-audio-dock {
+    background: linear-gradient(
+      135deg,
+      rgba(26, 18, 13, 0.82) 0%,
+      rgba(12, 10, 11, 0.88) 54%,
+      rgba(26, 17, 12, 0.8) 100%
+    );
+    backdrop-filter: blur(22px) saturate(145%);
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+  }
+}
+
+.lg-audio-dock-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 236, 210, 0.14);
+}
+
+.lg-audio-dock-progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #f3a659, #ffe7c2);
+  box-shadow: 0 0 10px rgba(243, 166, 89, 0.65);
+  transition: width 0.25s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-glass-card,
+  .lg-pill-amber,
+  .lg-pill-glass,
+  .lg-audio-dock-progress > span {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   CINEMATIC EXPANDED MASTHEAD STAGE FOR INNER PAGES
+   Gives /artists, /schedule, /archive, /tickets, /guide, /vip, /insights,
+   /newsletter, /partners, /booking, /contact, /faq & /sunsets-fm open
+   architectural scale and breathing room matching the Monolith hero.
+   ========================================================================== */
+
+.lg-cinematic-masthead {
+  --masthead-photo: url("/images/hero-monolith.webp");
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: max(820px, 92svh);
+  padding-top: calc(var(--shell-page-top-hero, 104px) + clamp(108px, 18vh, 200px));
+  padding-bottom: clamp(84px, 11vh, 136px);
+  border-bottom: 1px solid rgba(255, 228, 194, 0.16);
+}
+
+.lg-cinematic-masthead::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      ellipse 64% 56% at 76% 26%,
+      rgba(243, 162, 84, 0.22) 0%,
+      rgba(194, 112, 62, 0.08) 44%,
+      transparent 74%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(7, 6, 6, 0.56) 0%,
+      rgba(7, 6, 6, 0.38) 38%,
+      rgba(8, 7, 7, 0.84) 82%,
+      #080708 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(8, 7, 7, 0.86) 0%,
+      rgba(8, 7, 7, 0.52) 52%,
+      rgba(8, 7, 7, 0.34) 100%
+    ),
+    var(--masthead-photo);
+  background-size: cover;
+  background-position: center 36%;
+}
+
+.lg-cinematic-masthead::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  top: 16%;
+  height: 110%;
+  z-index: -1;
+  pointer-events: none;
+  border-top: 1px solid rgba(255, 226, 188, 0.16);
+  border-radius: 50% 50% 0 0 / 36% 36% 0 0;
+}
+
+.artist-index .lg-cinematic-masthead {
+  --masthead-photo: url("/images/artists-collective.webp");
+}
+
+.monolith-schedule .lg-cinematic-masthead {
+  --masthead-photo: url("/images/chasing-sunsets-castaways-hero.png");
+}
+
+.archive-index .lg-cinematic-masthead {
+  --masthead-photo: url("/images/archive/chasing-sunsets/css-s3-1.jpg");
+}
+
+@media (max-width: 767px) {
+  .lg-cinematic-masthead {
+    min-height: max(600px, 82svh);
+    padding-top: calc(var(--shell-page-top-hero, 92px) + 80px);
+    padding-bottom: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-glass-card-interactive:hover {
+    transform: none;
+  }
+}
+

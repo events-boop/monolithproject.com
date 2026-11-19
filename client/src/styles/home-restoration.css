@@ -1,6 +1,6 @@
 /* Keep the immersive home scene and oversized footer. */
 #app-shell .monolith-home .monolith-hero-stage {
-  min-height: max(760px, 100svh);
+  min-height: 100svh;
 }
 #app-shell .monolith-home .monolith-hero-photo img {
   object-position: center 48%;
@@ -133,7 +133,7 @@
 }
 @media (max-width: 639px) {
   #app-shell .monolith-home .monolith-hero-stage {
-    min-height: max(600px, 100svh);
+    min-height: 92svh;
   }
   #app-shell .monolith-home .monolith-hero-photo img {
     object-position: 58% center;

@@ -1,4 +1,5 @@
 import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
+import GlyphBackdrop from "./GlyphBackdrop";
 import { Instagram, Headphones, Youtube, ArrowUpRight } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import {
@@ -49,6 +50,7 @@ type FooterLinkGroup = {
     name: string;
     href: string;
     external?: boolean;
+    fullPage?: boolean;
   }>;
 };
 
@@ -70,8 +72,10 @@ const links: FooterLinkGroup[] = [
     items: [
       { name: "Chasing Sun(Sets)", href: ROUTES.chasingSunsets },
       { name: "Sun(Sets) Link In Bio", href: ROUTES.sunsets },
-      { name: "Untold Story", href: ROUTES.story },
-      { name: "Radio Show", href: ROUTES.radio },
+      { name: "Untold Story", href: ROUTES.untoldStory },
+      { name: "Chasing Sunsets Radio", href: ROUTES.radio },
+      { name: "SUNSETS.FM", href: ROUTES.sunsetsFM },
+      { name: "Open Network", href: ROUTES.openNetwork },
     ],
   },
   {
@@ -92,7 +96,7 @@ const links: FooterLinkGroup[] = [
       { name: "FAQ", href: ROUTES.faq },
       {
         name: "Tickets",
-        href: ROUTES.schedule,
+        href: ROUTES.tickets,
       },
       { name: "Terms of Service", href: ROUTES.terms },
       { name: "Privacy Policy", href: ROUTES.privacy },
@@ -130,10 +134,11 @@ export default function Footer() {
       : brand === "untold-story"
         ? "UNTOLD STORY"
         : brand === "radio"
-          ? "SUN(SETS) RADIO"
+          ? "CHASING SUNSETS RADIO"
           : "MONOLITH";
   return (
     <footer className="site-footer-refined" data-brand={brand}>
+      <GlyphBackdrop surface="footer" />
       <div className="container layout-wide">
         <div className="footer-refined-grid">
           <div className="footer-refined-brand">
@@ -168,11 +173,17 @@ export default function Footer() {
                 <span aria-hidden="true">+</span>
               </summary>
               <nav aria-label={group.title}>
-                {group.items.map(item => (
-                  <Link key={item.name} href={item.href}>
-                    {item.name}
-                  </Link>
-                ))}
+                {group.items.map(item =>
+                  item.fullPage ? (
+                    <a key={item.name} href={item.href}>
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link key={item.name} href={item.href}>
+                      {item.name}
+                    </Link>
+                  )
+                )}
               </nav>
             </details>
           ))}
@@ -195,23 +206,18 @@ export default function Footer() {
             © {new Date().getFullYear()} The Monolith Project{" "}
             <span>Chicago, IL</span>
           </p>
+          <p className="footer-nhc-stamp">
+            <span className="footer-nhc-mark" aria-hidden="true">
+              [NHC]
+            </span>
+            <span>Engineered by Nonhuman Citizens</span>
+          </p>
         </div>
       </div>
       <div
         ref={signatureRef}
         className="footer-mega-wordmark"
         aria-hidden="true"
-        onMouseMove={event => {
-          const rect = event.currentTarget.getBoundingClientRect();
-          event.currentTarget.style.setProperty(
-            "--mouse-x",
-            `${event.clientX - rect.left}px`
-          );
-          event.currentTarget.style.setProperty(
-            "--mouse-y",
-            `${event.clientY - rect.top}px`
-          );
-        }}
       >
         <motion.div
           className="footer-mega-text"
@@ -221,6 +227,7 @@ export default function Footer() {
               : { scale: textScale, y: textY, opacity: textOpacity }
           }
         >
+          <span className="footer-mega-glow">{title}</span>
           <span className="footer-mega-fill">{title}</span>
           <span className="footer-mega-outline">{title}</span>
         </motion.div>

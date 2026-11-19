@@ -1,11 +1,14 @@
 import { useMemo, useState, type ReactNode } from "react";
 import {
   ArrowUpRight,
+  Bookmark,
   Grid2x2,
   Headphones,
   List,
   MapPin,
   Music,
+  Pause,
+  Play,
   Sun,
   Search,
 } from "lucide-react";
@@ -14,13 +17,16 @@ import Navigation from "@/components/Navigation";
 import SlimSubscribeStrip from "@/components/SlimSubscribeStrip";
 import UntoldButterflyLogo from "@/components/UntoldButterflyLogo";
 import RevealText from "@/components/RevealText";
-import TicketTicker from "@/components/TicketTicker";
 import SEO from "@/components/SEO";
 import EntityBoostStrip from "@/components/EntityBoostStrip";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { useOptionalGlobalAudio } from "@/contexts/AudioContext";
+import { getArtistAudioTrack } from "@/lib/artistEventDiscovery";
+import { toggleSavedArtist, useSavedPassport } from "@/lib/savedPassport";
 import { cn } from "@/lib/utils";
 import {
   ARTIST_ENTRIES,
+  ARTIST_PORTRAIT_PLACEHOLDER,
   type ArtistData,
   type ArtistSeries,
 } from "@/data/artists";
@@ -274,8 +280,8 @@ function PreviewTile({
   return (
     <div
       className={cn(
-        "relative overflow-hidden border border-white/10 bg-white/[0.03]",
-        featured ? "aspect-[4/5] min-h-[18rem]" : "aspect-[4/3]"
+        "relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]",
+        featured ? "aspect-[4/5] min-h-[18rem]" : "aspect-[4/5]"
       )}
     >
       {isRemote ? (
@@ -285,7 +291,8 @@ function PreviewTile({
           loading="lazy"
           decoding="async"
           onError={handleError}
-          className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+          style={{ objectPosition: "50% 0%" }}
+          className="h-full w-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
         />
       ) : (
         <ResponsiveImage
@@ -297,7 +304,8 @@ function PreviewTile({
               : "(min-width: 1024px) 18vw, 50vw"
           }
           onError={handleError}
-          className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+          style={{ objectPosition: "50% 0%" }}
+          className="h-full w-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
@@ -326,8 +334,8 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
 
   return (
     <Link href={`/artists/${artist.id}`} asChild>
-      <a className="group block border-t border-white/10 py-8 first:border-t-0 md:py-10">
-        <article className="grid gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8">
+      <a className="group artist-index-list-row block py-3 first:pt-0 md:py-4">
+        <article className="grid gap-6 rounded-2xl border border-[rgba(255,228,194,0.12)] bg-[rgba(255,255,255,0.02)] p-5 transition-[border-color,background,box-shadow] duration-300 group-hover:border-[rgba(255,214,166,0.34)] group-hover:bg-[rgba(255,214,166,0.04)] group-hover:shadow-[0_22px_48px_rgba(0,0,0,0.28)] md:p-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2.5">
               <span
@@ -355,11 +363,15 @@ function ArtistListRow({ artist }: { artist: ArtistData }) {
               >
                 <ResponsiveImage
                   src={portraitSrc}
-                  alt={artist.name}
-                  style={{ objectPosition: artist.imagePosition }}
+                  alt={
+                    portraitSrc === ARTIST_PORTRAIT_PLACEHOLDER
+                      ? `Portrait pending for ${artist.name}`
+                      : artist.name
+                  }
+                  style={{ objectPosition: artist.imagePosition || "50% 0%" }}
                   sizes="80px"
                   onError={handlePortraitError}
-                  className="h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
+                  className="h-full w-full object-cover object-top transition duration-700"
                 />
               </div>
 
@@ -419,6 +431,14 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
   const primarySeries = artist.series[0];
   const portraitFallback = getArtistFallbackImage(artist);
   const [portraitSrc, setPortraitSrc] = useState(artist.image);
+  const audio = useOptionalGlobalAudio();
+  const passport = useSavedPassport();
+  const isSaved = passport.artists.includes(artist.id);
+  const audioTrack = getArtistAudioTrack(artist);
+  const isTrackPlaying = Boolean(
+    audioTrack && audio?.activeTrack?.src === audioTrack.src && audio?.isPlaying
+  );
+
   const handlePortraitError = () => {
     if (portraitSrc !== portraitFallback) {
       setPortraitSrc(portraitFallback);
@@ -426,54 +446,101 @@ function ArtistGridCard({ artist }: { artist: ArtistData }) {
   };
 
   return (
-    <Link href={`/artists/${artist.id}`} asChild>
-      <a className="group block">
-        <article
+    <article
+      className={cn(
+        "artist-grid-card group relative overflow-hidden rounded-2xl lg-glass-card lg-glass-card-interactive",
+        getSeriesHoverBorder(primarySeries)
+      )}
+    >
+      <Link href={`/artists/${artist.id}`} className="block">
+        <div className="artist-grid-portrait aspect-[4/5] overflow-hidden">
+          <ResponsiveImage
+            src={portraitSrc}
+            alt={
+              portraitSrc === ARTIST_PORTRAIT_PLACEHOLDER
+                ? `Portrait pending for ${artist.name}`
+                : artist.name
+            }
+            style={{ objectPosition: artist.imagePosition || "50% 0%" }}
+            sizes="(min-width: 1280px) 23vw, (min-width: 768px) 33vw, 100vw"
+            onError={handlePortraitError}
+            className="h-full w-full object-cover object-top origin-top transition-all duration-700 group-hover:scale-105"
+          />
+        </div>
+        <div className="artist-grid-series px-6 pt-6">
+          <span
+            className={cn(
+              "inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] backdrop-blur-md",
+              getSeriesChipClasses(primarySeries)
+            )}
+          >
+            {getSeriesIcon(primarySeries)}
+            {getSeriesLabel(primarySeries)}
+          </span>
+        </div>
+        <div className="artist-grid-copy px-6 pb-7 pt-4">
+          <h2 className="section-display-title-compact text-[#fbf6ee] group-hover:text-[#ffd8a6] transition-colors">
+            {artist.name}
+          </h2>
+          <p className="mt-2.5 line-clamp-2 text-sm leading-relaxed text-white/74">
+            {artist.bio}
+          </p>
+          <div className="mt-4 inline-flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#f3c68f] transition-colors group-hover:text-white">
+            <span>Artist Profile</span>
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </div>
+        </div>
+      </Link>
+
+      {/* Top-right Save & Inline Play controls */}
+      <div className="artist-grid-controls absolute top-4 right-4 z-10 flex items-center gap-2">
+        {audioTrack && (
+          <button
+            type="button"
+            onClick={() => {
+              if (audio?.activeTrack?.src === audioTrack.src) {
+                audio.setPlaying(!isTrackPlaying);
+              } else {
+                audio?.loadTrack(audioTrack);
+              }
+            }}
+            aria-label={
+              isTrackPlaying
+                ? `Pause ${artist.name} set`
+                : `Play ${artist.name} set in deck`
+            }
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#ffe6c2]/55 bg-[#18120e]/80 text-[#ffd8a6] backdrop-blur-md hover:bg-[#f3a659] hover:text-[#181009] transition-colors cursor-pointer"
+          >
+            {isTrackPlaying ? (
+              <Pause className="h-3.5 w-3.5 fill-current" />
+            ) : (
+              <Play className="h-3.5 w-3.5 ml-0.5 fill-current" />
+            )}
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={() => toggleSavedArtist(artist.id)}
+          aria-pressed={isSaved}
+          aria-label={
+            isSaved
+              ? `Remove ${artist.name} from saved artists`
+              : `Save ${artist.name}`
+          }
           className={cn(
-            "relative overflow-hidden border border-white/10 bg-black transition-colors duration-500",
-            getSeriesHoverBorder(primarySeries)
+            "inline-flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-colors cursor-pointer",
+            isSaved
+              ? "border-[#f3a659]/65 bg-[#f3a659] text-[#181009]"
+              : "border-white/20 bg-black/60 text-white/80 hover:border-[#f3a659]/50 hover:text-white"
           )}
         >
-          <div className="aspect-[4/5] overflow-hidden">
-            <ResponsiveImage
-              src={portraitSrc}
-              alt={artist.name}
-              style={{ objectPosition: artist.imagePosition }}
-              sizes="(min-width: 1280px) 23vw, (min-width: 768px) 33vw, 100vw"
-              onError={handlePortraitError}
-              className="h-full w-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-          <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
-            <span
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em]",
-                getSeriesChipClasses(primarySeries)
-              )}
-            >
-              {getSeriesIcon(primarySeries)}
-              {getSeriesLabel(primarySeries)}
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/42">
-              {artist.role}
-            </span>
-          </div>
-          <div className="absolute inset-x-0 bottom-0 p-5">
-            <h2 className="section-display-title-compact text-white">
-              {artist.name}
-            </h2>
-            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-white/68">
-              {artist.bio}
-            </p>
-            <div className="mt-4 inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-white/58 transition-colors group-hover:text-white">
-              <span>Artist Profile</span>
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </div>
-          </div>
-        </article>
-      </a>
-    </Link>
+          <Bookmark
+            className="h-3.5 w-3.5"
+            fill={isSaved ? "currentColor" : "none"}
+          />
+        </button>
+      </div>
+    </article>
   );
 }
 
@@ -495,7 +562,7 @@ export default function Lineup() {
   }, [activeFilter, query]);
 
   return (
-    <div className="artist-index min-h-screen bg-background text-foreground">
+    <div className="artist-index min-h-screen bg-background text-foreground lg-dusk-atmosphere">
       <SEO
         title="Artists"
         description="Explore the artists behind The Monolith Project across Chasing Sun(Sets), Untold Story, and Sun(Sets) Radio."
@@ -503,22 +570,32 @@ export default function Lineup() {
       />
       <Navigation />
 
-      <section className="page-shell-start-loose px-6 pb-8 artist-index-masthead">
+      <section className="lg-cinematic-masthead px-6 artist-index-masthead">
         <div className="container layout-default">
-          <span className="section-kicker block text-white/42">
+          <span className="section-kicker block text-[#f3b572] mb-5">
             The Monolith Project / Artist index
           </span>
           <RevealText as="h1" className={sectionTitleClass}>
             ARTISTS
           </RevealText>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
+          <p className="mt-7 max-w-2xl text-base leading-relaxed text-[#f4e9d8]/78 md:text-xl md:leading-relaxed">
             Find the artists behind the nights. Explore their sound, revisit a
             set, or follow the people shaping our dance floors.
           </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link href="/schedule" className="lg-pill-amber">
+              <span>Explore shows</span>
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+            <Link href="/radio" className="lg-pill-glass">
+              <span>Enter the listening room</span>
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="sticky sticky-shell-top z-30 border-y border-white/10 bg-black/75 px-6 py-4 backdrop-blur-xl">
+      <section className="artist-index-toolbar sticky sticky-shell-top z-30 border-y border-[rgba(255,228,194,0.14)] bg-[rgba(12,10,9,0.78)] px-6 py-5 shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-2xl">
         <div className="container layout-default">
           <label className="artist-index-search">
             <Search size={18} aria-hidden="true" />
@@ -531,7 +608,7 @@ export default function Lineup() {
             />
           </label>
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div className="flex flex-wrap gap-2">
+            <div className="artist-index-filters flex flex-wrap gap-2">
               {filters.map(filter => {
                 const isActive = activeFilter === filter.value;
                 return (
@@ -541,16 +618,16 @@ export default function Lineup() {
                     aria-pressed={isActive}
                     onClick={() => setActiveFilter(filter.value)}
                     className={cn(
-                      "inline-flex items-center gap-2 rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors",
+                      "artist-index-filter inline-flex items-center gap-2 rounded-full border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors backdrop-blur-md",
                       isActive
                         ? filter.value === "chasing-sunsets"
-                          ? "border-[#E8B86D]/45 bg-[#E8B86D]/10 text-[#F3D6A0]"
+                          ? "border-[#E8B86D]/55 bg-[#E8B86D]/14 text-[#F3D6A0] shadow-[0_8px_24px_rgba(232,184,109,0.12)]"
                           : filter.value === "untold-story"
-                            ? "border-[#22D3EE]/45 bg-[#22D3EE]/10 text-[#9BE7F7]"
+                            ? "border-[#22D3EE]/55 bg-[#22D3EE]/14 text-[#9BE7F7] shadow-[0_8px_24px_rgba(34,211,238,0.1)]"
                             : filter.value === "sunsets-radio"
-                              ? "border-[#C2703E]/45 bg-[#C2703E]/10 text-[#F3CDAF]"
-                              : "border-white/20 bg-white/8 text-white"
-                        : "border-white/10 text-white/52 hover:border-white/20 hover:text-white/80"
+                              ? "border-[#C2703E]/55 bg-[#C2703E]/14 text-[#F3CDAF] shadow-[0_8px_24px_rgba(194,112,62,0.12)]"
+                              : "border-[rgba(255,228,194,0.42)] bg-[rgba(255,214,166,0.12)] text-[#fff8ee] shadow-[0_8px_24px_rgba(243,166,89,0.12)]"
+                        : "border-[rgba(255,228,194,0.14)] bg-[rgba(255,255,255,0.03)] text-white/58 hover:border-[rgba(255,214,166,0.34)] hover:text-white/88"
                     )}
                   >
                     {filter.icon}
@@ -595,9 +672,9 @@ export default function Lineup() {
         </div>
       </section>
 
-      <section className="px-6 pb-20 pt-8 md:pb-24">
+      <section className="px-6 pb-24 pt-12 md:pb-32 md:pt-16">
         <div className="container layout-default">
-          <div className="mb-6 flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="mb-10 flex items-center justify-between border-b border-white/10 pb-5">
             <span
               aria-live="polite"
               className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/44"
@@ -613,14 +690,14 @@ export default function Lineup() {
           </div>
 
           {!filteredArtists.length && (
-            <div className="artist-index-empty">
+            <div className="artist-index-empty lg-glass-card rounded-2xl px-6 py-10 md:px-10">
               <h2>No artists found.</h2>
               <p>
                 Try another name, sound or city, or choose a different series.
               </p>
               <button
                 type="button"
-                className="home-text-link"
+                className="lg-pill-amber"
                 onClick={() => {
                   setQuery("");
                   setActiveFilter("all");
@@ -637,7 +714,7 @@ export default function Lineup() {
               ))}
             </div>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-6 md:gap-8 sm:grid-cols-2 xl:grid-cols-3">
               {filteredArtists.map(artist => (
                 <ArtistGridCard key={artist.id} artist={artist} />
               ))}
@@ -659,18 +736,19 @@ export default function Lineup() {
             Sun(Sets) Radio guest submissions.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link href="/booking" className="btn-pill-primary btn-pill-wide">
-              Artist Booking
+            <Link href="/booking" className="lg-pill-amber">
+              <span>Artist Booking</span>
+              <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
-            <Link href="/submit" className="btn-pill-outline btn-pill-wide">
-              Radio Submission
+            <Link href="/submit" className="lg-pill-glass">
+              <span>Radio Submission</span>
+              <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
           </div>
         </div>
       </section>
 
       <EntityBoostStrip tone="dark" className="pb-16" />
-      <TicketTicker />
       <SlimSubscribeStrip
         title="GET LINEUP DROPS FIRST"
         source="lineup_strip"

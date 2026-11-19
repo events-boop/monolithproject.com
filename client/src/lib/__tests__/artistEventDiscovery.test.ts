@@ -4,6 +4,7 @@ import {
   eventIncludesArtist,
   getEventArtists,
   getArtistRecording,
+  getArtistAudioTrack,
 } from "../artistEventDiscovery";
 import type { ScheduledEvent } from "@shared/events/types";
 const show = (lineup: string): ScheduledEvent => ({
@@ -42,5 +43,16 @@ describe("named artist discovery", () => {
     expect(getArtistRecording(ARTISTS.joezi)?.href).toBe(
       ARTISTS.joezi.featuredVideo?.url
     );
+  });
+  it("resolves inline SoundCloud tracks for radio or SoundCloud artists and null for YouTube-only artists", () => {
+    const benchekTrack = getArtistAudioTrack(ARTISTS.benchek);
+    expect(benchekTrack).not.toBeNull();
+    expect(benchekTrack?.src).toContain("w.soundcloud.com/player");
+
+    const geneFarrisTrack = getArtistAudioTrack(ARTISTS["gene-farris"]);
+    expect(geneFarrisTrack).not.toBeNull();
+    expect(geneFarrisTrack?.src).toContain("w.soundcloud.com/player");
+
+    expect(getArtistAudioTrack(ARTISTS.joezi)).toBeNull();
   });
 });

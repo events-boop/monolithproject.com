@@ -30,9 +30,7 @@ for (const width of [320, 390, 768, 1363]) {
     await expect(page.locator("[data-event-id]")).toHaveCount(0);
     await expect(page.getByText("Your next nights, saved.")).toBeVisible();
     await page.getByRole("button", { name: "All shows", exact: true }).click();
-    await expect(page.locator('[data-event-id="css-oct10"]')).toContainText(
-      "Date TBA"
-    );
+    await expect(page.locator('[data-event-id="css-oct10"]')).toHaveCount(0);
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Page Not Found | The Monolith Project</title>
+    <meta name="description" content="We couldn't find that page." />
+    <style>
+      :root {
+        --bg: #050505;
+        --ink: #ffffff;
+        --accent: rgb(212, 165, 116);
+        --dim: rgba(255, 255, 255, 0.55);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        text-align: center;
+        padding: 2rem;
+      }
+      .wordmark {
+        font-size: clamp(2.5rem, 8vw, 6rem);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        font-weight: 800;
+        line-height: 0.9;
+        background: linear-gradient(to bottom, #ffffff, rgba(255, 255, 255, 0.1));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .kicker {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 10px;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
+        color: var(--dim);
+      }
+      .links { display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center; }
+      a {
+        display: inline-block;
+        padding: 0.75rem 1.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        transition: all 200ms ease;
+      }
+      a:hover { border-color: var(--accent); color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <p class="kicker">404 / Page Not Found</p>
+    <h1 class="wordmark">Monolith</h1>
+    <p style="color: var(--dim); max-width: 30rem; line-height: 1.6">
+      We couldn't find that page. It may have moved, retired, or never existed.
+    </p>
+    <div class="links">
+      <a href="/">Home</a>
+      <a href="/lineup">Lineup</a>
+      <a href="/schedule">Schedule</a>
+    </div>
+  </body>
+</html>

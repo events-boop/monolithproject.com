@@ -1,4 +1,5 @@
 import ChasingSunsetsLogo from "./ChasingSunsetsLogo";
+import GlyphBackdrop from "./GlyphBackdrop";
 import {
   lazy,
   Suspense,
@@ -7,7 +8,15 @@ import {
   useLayoutEffect,
   useRef,
 } from "react";
-import { Ticket, ArrowUpRight, Lock, Zap, CalendarDays } from "lucide-react";
+import {
+  Ticket,
+  ArrowUpRight,
+  Lock,
+  Zap,
+  CalendarDays,
+  Search,
+  Bookmark,
+} from "lucide-react";
 import { sunsetsNeedsUpdate } from "@shared/events/sunsets-current";
 import "@/styles/event-alert.css";
 import { useLocation } from "wouter";
@@ -31,7 +40,8 @@ import { getEventCta } from "../lib/cta";
 import { getEventCtaToneClass } from "../lib/ctaTone";
 import { useIntentPrefetch } from "../hooks/useIntentPrefetch";
 import UntoldButterflyLogo from "./UntoldButterflyLogo";
-import { ROUTES, ANCHORS, routeRadioEpisode } from "@shared/routes";
+import { useSavedPassport } from "../lib/savedPassport";
+import { ROUTES, ANCHORS } from "@shared/routes";
 
 const InteractiveNavigationOverlay = lazy(
   () => import("./InteractiveNavigationOverlay")
@@ -56,7 +66,7 @@ const MenuCyclingText = ({
   return (
     <span
       className={cn(
-        "hidden sm:inline font-mono text-[11px] font-bold tracking-[0.18em] uppercase",
+        "site-nav-menu-label hidden sm:inline",
         isOpen && accentClass
       )}
     >
@@ -105,7 +115,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
   const setLocation = useLocation()[1];
   const { preconnectGateway } = useIntentPrefetch();
 
-  const { openDrawer } = useUI();
+  const { openDrawer, openCommandPalette } = useUI();
+  const savedPassport = useSavedPassport();
   const isHome = location === ROUTES.home;
   const scene = getSceneForPath(location);
   const resolvedVariant = variant ?? scene.variant;
@@ -347,6 +358,18 @@ export default function Navigation({ variant, brand }: NavigationProps) {
     }
   };
 
+  // The header action is a plain anchor because it is usually an outbound ticket link. When it
+  // points inside the site (the calendar), route in-app: a full page load would stop the
+  // persistent player mid-set.
+  const handleNavCtaClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (navCta.isExternal || !navCta.href.startsWith("/")) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+      return;
+    if (event.button !== 0) return;
+    event.preventDefault();
+    setLocation(navCta.href);
+  };
+
   const handleLogoClick = () => {
     signalChirp.click();
     const logoHref = ROUTES.home;
@@ -381,7 +404,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
         style={{
           top: "var(--shell-nav-offset)",
         }}
-        className="fixed left-0 right-0 z-[10001] px-1 py-1 sm:px-4 sm:py-3 pointer-events-none"
+        className="fixed left-0 right-0 z-[110] px-1 py-1 sm:px-4 sm:py-3 pointer-events-none"
       >
         <a
           href="#main-content"
@@ -474,9 +497,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
           <div
             className={`rounded-3xl sm:rounded-[2rem] ${isLight ? "shell-frame-light" : "shell-frame"}`}
           >
-            <div className="flex min-h-[3rem] w-full items-center justify-between px-2 py-1 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
+            <GlyphBackdrop surface="nav" />
+            <div className="site-nav-row flex min-h-[3rem] w-full items-center justify-between px-2 py-1 sm:min-h-[4.25rem] sm:px-6 lg:py-3 xl:px-8">
               {/* LEFT: LOGO */}
-              <div className="mr-2 flex shrink-0 items-center gap-2.5 min-[360px]:mr-3 min-[360px]:gap-3 lg:mr-8 xl:mr-12">
+              <div className="site-nav-brand mr-2 flex shrink-0 items-center gap-2.5 min-[360px]:mr-3 min-[360px]:gap-3 lg:mr-8 xl:mr-12">
                 <MagneticButton strength={0.25}>
                   <button
                     type="button"
@@ -516,7 +540,15 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         </>
                       ) : resolvedBrand === "radio" ? (
                         <span className="font-radio text-rose-500">
-                          SUN(SETS) RADIO
+                          <span className="block text-[8px] leading-tight tracking-[0.1em] sm:hidden">
+                            CHASING SUNSETS
+                          </span>
+                          <span className="block text-sm leading-tight tracking-[0.16em] sm:hidden">
+                            RADIO
+                          </span>
+                          <span className="hidden sm:inline">
+                            CHASING SUNSETS RADIO
+                          </span>
                         </span>
                       ) : (
                         <div className="flex flex-row items-baseline gap-2">
@@ -565,7 +597,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
               </div>
 
               {/* CENTER: NAV ITEMS */}
-              <div className="hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2.5 2xl:gap-4 pr-3 whitespace-nowrap">
+              <div className="site-nav-links hidden xl:flex flex-1 min-w-0 items-center justify-end gap-2.5 2xl:gap-4 pr-3 whitespace-nowrap">
                 <NavigationMegamenu
                   label="SHOWS"
                   href={ROUTES.schedule}
@@ -586,15 +618,23 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         icon: "arrow",
                       },
                       {
-                        label: ticketHref ? "GET TICKETS" : "EVENT INFORMATION",
-                        href: ticketHref || ROUTES.tickets,
+                        label: ticketHref
+                          ? "GET TICKETS"
+                          : isUpdateContext
+                            ? "TICKET-HOLDER UPDATE"
+                            : "GET FIRST ACCESS",
+                        href:
+                          ticketHref ||
+                          (isUpdateContext
+                            ? ROUTES.tickets
+                            : ROUTES.newsletter),
                         icon: "ticket",
                       },
                       {
                         label: "CHASING SUN(SETS)",
                         href: ROUTES.chasingSunsets,
                       },
-                      { label: "UNTOLD STORY", href: ROUTES.story },
+                      { label: "UNTOLD STORY", href: ROUTES.untoldStory },
                       {
                         label: "ENTRY GUIDE",
                         href: ROUTES.guide + ANCHORS.entry,
@@ -612,8 +652,14 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                             "/images/chasing-sunsets-premium.webp",
                           href:
                             ticketHref ||
-                            `/events/${ticketEvent.slug || ticketEvent.id}`,
-                          ctaText: ticketHref ? "On Sale" : "Event Details",
+                            (isUpdateContext
+                              ? ROUTES.tickets
+                              : ROUTES.newsletter),
+                          ctaText: ticketHref
+                            ? "Get Tickets"
+                            : isUpdateContext
+                              ? "Ticket-Holder Update"
+                              : "Get First Access",
                           icon: ticketHref ? "ticket" : "arrow",
                           badge:
                             ticketEvent.eventStatus === "EventPostponed"
@@ -622,7 +668,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                                 ? "CANCELLED"
                                 : ticketEvent.status === "on-sale"
                                   ? "ON SALE"
-                                  : "COMING SOON",
+                                  : "FIRST ACCESS",
                           external: !!ticketHref,
                         }
                       : {
@@ -664,7 +710,8 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                     feature: {
                       title: "Kiko Franco",
                       subtitle: "Chapter One Headliner — Archive",
-                      image: "/images/artist-kiko-franco-card.webp",
+                      image: "/images/artist-kiko-franco.webp",
+                      imagePosition: "50% 0%",
                       href: "/artists/kiko-franco",
                       ctaText: "View Profile",
                       icon: "arrow",
@@ -734,7 +781,7 @@ export default function Navigation({ variant, brand }: NavigationProps) {
 
                 <NavigationMegamenu
                   label="UNTOLD STORY"
-                  href={ROUTES.story}
+                  href={ROUTES.untoldStory}
                   isActive={
                     location.includes(ROUTES.story) ||
                     location.includes(ROUTES.untoldStory)
@@ -756,10 +803,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         "/images/untold-story-juany-deron-v2.webp",
                       href:
                         getPrimaryTicketUrl(featuredUntoldEvent) ||
-                        ROUTES.story,
+                        ROUTES.newsletter,
                       ctaText: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "Get Tickets"
-                        : "View Story",
+                        : "Get First Access",
                       icon: getPrimaryTicketUrl(featuredUntoldEvent)
                         ? "ticket"
                         : "arrow",
@@ -777,7 +824,11 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                 <NavigationMegamenu
                   label="RADIO"
                   href={ROUTES.radio}
-                  isActive={location.startsWith(ROUTES.radio)}
+                  isActive={
+                    location.startsWith(ROUTES.radio) ||
+                    location.startsWith(ROUTES.sunsetsFM) ||
+                    location.startsWith(ROUTES.openNetwork)
+                  }
                   isLight={isLight}
                   brand={resolvedBrand}
                   type="chasing-radio"
@@ -785,20 +836,77 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                   megamenu={{
                     items: [], // Dynamic roster generated inside NavigationMegamenu
                     feature: {
-                      title: "Chasing Sun(Sets) Radio Show",
-                      subtitle: "Latest YouTube Broadcast",
-                      image: "/images/radio-show-gear.webp",
-                      href: routeRadioEpisode("ep-004-benchek-part-2"),
+                      title: "Chasing Sunsets Radio",
+                      subtitle: "powered by sunsets.fm",
+                      image: "/images/artists/benchek/benchek-portrait.jpg",
+                      imagePosition: "50% 0%",
+                      href: `${ROUTES.radio}#radio-featured`,
                       ctaText: "Listen Now",
                       icon: "play",
-                      badge: "YOUTUBE BROADCAST",
+                      badge: "A MONOLITH ORIGINAL",
                     },
                   }}
                 />
               </div>
 
-              {/* RIGHT: CTA & MOBILE TOGGLE */}
-              <div className="flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-3 md:gap-4 shrink-0">
+              {/* RIGHT: SEARCH, SAVED, CTA & MOBILE TOGGLE */}
+              <div className="site-nav-actions flex items-center justify-end gap-1.5 min-[360px]:gap-2 sm:gap-2.5 md:gap-3 shrink-0">
+                {/* Search / ⌘K trigger */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    signalChirp.click();
+                    openCommandPalette();
+                  }}
+                  data-nav-search-trigger="true"
+                  aria-label="Search artists, radio sets, and shows"
+                  className={cn(
+                    "hidden min-[420px]:inline-flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center justify-center gap-2 rounded-full border px-2.5 lg:px-3.5 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
+                    isLight
+                      ? "border-black/10 bg-black/[0.04] text-charcoal hover:bg-black/[0.08]"
+                      : "border-white/12 bg-white/[0.05] text-white/85 hover:border-[#f3a659]/50 hover:text-white"
+                  )}
+                >
+                  <Search className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span className="hidden 2xl:inline font-mono text-[10.5px] tracking-[0.12em] text-white/65">
+                    ⌘K
+                  </span>
+                </button>
+
+                {/* Saved Nights & Sets trigger */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    signalChirp.click();
+                    openDrawer("saved");
+                  }}
+                  data-nav-saved-trigger="true"
+                  aria-label={
+                    savedPassport.total > 0
+                      ? `Open saved list (${savedPassport.total} saved)`
+                      : "Open saved list"
+                  }
+                  className={cn(
+                    "hidden md:inline-flex min-h-[var(--tap-target-min)] min-w-[var(--tap-target-min)] items-center justify-center gap-1.5 rounded-full border px-2.5 transition-all duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70",
+                    savedPassport.total > 0
+                      ? "border-[#f3a659]/45 bg-[#f3a659]/14 text-[#ffd8a6]"
+                      : isLight
+                        ? "border-black/10 bg-black/[0.04] text-charcoal hover:bg-black/[0.08]"
+                        : "border-white/12 bg-white/[0.05] text-white/80 hover:border-[#f3a659]/50 hover:text-white"
+                  )}
+                >
+                  <Bookmark
+                    className="h-4 w-4 shrink-0"
+                    fill={savedPassport.total > 0 ? "currentColor" : "none"}
+                    aria-hidden="true"
+                  />
+                  {savedPassport.total > 0 && (
+                    <span className="font-mono text-[11px] font-semibold tabular-nums">
+                      {savedPassport.total}
+                    </span>
+                  )}
+                </button>
+
                 <div className="hidden min-[370px]:flex sm:hidden">
                   <MagneticButton strength={0.16}>
                     <a
@@ -827,7 +935,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         signalChirp.hover();
                         if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
-                      onClick={() => signalChirp.click()}
+                      onClick={event => {
+                        signalChirp.click();
+                        handleNavCtaClick(event);
+                      }}
                       className={`${isUpdateContext ? "nav-calendar-action" : ""} inline-flex h-11 gap-1.5 px-3 items-center justify-center rounded-full border transition-all duration-300 ${
                         navCta.tool === "posh" || navCta.tool === "allevents"
                           ? "border-transparent bg-primary text-black"
@@ -884,7 +995,10 @@ export default function Navigation({ variant, brand }: NavigationProps) {
                         signalChirp.hover();
                         if (navCta.isExternal) preconnectGateway(navCta.href);
                       }}
-                      onClick={() => signalChirp.click()}
+                      onClick={event => {
+                        signalChirp.click();
+                        handleNavCtaClick(event);
+                      }}
                     >
                       <div
                         className={`

@@ -67,7 +67,11 @@ export type ResponsiveImageSource = {
 };
 
 function isLocalImage(src: string) {
-  return src.startsWith("/images/") || src === "/og-image.jpg";
+  return (
+    src.startsWith("/images/") ||
+    src.startsWith("/media/chasing-radio/") ||
+    src === "/og-image.jpg"
+  );
 }
 
 function isGeneratedImage(src: string) {
@@ -124,6 +128,9 @@ export function buildResponsiveImageSources(
 }
 
 export function getResponsiveImageWidths(baseName: string) {
+  if (baseName.startsWith("media-chasing-radio-")) {
+    return [160, 320, 640, 1024];
+  }
   const desktopWidths = DESKTOP_RESPONSIVE_WIDTHS_BY_BASE_NAME[baseName];
   if (desktopWidths) return desktopWidths;
 
